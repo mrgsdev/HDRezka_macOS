@@ -57,6 +57,7 @@ struct PlayerView: View {
         }
         .onAppear {
             controller.onClose = { dismiss() }
+            controller.start()
         }
         .onDisappear {
             controller.finish()

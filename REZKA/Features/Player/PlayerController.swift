@@ -33,10 +33,19 @@ final class PlayerController {
     @ObservationIgnored private var usingFallback = false
     @ObservationIgnored private var lastLocalSave = Date.distantPast
     @ObservationIgnored private var lastRemoteSave = Date()
+    @ObservationIgnored private var isStarted = false
     @ObservationIgnored private var isTornDown = false
 
     init(request: PlaybackRequest) {
         self.request = request
+    }
+
+    /// Loads the stream and starts playback; called once the window appears. Not done in `init`:
+    /// SwiftUI may build the view, and so a controller, more than once, and every extra one
+    /// would play the episode in the background — the sound doubled.
+    func start() {
+        guard !isStarted, !isTornDown else { return }
+        isStarted = true
         timeObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.25, preferredTimescale: 600), queue: .main) { [weak self] time in
             MainActor.assumeIsolated { self?.tick(time.seconds) }
         }
