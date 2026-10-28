@@ -29,6 +29,16 @@ struct RezkaApp: App {
         // Otherwise macOS reopens the last player window at launch and it starts playing by itself.
         .restorationBehavior(.disabled)
 
+        Window("Обновление REZKA", id: "update") {
+            UpdateView()
+                .preferredColorScheme(.dark)
+        }
+        .windowResizability(.contentSize)
+        .defaultPosition(.center)
+        .restorationBehavior(.disabled)
+        // Keeps it out of the Window menu; it opens by itself or from "Проверить обновления…".
+        .commandsRemoved()
+
         Settings {
             SettingsView()
                 .environment(AuthSession.shared)
@@ -52,6 +62,10 @@ struct RootView: View {
         .onAppear {
             PlayerPresenter.open = { openWindow(id: "player", value: $0) }
         }
+        .task { await offerUpdate() }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            Task { await offerUpdate() }
+        }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.willResignActiveNotification)) { _ in
             persist()
         }
@@ -63,6 +77,13 @@ struct RootView: View {
     private func persist() {
         CookieVault.save()
         WatchProgressStore.shared.persist()
+    }
+
+    /// Looks for a new release at launch and then at most twice a day; the window opens only when there is one.
+    private func offerUpdate() async {
+        if await Updater.shared.checkInBackground() {
+            openWindow(id: "update")
+        }
     }
 }
 
@@ -82,6 +103,7 @@ struct AppCommands: Commands {
     var body: some Commands {
         CommandGroup(replacing: .appInfo) {
             Button("О программе REZKA") { AboutPanel.show() }
+            Button("Проверить обновления…") { checkForUpdates() }
         }
         // No "New Window": a second library window would load everything twice and share the first
         // one's sidebar, and the player's would open empty. The group can't be left empty either:
@@ -110,6 +132,12 @@ struct AppCommands: Commands {
 }
 
 extension AppCommands {
+    @MainActor
+    private func checkForUpdates() {
+        openWindow(id: "update")
+        Task { await Updater.shared.checkNow() }
+    }
+
     /// Brings the library window forward, or opens it again after it was closed.
     @MainActor
     private func showMainWindow() {

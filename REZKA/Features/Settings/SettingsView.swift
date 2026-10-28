@@ -3,6 +3,7 @@ import SwiftUI
 /// The app's Settings window (⌘,).
 struct SettingsView: View {
     @Environment(AuthSession.self) private var auth
+    @Environment(\.openWindow) private var openWindow
 
     @State private var mirror = Mirror.current.absoluteString
     @State private var mirrorStatus: String?
@@ -62,6 +63,10 @@ struct SettingsView: View {
 
             Section("О приложении") {
                 LabeledContent("Версия", value: "\(Self.version) (\(Self.build))")
+                Button("Проверить обновления…") {
+                    openWindow(id: "update")
+                    Task { await Updater.shared.checkNow() }
+                }
                 LabeledContent("Разработчик") {
                     Link("github.com/mrgsdev", destination: URL(string: "https://github.com/mrgsdev")!)
                 }
