@@ -77,12 +77,19 @@ enum PlayerPresenter {
 }
 
 struct AppCommands: Commands {
+    @Environment(\.openWindow) private var openWindow
+
     var body: some Commands {
         CommandGroup(replacing: .appInfo) {
             Button("О программе REZKA") { AboutPanel.show() }
         }
-        // One library window is enough; extra ones would load everything twice.
-        CommandGroup(replacing: .newItem) {}
+        // No "New Window": a second library window would load everything twice and share the first
+        // one's sidebar, and the player's would open empty. The group can't be left empty either:
+        // SwiftUI then drops the whole File menu, and Close (⌘W) with it.
+        CommandGroup(replacing: .newItem) {
+            Button("Главное окно") { showMainWindow() }
+                .keyboardShortcut("0")
+        }
         CommandMenu("Разделы") {
             Button("Главная") { Router.shared.selection = .home }
                 .keyboardShortcut("1")
@@ -99,6 +106,22 @@ struct AppCommands: Commands {
             Button("Закладки") { Router.shared.selection = .bookmarks }
                 .keyboardShortcut("7")
         }
+    }
+}
+
+extension AppCommands {
+    /// Brings the library window forward, or opens it again after it was closed.
+    @MainActor
+    private func showMainWindow() {
+        let window = NSApp.windows.first {
+            $0.identifier?.rawValue.hasPrefix("main") == true && ($0.isVisible || $0.isMiniaturized)
+        }
+        guard let window else {
+            openWindow(id: "main")
+            return
+        }
+        if window.isMiniaturized { window.deminiaturize(nil) }
+        window.makeKeyAndOrderFront(nil)
     }
 }
 
