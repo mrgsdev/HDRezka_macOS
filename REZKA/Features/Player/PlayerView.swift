@@ -235,6 +235,7 @@ private struct PlayerSurface: NSViewRepresentable {
         view.player = player
         view.controlsStyle = .floating
         view.showsFullScreenToggleButton = false
+        view.speeds = PlayerController.speedOptions.map { AVPlaybackSpeed(rate: $0, localizedName: PlayerController.speedLabel($0)) }
         view.allowsPictureInPicturePlayback = true
         view.onSeek = onSeek
         // Space, arrows and J/K/L reach the player without clicking it first.

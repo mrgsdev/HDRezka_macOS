@@ -8,7 +8,8 @@ import Observation
 @MainActor
 @Observable
 final class PlayerController {
-    static let speedOptions: [Float] = [1, 1.25, 1.5, 1.75, 2]
+    /// Offered both in the toolbar and in the player's own menu (» in its controls).
+    static let speedOptions: [Float] = [0.5, 1, 1.25, 1.5, 1.75, 2]
 
     private(set) var request: PlaybackRequest
     let player = AVPlayer()
@@ -31,6 +32,7 @@ final class PlayerController {
     @ObservationIgnored private var endObserver: NSObjectProtocol?
     @ObservationIgnored private var statusObservation: NSKeyValueObservation?
     @ObservationIgnored private var waitingObservation: NSKeyValueObservation?
+    @ObservationIgnored private var speedObservation: NSKeyValueObservation?
     @ObservationIgnored private var bufferingTask: Task<Void, Never>?
     @ObservationIgnored private var loadTask: Task<Void, Never>?
     @ObservationIgnored private var subtitleTask: Task<Void, Never>?
@@ -61,6 +63,16 @@ final class PlayerController {
         waitingObservation = player.observe(\.timeControlStatus, options: [.new]) { [weak self] _, _ in
             DispatchQueue.main.async {
                 MainActor.assumeIsolated { self?.timeControlChanged() }
+            }
+        }
+        // The player's own menu sets the speed straight on the player; the toolbar has to follow.
+        speedObservation = player.observe(\.defaultRate, options: [.new]) { [weak self] player, _ in
+            let rate = player.defaultRate
+            DispatchQueue.main.async {
+                MainActor.assumeIsolated {
+                    guard let self, rate > 0, rate != self.speed else { return }
+                    self.speed = rate
+                }
             }
         }
         load(startAt: request.startPosition)
@@ -359,6 +371,7 @@ final class PlayerController {
         seekHintTask?.cancel()
         bufferingTask?.cancel()
         waitingObservation = nil
+        speedObservation = nil
         if let timeObserver { player.removeTimeObserver(timeObserver) }
         if let endObserver { NotificationCenter.default.removeObserver(endObserver) }
         timeObserver = nil
