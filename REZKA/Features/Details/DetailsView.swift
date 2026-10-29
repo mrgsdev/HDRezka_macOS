@@ -8,6 +8,8 @@ struct DetailsView: View {
     @Environment(AuthSession.self) private var auth
     @State private var isCreatingFolder = false
     @State private var newFolderName = ""
+    /// The score a star click asks to confirm: a vote can't be changed later.
+    @State private var pendingRating: Int?
 
     init(item: MediaItem) {
         self.item = item
@@ -44,6 +46,15 @@ struct DetailsView: View {
             Button("OK", role: .cancel) {}
         } message: {
             Text(model.actionError ?? "")
+        }
+        .alert("Оценить на \(pendingRating ?? 0) из 10?", isPresented: Binding(
+            get: { pendingRating != nil },
+            set: { if !$0 { pendingRating = nil } }
+        ), presenting: pendingRating) { score in
+            Button("Оценить") { Task { await model.rate(score) } }
+            Button("Отмена", role: .cancel) {}
+        } message: { _ in
+            Text("Сайт принимает одну оценку от аккаунта — изменить её потом не получится.")
         }
     }
 
@@ -113,6 +124,11 @@ struct DetailsView: View {
                 if let ratings = details.info("Рейтинги") {
                     Label(ratings, systemImage: "star.fill")
                         .foregroundStyle(.yellow)
+                }
+                if let rating = model.siteRating {
+                    SiteRatingView(rating: rating, myRating: model.myRating, isRating: model.isRating) { score in
+                        pendingRating = score
+                    }
                 }
                 actions(details)
                     .padding(.vertical, 6)

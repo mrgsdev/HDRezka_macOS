@@ -22,7 +22,7 @@ final class DetailsModel {
     /// The account's bookmark folders; nil hides the bookmark button (logged out).
     private(set) var bookmarkFolders: [BookmarkFolder]?
     private(set) var bookmarkedIn: Set<String> = []
-    /// Shown in a "Не получилось" alert: a failed bookmark or watched-mark change.
+    /// Shown in a "Не получилось" alert: a failed bookmark, watched-mark change or vote.
     var actionError: String?
     /// Schedule ids of the episodes marked "просмотрено" in the account.
     private(set) var watchedEpisodes: Set<String> = []
@@ -31,6 +31,11 @@ final class DetailsModel {
     private(set) var isLoadingComments = false
     private(set) var commentsError: Error?
     private var commentsPage = 0
+    /// The site's rating of the title; changes once the account votes.
+    private(set) var siteRating: SiteRating?
+    /// The vote sent from this Mac, if any: after voting the site no longer says which one it was.
+    private(set) var myRating: Int?
+    private(set) var isRating = false
 
     init(item: MediaItem) {
         self.item = item
@@ -63,6 +68,8 @@ final class DetailsModel {
             bookmarkFolders = details.bookmarkFolders
             bookmarkedIn = details.bookmarkedIn
             watchedEpisodes = Set(details.schedule.flatMap(\.episodes).filter(\.isWatched).map(\.id))
+            siteRating = details.siteRating
+            myRating = Self.myRatings[details.postId]
             state = .loaded(details)
 
             if details.isSeries, let chosen {
@@ -242,6 +249,28 @@ final class DetailsModel {
         } catch {
             report(error)
         }
+    }
+
+    // MARK: Rating
+
+    /// Votes for the title from 1 to 10. The site takes one vote per account and never changes it.
+    func rate(_ value: Int) async {
+        guard let details, !isRating else { return }
+        isRating = true
+        defer { isRating = false }
+        do {
+            siteRating = try await RezkaClient.shared.rate(postId: details.postId, value: value)
+            myRating = value
+            Self.myRatings[details.postId] = value
+        } catch {
+            report(error)
+        }
+    }
+
+    /// Votes sent from this Mac by post id.
+    private static var myRatings: [String: Int] {
+        get { UserDefaults.standard.dictionary(forKey: "myRatings") as? [String: Int] ?? [:] }
+        set { UserDefaults.standard.set(newValue, forKey: "myRatings") }
     }
 
     private func report(_ error: Error) {

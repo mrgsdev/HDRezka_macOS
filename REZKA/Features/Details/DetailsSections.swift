@@ -11,6 +11,106 @@ private struct SectionTitle: View {
     }
 }
 
+// MARK: Rating
+
+/// The site's rating as ten stars filled to the average, like on the site. Until the account votes,
+/// hovering a star previews that score and clicking it asks to vote.
+struct SiteRatingView: View {
+    let rating: SiteRating
+    let myRating: Int?
+    let isRating: Bool
+    let onRate: (Int) -> Void
+
+    @State private var hovered: Int?
+
+    private static let russian = Locale(identifier: "ru_RU")
+
+    var body: some View {
+        HStack(spacing: 12) {
+            stars
+            Text(rating.value.formatted(.number.precision(.fractionLength(2)).locale(Self.russian)))
+                .font(.headline.monospacedDigit())
+            Text("\(rating.votes.formatted(.number.locale(Self.russian))) \(Self.votesWord(rating.votes))")
+                .foregroundStyle(.secondary)
+            status
+                .font(.callout)
+        }
+        .animation(.easeOut(duration: 0.12), value: hovered)
+    }
+
+    @ViewBuilder
+    private var status: some View {
+        if isRating {
+            ProgressView().controlSize(.small)
+        } else if let hovered {
+            Text("Оценить на \(hovered)").foregroundStyle(Color.accentColor)
+        } else if let myRating {
+            Label("Ваша оценка: \(myRating)", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
+        } else if !rating.canVote {
+            Label("Вы уже оценили", systemImage: "checkmark.circle").foregroundStyle(.secondary)
+        } else {
+            Text("Наведите на звёзды, чтобы оценить").foregroundStyle(.tertiary)
+        }
+    }
+
+    private var row: some View {
+        HStack(spacing: 3) {
+            ForEach(1...10, id: \.self) { _ in
+                Image(systemName: "star.fill")
+            }
+        }
+        .font(.system(size: 17))
+    }
+
+    private var stars: some View {
+        row
+            .foregroundStyle(.white.opacity(0.18))
+            .overlay(alignment: .leading) {
+                GeometryReader { proxy in
+                    Rectangle()
+                        .fill(hovered == nil ? Color.yellow : Color.accentColor)
+                        .frame(width: proxy.size.width * fill)
+                }
+                .mask(row)
+                .allowsHitTesting(false)
+            }
+            .overlay {
+                if rating.canVote, myRating == nil, !isRating {
+                    HStack(spacing: 0) {
+                        ForEach(1...10, id: \.self) { score in
+                            Color.clear
+                                .contentShape(Rectangle())
+                                .onHover { inside in
+                                    if inside { hovered = score } else if hovered == score { hovered = nil }
+                                }
+                                .onTapGesture { onRate(score) }
+                                .help("Оценить на \(score)")
+                        }
+                    }
+                }
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Рейтинг на сайте")
+            .accessibilityValue("\(rating.value.formatted(.number.precision(.fractionLength(2)).locale(Self.russian))) из 10")
+            .accessibilityIdentifier("siteRating")
+    }
+
+    /// The hovered score, or the average; star N ends at N tenths of the row.
+    private var fill: CGFloat {
+        CGFloat(hovered.map(Double.init) ?? min(max(rating.value, 0), 10)) / 10
+    }
+
+    private static func votesWord(_ count: Int) -> String {
+        let tens = count % 100, ones = count % 10
+        if (11...14).contains(tens) { return "голосов" }
+        switch ones {
+        case 1: return "голос"
+        case 2...4: return "голоса"
+        default: return "голосов"
+        }
+    }
+}
+
 // MARK: Episodes
 
 struct EpisodesSection: View {

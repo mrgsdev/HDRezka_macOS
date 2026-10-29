@@ -247,7 +247,8 @@ enum RezkaParser {
             // Nothing to play: no dub list and no player config, only the site's status and maybe a trailer.
             upcomingStatus: translators.isEmpty
                 ? try doc.select(".b-post__go_status").first()?.text().nonEmpty ?? "Ожидается"
-                : nil
+                : nil,
+            siteRating: try siteRating(in: doc)
         )
     }
 
@@ -259,6 +260,18 @@ enum RezkaParser {
             return try group.children().array().first { $0.tagName() == "div" }?.text().nonEmpty
         }
         return nil
+    }
+
+    /// "Оцени фильм: ★★★★★ 8.62 (4836)" under the title. The 1–10 links are there only until the account votes.
+    private static func siteRating(in doc: Document) throws -> SiteRating? {
+        guard let block = try doc.select(".b-post__rating").first(),
+              let value = Double(try block.select(".num").first()?.text().replacingOccurrences(of: ",", with: ".") ?? "")
+        else { return nil }
+        return SiteRating(
+            value: value,
+            votes: Int(try block.select(".votes span").first()?.text().filter(\.isNumber) ?? "") ?? 0,
+            canVote: try !block.select(".b-post__rating_wrapper a[onclick*=rate]").isEmpty()
+        )
     }
 
     /// The account's bookmark folders from a details page and those holding the title;

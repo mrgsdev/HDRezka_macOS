@@ -176,10 +176,20 @@ struct MediaDetails {
     /// The site's note for a title that cannot be played yet, e.g. "Ожидаем фильм в хорошем качестве...";
     /// nil when it has something to watch.
     let upcomingStatus: String?
+    /// The viewers' rating on the site itself; nil when the page has none.
+    let siteRating: SiteRating?
 
     func info(_ title: String) -> String? {
         info.first { $0.title.hasPrefix(title) }?.value
     }
+}
+
+/// The site's own rating of a title: the average of its viewers' votes from 1 to 10.
+struct SiteRating: Hashable {
+    let value: Double
+    let votes: Int
+    /// The page still offers its 1–10 links: this account has not voted for the title.
+    let canVote: Bool
 }
 
 struct StreamQuality: Identifiable, Hashable {

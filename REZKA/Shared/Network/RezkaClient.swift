@@ -313,6 +313,35 @@ final class RezkaClient {
         try RezkaParser.accountName(in: try await document(url("settings/")))
     }
 
+    /// Votes for a title from 1 to 10, as the stars on a details page do, and returns the new average.
+    /// The site takes one vote per account.
+    func rate(postId: String, value: Int) async throws -> SiteRating {
+        var request = URLRequest(url: url("engine/ajax/rating.php", query: [
+            URLQueryItem(name: "news_id", value: postId),
+            URLQueryItem(name: "go_rate", value: String(value)),
+            URLQueryItem(name: "skin", value: "hdrezka"),
+        ]))
+        // The vote is a GET, so keep it out of the cache and never resend it.
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        request.setValue("XMLHttpRequest", forHTTPHeaderField: "X-Requested-With")
+        request.setValue(baseURL.absoluteString, forHTTPHeaderField: "Referer")
+        let data = try await perform(request, retryingTimeout: false)
+        guard let json = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any] else {
+            if String(decoding: data, as: UTF8.self).contains("loginForm") { throw RezkaError.loginRequired }
+            throw RezkaError.parsing("оценка")
+        }
+        guard json["success"] as? Bool == true else {
+            throw siteError(json, fallback: "Сайт не принял оценку. Возможно, вы уже оценивали этот тайтл.")
+        }
+        // Numbers come back as strings or as numbers.
+        let field = { (key: String) in (json[key] as? NSNumber)?.stringValue ?? json[key] as? String ?? "" }
+        return SiteRating(
+            value: Double(field("num").replacingOccurrences(of: ",", with: ".")) ?? 0,
+            votes: Int(field("votes").filter(\.isNumber)) ?? 0,
+            canVote: false
+        )
+    }
+
     /// Removes an entry from the site's "continue watching" list.
     func removeFromContinue(id: String) async throws {
         let json = try await postJSON("engine/ajax/cdn_saves_remove.php", form: ["id": id], timestamped: false)
@@ -353,15 +382,15 @@ final class RezkaClient {
         return String(decoding: try await perform(request), as: UTF8.self)
     }
 
-    /// Sends the request through the concurrency gate, retrying a GET once after a timeout.
-    /// The site stalls bursts of parallel requests, so at most `gate.limit` run at a time.
-    private func perform(_ request: URLRequest) async throws -> Data {
+    /// Sends the request through the concurrency gate, retrying a GET once after a timeout unless
+    /// `retryingTimeout` is off. The site stalls bursts of parallel requests, so at most `gate.limit` run at a time.
+    private func perform(_ request: URLRequest, retryingTimeout: Bool = true) async throws -> Data {
         await gate.acquire()
         do {
             let data: Data
             do {
                 data = try await attempt(request)
-            } catch let error as URLError where (request.httpMethod ?? "GET") == "GET" && [.timedOut, .networkConnectionLost].contains(error.code) {
+            } catch let error as URLError where retryingTimeout && (request.httpMethod ?? "GET") == "GET" && [.timedOut, .networkConnectionLost].contains(error.code) {
                 data = try await attempt(request)
             }
             await gate.release()
