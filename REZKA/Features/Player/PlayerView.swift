@@ -13,7 +13,9 @@ struct PlayerView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
+            // Under the title bar too: the toolbar floats over the picture with no background of its own.
             PlayerSurface(player: controller.player)
+                .ignoresSafeArea()
 
             if let text = controller.subtitleText {
                 Text(text)
@@ -55,6 +57,9 @@ struct PlayerView: View {
                 }
             }
         }
+        .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
+        // In full screen the video takes the whole screen; the toolbar slides in with the menu bar.
+        .windowToolbarFullScreenVisibility(.onHover)
         .onAppear {
             controller.onClose = { dismiss() }
             controller.start()
@@ -160,7 +165,7 @@ private struct PlayerSurface: NSViewRepresentable {
     let player: AVPlayer
 
     func makeNSView(context: Context) -> AVPlayerView {
-        let view = AVPlayerView()
+        let view = TitleBarHidingPlayerView()
         view.player = player
         view.controlsStyle = .floating
         view.showsFullScreenToggleButton = false
@@ -172,5 +177,102 @@ private struct PlayerSurface: NSViewRepresentable {
 
     func updateNSView(_ view: AVPlayerView, context: Context) {
         if view.player !== player { view.player = player }
+    }
+}
+
+/// Hides the window's title bar along with the floating controls, as QuickTime does: a few seconds
+/// after the mouse stops while the video plays. It stays while paused, under the pointer or with a
+/// menu open; in full screen the system hides it.
+private final class TitleBarHidingPlayerView: AVPlayerView {
+    private var monitor: Any?
+    private var observers: [NSObjectProtocol] = []
+    private var hideTimer: Timer?
+    private var openMenus = 0
+    private var isTitleBarHidden = false
+
+    override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        stopWatching()
+        guard let window else { return }
+        window.acceptsMouseMovedEvents = true
+        monitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved, .leftMouseDown, .rightMouseDown, .scrollWheel, .keyDown]) { [weak self] event in
+            MainActor.assumeIsolated {
+                if let self, event.window === self.window { self.userDidSomething() }
+            }
+            return event
+        }
+        let center = NotificationCenter.default
+        observers = [
+            center.addObserver(forName: NSMenu.didBeginTrackingNotification, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated {
+                    self?.openMenus += 1
+                    self?.userDidSomething()
+                }
+            },
+            center.addObserver(forName: NSMenu.didEndTrackingNotification, object: nil, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated {
+                    guard let self else { return }
+                    self.openMenus = max(self.openMenus - 1, 0)
+                    self.userDidSomething()
+                }
+            },
+            center.addObserver(forName: NSWindow.willEnterFullScreenNotification, object: window, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated { self?.setTitleBarHidden(false) }
+            },
+            center.addObserver(forName: NSWindow.willCloseNotification, object: window, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated { self?.stopWatching() }
+            },
+        ]
+        userDidSomething()
+    }
+
+    private func stopWatching() {
+        if let monitor { NSEvent.removeMonitor(monitor) }
+        monitor = nil
+        observers.forEach(NotificationCenter.default.removeObserver)
+        observers = []
+        hideTimer?.invalidate()
+        hideTimer = nil
+    }
+
+    private func userDidSomething() {
+        setTitleBarHidden(false)
+        scheduleHide()
+    }
+
+    private func scheduleHide() {
+        hideTimer?.invalidate()
+        hideTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { [weak self] _ in
+            MainActor.assumeIsolated { self?.hideIfIdle() }
+        }
+    }
+
+    /// Paused or otherwise busy, it looks again later rather than waiting for the mouse.
+    private func hideIfIdle() {
+        guard let window else { return }
+        guard player?.timeControlStatus != .paused, openMenus == 0,
+              !window.styleMask.contains(.fullScreen), !isPointerOverTitleBar(window)
+        else { return scheduleHide() }
+        setTitleBarHidden(true)
+    }
+
+    private func isPointerOverTitleBar(_ window: NSWindow) -> Bool {
+        let point = window.mouseLocationOutsideOfEventStream
+        return point.y > window.contentLayoutRect.maxY && NSRect(origin: .zero, size: window.frame.size).contains(point)
+    }
+
+    /// Fades the title, toolbar and window buttons together through the view that holds them,
+    /// so the video does not move as hiding the toolbar itself would make it.
+    private func setTitleBarHidden(_ hidden: Bool) {
+        guard hidden != isTitleBarHidden, let window else { return }
+        let themeFrame = window.contentView?.superview
+        var titleBar: NSView? = window.standardWindowButton(.closeButton)
+        while let parent = titleBar?.superview, parent !== themeFrame { titleBar = parent }
+        guard let titleBar else { return }
+        isTitleBarHidden = hidden
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = hidden ? 0.4 : 0.15
+            titleBar.animator().alphaValue = hidden ? 0 : 1
+        }
     }
 }
