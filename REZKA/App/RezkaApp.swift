@@ -39,6 +39,15 @@ struct RezkaApp: App {
         // Keeps it out of the Window menu; it opens by itself or from "Проверить обновления…".
         .commandsRemoved()
 
+        Window("Горячие клавиши", id: "shortcuts") {
+            ShortcutsView()
+        }
+        .windowResizability(.contentSize)
+        .defaultPosition(.center)
+        .restorationBehavior(.disabled)
+        // It opens from the Help menu.
+        .commandsRemoved()
+
         Settings {
             SettingsView()
                 .environment(AuthSession.shared)
@@ -110,6 +119,11 @@ struct AppCommands: Commands {
         CommandGroup(replacing: .newItem) {
             Button("Главное окно") { showMainWindow() }
                 .keyboardShortcut("0")
+        }
+        // Instead of the system "REZKA Help", which only says there is none.
+        CommandGroup(replacing: .help) {
+            Button("Горячие клавиши") { openWindow(id: "shortcuts") }
+                .keyboardShortcut("/")
         }
         CommandMenu("Разделы") {
             Button("Главная") { Router.shared.selection = .home }
