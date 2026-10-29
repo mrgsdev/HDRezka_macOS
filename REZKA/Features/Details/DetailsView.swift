@@ -290,11 +290,6 @@ struct DetailsView: View {
                 }
                 .fixedSize()
                 .help("Озвучка")
-                if let popularity = details.dubPopularity {
-                    DubPopularityLink(popularity: popularity, translators: details.translators, current: model.translator) { translator in
-                        Task { await model.select(translator) }
-                    }
-                }
             } else if let translator = model.translator {
                 Label(translator.name, systemImage: "waveform")
                     .foregroundStyle(.secondary)
@@ -302,6 +297,13 @@ struct DetailsView: View {
 
             if let folders = model.bookmarkFolders {
                 bookmarkMenu(folders)
+            }
+
+            // Last, after the buttons: it is a hint, not an action.
+            if details.translators.count > 1, let popularity = details.dubPopularity {
+                DubPopularityLink(popularity: popularity, translators: details.translators, current: model.translator) { translator in
+                    Task { await model.select(translator) }
+                }
             }
         }
         .controlSize(.large)
