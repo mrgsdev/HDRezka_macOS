@@ -749,12 +749,32 @@
         }
       }
     },
+    "Загружаем видео…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading video…"
+          }
+        }
+      }
+    },
     "Загружаем и устанавливаем. REZKA перезапустится сама.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Downloading and installing. REZKA will relaunch on its own."
+          }
+        }
+      }
+    },
+    "Загружается…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading…"
           }
         }
       }
@@ -915,6 +935,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Default Quality"
+          }
+        }
+      }
+    },
+    "Кэш на диске": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disk Cache"
           }
         }
       }
@@ -1611,6 +1641,16 @@
         }
       }
     },
+    "Очистить кэш": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear Cache"
+          }
+        }
+      }
+    },
     "Папка": {
       "localizations": {
         "en": {
@@ -1771,6 +1811,16 @@
         }
       }
     },
+    "Подождите, видео скоро загрузится": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please wait, the video will load shortly"
+          }
+        }
+      }
+    },
     "Подписка": {
       "localizations": {
         "en": {
@@ -1889,6 +1939,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Latest"
+          }
+        }
+      }
+    },
+    "Постеры и страницы сайта, чтобы не скачивать их заново; не больше 400 МБ. Видео не сохраняется.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Posters and site pages, kept so they don't download again; up to 400 MB. Video isn't saved."
           }
         }
       }
@@ -2584,6 +2644,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Movies, series, cartoons"
+          }
+        }
+      }
+    },
+    "Хранилище": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Storage"
           }
         }
       }

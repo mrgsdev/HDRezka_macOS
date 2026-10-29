@@ -21,6 +21,8 @@ final class PlayerController {
     var errorMessage: String?
     /// The sum of the latest run of ← → jumps, shown over the video for a moment; nil hides it.
     private(set) var seekHint: Double?
+    /// Playback has waited for data for more than a moment, e.g. after a jump to a part not loaded yet.
+    private(set) var isBuffering = false
     /// Closes the window; set by the view.
     var onClose: (() -> Void)?
 
@@ -28,6 +30,8 @@ final class PlayerController {
     @ObservationIgnored private var timeObserver: Any?
     @ObservationIgnored private var endObserver: NSObjectProtocol?
     @ObservationIgnored private var statusObservation: NSKeyValueObservation?
+    @ObservationIgnored private var waitingObservation: NSKeyValueObservation?
+    @ObservationIgnored private var bufferingTask: Task<Void, Never>?
     @ObservationIgnored private var loadTask: Task<Void, Never>?
     @ObservationIgnored private var subtitleTask: Task<Void, Never>?
     @ObservationIgnored private var remoteSaveTask: Task<Void, Never>?
@@ -53,6 +57,11 @@ final class PlayerController {
         isStarted = true
         timeObserver = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.25, preferredTimescale: 600), queue: .main) { [weak self] time in
             MainActor.assumeIsolated { self?.tick(time.seconds) }
+        }
+        waitingObservation = player.observe(\.timeControlStatus, options: [.new]) { [weak self] _, _ in
+            DispatchQueue.main.async {
+                MainActor.assumeIsolated { self?.timeControlChanged() }
+            }
         }
         load(startAt: request.startPosition)
     }
@@ -183,6 +192,26 @@ final class PlayerController {
             try? await Task.sleep(for: .milliseconds(900))
             guard !Task.isCancelled else { return }
             self?.seekHint = nil
+        }
+    }
+
+    // MARK: Buffering
+
+    /// Shows the loading badge once playback has waited half a second for data: after a jump to a part
+    /// not loaded yet the video otherwise just looks frozen. Shorter waits show nothing.
+    private func timeControlChanged() {
+        guard !isTornDown else { return }
+        guard player.timeControlStatus == .waitingToPlayAtSpecifiedRate, player.currentItem != nil else {
+            bufferingTask?.cancel()
+            bufferingTask = nil
+            isBuffering = false
+            return
+        }
+        guard bufferingTask == nil else { return }
+        bufferingTask = Task { [weak self] in
+            try? await Task.sleep(for: .milliseconds(500))
+            guard !Task.isCancelled else { return }
+            self?.isBuffering = true
         }
     }
 
@@ -328,6 +357,8 @@ final class PlayerController {
         loadTask?.cancel()
         subtitleTask?.cancel()
         seekHintTask?.cancel()
+        bufferingTask?.cancel()
+        waitingObservation = nil
         if let timeObserver { player.removeTimeObserver(timeObserver) }
         if let endObserver { NotificationCenter.default.removeObserver(endObserver) }
         timeObserver = nil

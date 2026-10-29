@@ -13,6 +13,7 @@ struct SettingsView: View {
     @State private var appearance = AppearancePreference.current
     @State private var language = AppLanguage.current
     @State private var confirmLogout = false
+    @State private var cacheSize = URLCache.shared.currentDiskUsage
 
     static let mirrorHint = String(localized: "Напишите на mirror@hdrezka.org, чтобы узнать актуальное зеркало, и введите его сюда.")
 
@@ -95,6 +96,17 @@ struct SettingsView: View {
                 .onChange(of: quality) { _, value in QualityPreference.current = value }
             }
 
+            Section {
+                LabeledContent("Кэш на диске", value: Int64(cacheSize).formatted(.byteCount(style: .file)))
+                Button("Очистить кэш", action: clearCache)
+                    .disabled(cacheSize == 0)
+            } header: {
+                Text("Хранилище")
+            } footer: {
+                Text("Постеры и страницы сайта, чтобы не скачивать их заново; не больше 400 МБ. Видео не сохраняется.")
+                    .foregroundStyle(.secondary)
+            }
+
             Section("О приложении") {
                 LabeledContent("Версия", value: "\(Self.version) (\(Self.build))")
                 Button("Проверить обновления…") {
@@ -116,6 +128,13 @@ struct SettingsView: View {
         .confirmationDialog("Выйти из аккаунта?", isPresented: $confirmLogout) {
             Button("Выйти", role: .destructive) { Task { await auth.logout() } }
         }
+    }
+
+    /// Posters and pages load again from the site after this; the session and history stay.
+    private func clearCache() {
+        URLCache.shared.removeAllCachedResponses()
+        PosterCache.removeAll()
+        cacheSize = URLCache.shared.currentDiskUsage
     }
 
     private func applyMirror() {

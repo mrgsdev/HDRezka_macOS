@@ -114,6 +114,10 @@ enum PosterCache {
         cache.object(forKey: url as NSURL)
     }
 
+    static func removeAll() {
+        cache.removeAllObjects()
+    }
+
     static func store(_ image: NSImage, for url: URL) {
         let pixels = image.representations.first.map { $0.pixelsWide * $0.pixelsHigh } ?? 0
         cache.setObject(image, forKey: url as NSURL, cost: pixels * 4)

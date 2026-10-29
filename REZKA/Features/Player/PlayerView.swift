@@ -30,11 +30,11 @@ struct PlayerView: View {
                     .allowsHitTesting(false)
             }
 
-            if controller.isLoading {
-                ProgressView()
-                    .controlSize(.large)
+            if controller.isLoading || controller.isBuffering {
+                LoadingBadge(isStarting: controller.isLoading)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .allowsHitTesting(false)
+                    .transition(.opacity)
             }
 
             if let jump = controller.seekHint {
@@ -50,6 +50,7 @@ struct PlayerView: View {
             }
         }
         .animation(.easeOut(duration: 0.2), value: controller.seekHint == nil)
+        .animation(.easeOut(duration: 0.2), value: controller.isLoading || controller.isBuffering)
         .background(.black)
         .frame(minWidth: 640, minHeight: 360)
         .navigationTitle(controller.request.title)
@@ -176,6 +177,50 @@ struct PlayerView: View {
             .help("Субтитры")
             .accessibilityLabel("Субтитры")
         }
+    }
+}
+
+/// Shown while the video waits for data: before it starts, and after a jump to a part not loaded yet.
+private struct LoadingBadge: View {
+    let isStarting: Bool
+
+    var body: some View {
+        VStack(spacing: 12) {
+            SpinningRing()
+                .padding(.bottom, 4)
+            Text(isStarting ? "Загружаем видео…" : "Загружается…")
+                .font(.title3.weight(.semibold))
+            Text("Подождите, видео скоро загрузится")
+                .font(.callout)
+                .foregroundStyle(.white.opacity(0.7))
+        }
+        .foregroundStyle(.white)
+        .padding(.horizontal, 28)
+        .padding(.vertical, 20)
+        .background(.black.opacity(0.6), in: RoundedRectangle(cornerRadius: 16))
+        .environment(\.colorScheme, .dark)
+    }
+}
+
+/// An arc running round a faint ring, as web players show while loading.
+private struct SpinningRing: View {
+    /// Seconds per turn.
+    private let period = 0.9
+
+    var body: some View {
+        TimelineView(.animation) { context in
+            let turn = context.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: period) / period
+            ZStack {
+                Circle()
+                    .stroke(.white.opacity(0.15), lineWidth: 4)
+                Circle()
+                    .trim(from: 0, to: 0.3)
+                    .stroke(.white, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                    .rotationEffect(.degrees(turn * 360))
+            }
+            .frame(width: 40, height: 40)
+        }
+        .accessibilityHidden(true)
     }
 }
 
