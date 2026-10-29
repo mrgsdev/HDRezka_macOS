@@ -63,7 +63,7 @@ final class PlayerController {
         guard let seasonId = request.seasonId, let episodeId = request.episodeId else { return nil }
         let season = request.seasons.first { $0.id == seasonId }
         let episode = season?.episodes.first { $0.id == episodeId }
-        return [season?.title ?? "Сезон \(seasonId)", episode?.title ?? "Серия \(episodeId)", request.translator.name].joined(separator: " · ")
+        return [season?.title ?? String(localized: "Сезон \(seasonId)"), episode?.title ?? String(localized: "Серия \(episodeId)"), request.translator.name].joined(separator: " · ")
     }
 
     var subtitleLine: String {
@@ -206,7 +206,7 @@ final class PlayerController {
     }
 
     static func speedLabel(_ rate: Float) -> String {
-        rate == 1 ? "Обычная" : rate.formatted(.number.locale(Locale(identifier: "ru_RU"))) + "×"
+        rate == 1 ? String(localized: "Обычная") : rate.formatted(.number.locale(AppLanguage.locale)) + "×"
     }
 
     private func restoreSubtitle() {

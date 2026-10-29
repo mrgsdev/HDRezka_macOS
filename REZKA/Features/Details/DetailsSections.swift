@@ -2,7 +2,7 @@ import SwiftUI
 
 /// A section title in the details page, aligned with the header.
 private struct SectionTitle: View {
-    let text: String
+    let text: LocalizedStringKey
 
     var body: some View {
         Text(text)
@@ -66,7 +66,6 @@ private struct DubPopularityTable: View {
     let current: Translator?
     let onSelect: (Translator) -> Void
 
-    private static let russian = Locale(identifier: "ru_RU")
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -103,7 +102,7 @@ private struct DubPopularityTable: View {
                 }
                 Spacer(minLength: 12)
                 // "42,59%" as on the site; the Russian percent format would put a space before the sign.
-                Text(entry.percent.formatted(.number.precision(.fractionLength(0...2)).locale(Self.russian)) + "%")
+                Text(entry.percent.formatted(.number.precision(.fractionLength(0...2)).locale(AppLanguage.locale)) + "%")
                     .fontWeight(.semibold)
                     .monospacedDigit()
             }
@@ -138,7 +137,6 @@ struct SiteRatingView: View {
 
     @State private var hovered: Int?
 
-    private static let russian = Locale(identifier: "ru_RU")
 
     var body: some View {
         // A narrow window drops the idle hint first, then moves the votes under the stars;
@@ -171,12 +169,12 @@ struct SiteRatingView: View {
     }
 
     private var average: some View {
-        Text(rating.value.formatted(.number.precision(.fractionLength(2)).locale(Self.russian)))
+        Text(rating.value.formatted(.number.precision(.fractionLength(2)).locale(AppLanguage.locale)))
             .font(.headline.monospacedDigit())
     }
 
     private var votes: some View {
-        Text("\(rating.votes.formatted(.number.locale(Self.russian))) \(Self.votesWord(rating.votes))")
+        Text("\(rating.votes.formatted(.number.locale(AppLanguage.locale))) \(Self.votesWord(rating.votes))")
             .foregroundStyle(.secondary)
     }
 
@@ -237,7 +235,7 @@ struct SiteRatingView: View {
             }
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Рейтинг на сайте")
-            .accessibilityValue("\(rating.value.formatted(.number.precision(.fractionLength(2)).locale(Self.russian))) из 10")
+            .accessibilityValue("\(rating.value.formatted(.number.precision(.fractionLength(2)).locale(AppLanguage.locale))) из 10")
             .accessibilityIdentifier("siteRating")
     }
 
@@ -246,7 +244,9 @@ struct SiteRatingView: View {
         CGFloat(hovered.map(Double.init) ?? min(max(rating.value, 0), 10)) / 10
     }
 
+    /// Russian has three plural forms and English two; the number is formatted separately, with grouping.
     private static func votesWord(_ count: Int) -> String {
+        guard AppLanguage.isRussian else { return count == 1 ? "vote" : "votes" }
         let tens = count % 100, ones = count % 10
         if (11...14).contains(tens) { return "голосов" }
         switch ones {
@@ -418,7 +418,7 @@ private struct ScheduleRow: View {
                 .font(.headline)
                 .frame(width: 90, alignment: .leading)
             VStack(alignment: .leading, spacing: 2) {
-                Text(episode.title.isEmpty ? "Без названия" : episode.title)
+                Text(episode.title.isEmpty ? String(localized: "Без названия") : episode.title)
                     .lineLimit(1)
                 if let original = episode.originalTitle {
                     Text(original)
@@ -630,7 +630,7 @@ private struct CommentCard: View {
     private var text: AttributedString {
         var result = AttributedString()
         for part in comment.parts {
-            var piece = AttributedString(part.isSpoiler && !isRevealed ? "[спойлер]" : part.text)
+            var piece = AttributedString(part.isSpoiler && !isRevealed ? String(localized: "[спойлер]") : part.text)
             if part.isSpoiler { piece.foregroundColor = .orange }
             result += piece
         }

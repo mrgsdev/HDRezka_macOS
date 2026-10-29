@@ -172,12 +172,12 @@ struct PosterImage: View {
 
 /// An entry of a poster's context menu, e.g. "remove from this list".
 struct CardAction: Identifiable {
-    let title: String
+    let title: LocalizedStringKey
     let systemImage: String
     var isDestructive = false
     let perform: () -> Void
 
-    var id: String { title }
+    let id = UUID()
 }
 
 /// Lifts and outlines a card under the mouse pointer, the Mac counterpart of tvOS focus.
@@ -387,7 +387,8 @@ struct MediaRow<Title: View>: View {
 
 extension MediaRow where Title == Text {
     init(title: String, items: [MediaItem], actions: @escaping (MediaItem) -> [CardAction] = { _ in [] }) {
-        self.init(items: items, actions: actions) { Text(title) }
+        // Shelf titles such as "Новинки" are app text kept as plain strings; this finds their translation.
+        self.init(items: items, actions: actions) { Text(LocalizedStringKey(title)) }
     }
 }
 
@@ -434,7 +435,7 @@ struct ErrorStateView: View {
 }
 
 struct EmptyStateView: View {
-    let text: String
+    let text: LocalizedStringKey
     var icon = "tray"
 
     var body: some View {
@@ -452,7 +453,7 @@ struct EmptyStateView: View {
 /// Footer for paged grids: spinner, error with retry, or empty state.
 struct PagedFooter: View {
     let loader: PagedLoader
-    var emptyText = "Ничего не найдено"
+    var emptyText: LocalizedStringKey = "Ничего не найдено"
 
     var body: some View {
         Group {

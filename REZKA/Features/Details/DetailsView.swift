@@ -217,7 +217,7 @@ struct DetailsView: View {
 
     /// A labelled row of the site's info table, "Входит в списки" or "Из серии", whose chips wrap
     /// onto new lines: all of them in view, nothing to scroll sideways.
-    private func listRow(_ title: String, @ViewBuilder chips: () -> some View) -> some View {
+    private func listRow(_ title: LocalizedStringKey, @ViewBuilder chips: () -> some View) -> some View {
         HStack(alignment: .top, spacing: 14) {
             Text(title)
                 .font(.callout.weight(.semibold))
@@ -252,7 +252,7 @@ struct DetailsView: View {
             .contentShape(Capsule())
         }
         .buttonStyle(.plain)
-        .help(place.map { "\(listing.title): \($0) место" } ?? listing.title)
+        .help(place.map { String(localized: "\(listing.title): \($0) место") } ?? listing.title)
     }
 
     // MARK: Actions
@@ -321,7 +321,7 @@ struct DetailsView: View {
                         ForEach(details.translators) { translatorButton($0) }
                     }
                 } label: {
-                    Label(model.translator?.name ?? "Озвучка", systemImage: model.translator?.isPremium == true ? "crown.fill" : "waveform")
+                    Label(model.translator?.name ?? String(localized: "Озвучка"), systemImage: model.translator?.isPremium == true ? "crown.fill" : "waveform")
                 }
                 .fixedSize()
                 .help("Озвучка")

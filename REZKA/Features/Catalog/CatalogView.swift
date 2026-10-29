@@ -9,7 +9,7 @@ struct CatalogView: View {
         var title: String {
             switch self {
             case let .filter(filter): filter.title
-            case .best: "Лучшие"
+            case .best: String(localized: "Лучшие")
             }
         }
     }
@@ -88,14 +88,14 @@ struct CatalogView: View {
             Button {
                 genre = nil
             } label: {
-                choice("Все жанры", isOn: genre == nil)
+                choice(Text("Все жанры"), isOn: genre == nil)
             }
             Section("Жанры") {
                 ForEach(menu.genres) { item in
                     Button {
                         genre = item
                     } label: {
-                        choice(item.title, isOn: genre == item)
+                        choice(Text(item.title), isOn: genre == item)
                     }
                 }
             }
@@ -105,13 +105,17 @@ struct CatalogView: View {
                         Button {
                             genre = item
                         } label: {
-                            choice(item.title, isOn: genre == item)
+                            choice(Text(item.title), isOn: genre == item)
                         }
                     }
                 }
             }
         } label: {
-            Label(genre?.title ?? "Все жанры", systemImage: "line.3.horizontal.decrease.circle")
+            Label {
+                if let genre { Text(genre.title) } else { Text("Все жанры") }
+            } icon: {
+                Image(systemName: "line.3.horizontal.decrease.circle")
+            }
                 .labelStyle(.titleAndIcon)
         }
         // A toolbar shows only icons by default; the chosen genre has to be readable.
@@ -124,17 +128,21 @@ struct CatalogView: View {
             Button {
                 bestYear = nil
             } label: {
-                choice("За всё время", isOn: bestYear == nil)
+                choice(Text("За всё время"), isOn: bestYear == nil)
             }
             ForEach(Self.years, id: \.self) { year in
                 Button {
                     bestYear = year
                 } label: {
-                    choice(String(year), isOn: bestYear == year)
+                    choice(Text(verbatim: String(year)), isOn: bestYear == year)
                 }
             }
         } label: {
-            Label(bestYear.map(String.init) ?? "За всё время", systemImage: "calendar")
+            Label {
+                if let bestYear { Text(verbatim: String(bestYear)) } else { Text("За всё время") }
+            } icon: {
+                Image(systemName: "calendar")
+            }
                 .labelStyle(.titleAndIcon)
         }
         .fixedSize()
@@ -142,11 +150,12 @@ struct CatalogView: View {
     }
 
     @ViewBuilder
-    private func choice(_ title: String, isOn: Bool) -> some View {
+    /// A menu item: app text like "Все жанры" comes localized, a genre or a year as the site has it.
+    private func choice(_ title: Text, isOn: Bool) -> some View {
         if isOn {
-            Label(title, systemImage: "checkmark")
+            Label { title } icon: { Image(systemName: "checkmark") }
         } else {
-            Text(title)
+            title
         }
     }
 }

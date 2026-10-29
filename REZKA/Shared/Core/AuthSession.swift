@@ -25,7 +25,7 @@ final class AuthSession {
     func login(email: String, password: String) async throws {
         try await RezkaClient.shared.login(email: email, password: password)
         isLoggedIn = RezkaClient.shared.isLoggedIn
-        if !isLoggedIn { throw RezkaError.site("Сайт не выдал сессию. Попробуйте ещё раз или смените зеркало.") }
+        if !isLoggedIn { throw RezkaError.site(String(localized: "Сайт не выдал сессию. Попробуйте ещё раз или смените зеркало.")) }
         // It may be another account than the last one.
         updateUserName(nil)
     }

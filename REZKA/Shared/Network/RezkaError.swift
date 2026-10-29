@@ -10,15 +10,15 @@ enum RezkaError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .loginRequired:
-            "Нужно войти в аккаунт HDrezka."
+            String(localized: "Нужно войти в аккаунт HDrezka.")
         case let .badStatus(code):
-            "Сервер ответил ошибкой \(code). Попробуйте позже или смените зеркало в настройках."
+            String(localized: "Сервер ответил ошибкой \(code). Попробуйте позже или смените зеркало в настройках.")
         case let .parsing(what):
-            "Не удалось разобрать ответ сайта (\(what)). Возможно, изменилась вёрстка."
+            String(localized: "Не удалось разобрать ответ сайта (\(what)). Возможно, изменилась вёрстка.")
         case let .site(message):
             message
         case .noStreams:
-            "Для этой озвучки нет доступных видео. Попробуйте другую озвучку."
+            String(localized: "Для этой озвучки нет доступных видео. Попробуйте другую озвучку.")
         }
     }
 }

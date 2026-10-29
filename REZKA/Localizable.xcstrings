@@ -1,0 +1,2765 @@
+{
+  "sourceLanguage": "ru",
+  "strings": {
+    " и ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " and "
+          }
+        }
+      }
+    },
+    "%@ %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ %2$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "%@ Сессия перенесётся на новое зеркало.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ Your session will move to the new mirror."
+          }
+        }
+      }
+    },
+    "%@ из 10": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ of 10"
+          }
+        }
+      }
+    },
+    "%@ сезон": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Season %@"
+          }
+        }
+      }
+    },
+    "%@ серия": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Episode %@"
+          }
+        }
+      }
+    },
+    "%@: %lld место": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@: #%2$lld"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@: %2$lld место"
+          }
+        }
+      }
+    },
+    "%lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld"
+          }
+        }
+      }
+    },
+    "%lld место": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "#%lld"
+          }
+        }
+      }
+    },
+    "%lld с": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld s"
+          }
+        }
+      }
+    },
+    "(%@)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(%@)"
+          }
+        }
+      }
+    },
+    ", ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": ", "
+          }
+        }
+      }
+    },
+    "Email": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Email"
+          }
+        }
+      }
+    },
+    "GitHub ответил ошибкой %lld.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub returned error %lld."
+          }
+        }
+      }
+    },
+    "JSON %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JSON %@"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "REZKA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REZKA"
+          }
+        }
+      }
+    },
+    "REZKA %@ — самая новая версия.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REZKA %@ is the latest version."
+          }
+        }
+      }
+    },
+    "[спойлер]": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "[spoiler]"
+          }
+        }
+      }
+    },
+    "github.com/mrgsdev": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "github.com/mrgsdev"
+          }
+        }
+      }
+    },
+    "https://rezka.fi": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "https://rezka.fi"
+          }
+        }
+      }
+    },
+    "id новой папки": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "new folder id"
+          }
+        }
+      }
+    },
+    "Адрес": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Address"
+          }
+        }
+      }
+    },
+    "Аккаунт": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Account"
+          }
+        }
+      }
+    },
+    "Аниме": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anime"
+          }
+        }
+      }
+    },
+    "Анонсы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Announcements"
+          }
+        }
+      }
+    },
+    "Без названия": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Untitled"
+          }
+        }
+      }
+    },
+    "В архиве версия %@ — она не новее установленной.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The archive has version %@, which is not newer than the installed one."
+          }
+        }
+      }
+    },
+    "В архиве обновления другое приложение.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The update archive contains a different app."
+          }
+        }
+      }
+    },
+    "В архиве обновления нет приложения.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The update archive contains no app."
+          }
+        }
+      }
+    },
+    "В закладках": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bookmarked"
+          }
+        }
+      }
+    },
+    "В закладки": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bookmark"
+          }
+        }
+      }
+    },
+    "В ожидании": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upcoming"
+          }
+        }
+      }
+    },
+    "В ролях": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cast"
+          }
+        }
+      }
+    },
+    "В ролях: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cast: %@"
+          }
+        }
+      }
+    },
+    "В этой папке пока пусто. Добавляйте сюда фильмы и сериалы кнопкой «В закладки» в их карточке.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This folder is empty. Add movies and series to it with the Bookmark button on their page."
+          }
+        }
+      }
+    },
+    "Ваша оценка: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your rating: %lld"
+          }
+        }
+      }
+    },
+    "Введите название фильма, сериала или мультфильма": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter the title of a movie, series or cartoon"
+          }
+        }
+      }
+    },
+    "Версия": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version"
+          }
+        }
+      }
+    },
+    "Версия %@ — у вас %@. Хотите обновить приложение?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %1$@ is out — you have %2$@. Would you like to update?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Версия %1$@ — у вас %2$@. Хотите обновить приложение?"
+          }
+        }
+      }
+    },
+    "Во весь экран": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full Screen"
+          }
+        }
+      }
+    },
+    "Войдите в свой аккаунт HDrezka, чтобы смотреть фильмы и сериалы на Mac.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in to your HDrezka account to watch movies and series on your Mac."
+          }
+        }
+      }
+    },
+    "Войти": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign In"
+          }
+        }
+      }
+    },
+    "Воспроизведение": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Playback"
+          }
+        }
+      }
+    },
+    "Все жанры": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Genres"
+          }
+        }
+      }
+    },
+    "Все фильмы и сериалы: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All movies and series: %@"
+          }
+        }
+      }
+    },
+    "Все части франшизы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Franchise Parts"
+          }
+        }
+      }
+    },
+    "Вход выполнен": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signed in"
+          }
+        }
+      }
+    },
+    "Входим…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signing In…"
+          }
+        }
+      }
+    },
+    "Входит в списки": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In Lists"
+          }
+        }
+      }
+    },
+    "Вы уже оценили": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You've already rated"
+          }
+        }
+      }
+    },
+    "Выбрать": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose"
+          }
+        }
+      }
+    },
+    "Выйти": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign Out"
+          }
+        }
+      }
+    },
+    "Выйти из REZKA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quit REZKA"
+          }
+        }
+      }
+    },
+    "Выйти из аккаунта": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign Out"
+          }
+        }
+      }
+    },
+    "Выйти из аккаунта?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign out?"
+          }
+        }
+      }
+    },
+    "Выключены": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off"
+          }
+        }
+      }
+    },
+    "Вышла": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Released"
+          }
+        }
+      }
+    },
+    "Главная": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home"
+          }
+        }
+      }
+    },
+    "Главная и карточка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Home and Title Page"
+          }
+        }
+      }
+    },
+    "Главное окно": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Main Window"
+          }
+        }
+      }
+    },
+    "Главное окно, в том числе после закрытия": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Main window, even after closing it"
+          }
+        }
+      }
+    },
+    "Год": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Year"
+          }
+        }
+      }
+    },
+    "Горячие клавиши": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyboard Shortcuts"
+          }
+        }
+      }
+    },
+    "Готово": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "График выхода серий": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Episode Schedule"
+          }
+        }
+      }
+    },
+    "Дальше": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
+          }
+        }
+      }
+    },
+    "Для этой озвучки нет доступных видео. Попробуйте другую озвучку.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No videos are available for this dub. Try another dub."
+          }
+        }
+      }
+    },
+    "Доступна новая версия REZKA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A new version of REZKA is available"
+          }
+        }
+      }
+    },
+    "Есть сезон %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "With Season %@"
+          }
+        }
+      }
+    },
+    "Жанр или студия": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genre or Studio"
+          }
+        }
+      }
+    },
+    "Жанры": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genres"
+          }
+        }
+      }
+    },
+    "За всё время": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Time"
+          }
+        }
+      }
+    },
+    "Загружаем и устанавливаем. REZKA перезапустится сама.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Downloading and installing. REZKA will relaunch on its own."
+          }
+        }
+      }
+    },
+    "Закладки": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bookmarks"
+          }
+        }
+      }
+    },
+    "Закладки в ней (%lld) тоже удалятся.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Its bookmarks (%lld) will be deleted too."
+          }
+        }
+      }
+    },
+    "Закладок пока нет. Создайте папку и добавляйте в неё фильмы и сериалы кнопкой «В закладки» в их карточке.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No bookmarks yet. Create a folder and add movies and series to it with the Bookmark button on their page."
+          }
+        }
+      }
+    },
+    "Закрыть": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close"
+          }
+        }
+      }
+    },
+    "Закрыть окно": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close window"
+          }
+        }
+      }
+    },
+    "Закрыть плеер, позиция сохранится": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Close the player, keeping your position"
+          }
+        }
+      }
+    },
+    "Здесь пока ничего нет": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing here yet"
+          }
+        }
+      }
+    },
+    "Здесь пока ничего нет — попробуйте другую сортировку": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing here yet — try another sort order"
+          }
+        }
+      }
+    },
+    "Зеркало сайта": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Site Mirror"
+          }
+        }
+      }
+    },
+    "Из серии": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In Collections"
+          }
+        }
+      }
+    },
+    "Ищем новую версию на GitHub…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Looking for a new version on GitHub…"
+          }
+        }
+      }
+    },
+    "К релизу не приложен архив с приложением.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The release has no app archive attached."
+          }
+        }
+      }
+    },
+    "Как в системе": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Same as System"
+          }
+        }
+      }
+    },
+    "Каталог": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Catalog"
+          }
+        }
+      }
+    },
+    "Качество": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quality"
+          }
+        }
+      }
+    },
+    "Качество по умолчанию": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default Quality"
+          }
+        }
+      }
+    },
+    "Лучшее": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Best"
+          }
+        }
+      }
+    },
+    "Лучшие": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Best"
+          }
+        }
+      }
+    },
+    "Моё": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Library"
+          }
+        }
+      }
+    },
+    "Мультфильм": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cartoon"
+          }
+        }
+      }
+    },
+    "Мультфильмы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cartoons"
+          }
+        }
+      }
+    },
+    "На сайте пока нет фильмов и сериалов с этим человеком.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The site has no movies or series with this person yet."
+          }
+        }
+      }
+    },
+    "Наведите на звёзды, чтобы оценить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hover over the stars to rate"
+          }
+        }
+      }
+    },
+    "Назад": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back"
+          }
+        }
+      }
+    },
+    "Название": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Title"
+          }
+        }
+      }
+    },
+    "Найти рабочее зеркало": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find a Working Mirror"
+          }
+        }
+      }
+    },
+    "Напишите на mirror@hdrezka.org, чтобы узнать актуальное зеркало, и введите его сюда.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Email mirror@hdrezka.org to get the current mirror, and enter it here."
+          }
+        }
+      }
+    },
+    "Настройки": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings"
+          }
+        }
+      }
+    },
+    "Не выполнен вход": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not signed in"
+          }
+        }
+      }
+    },
+    "Не можешь выбрать озвучку?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Can't choose a dub?"
+          }
+        }
+      }
+    },
+    "Не получилось": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Something Went Wrong"
+          }
+        }
+      }
+    },
+    "Не просмотрено": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not Watched"
+          }
+        }
+      }
+    },
+    "Не удалось войти. Проверьте email и пароль.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't sign in. Check your email and password."
+          }
+        }
+      }
+    },
+    "Не удалось воспроизвести": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't Play"
+          }
+        }
+      }
+    },
+    "Не удалось добавить в закладки.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't add the bookmark."
+          }
+        }
+      }
+    },
+    "Не удалось загрузить серии.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't load the episodes."
+          }
+        }
+      }
+    },
+    "Не удалось изменить отметку «просмотрено».": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't change the watched mark."
+          }
+        }
+      }
+    },
+    "Не удалось переименовать папку.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't rename the folder."
+          }
+        }
+      }
+    },
+    "Не удалось перенести закладку.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't move the bookmark."
+          }
+        }
+      }
+    },
+    "Не удалось получить ссылку на видео.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't get the video link."
+          }
+        }
+      }
+    },
+    "Не удалось проверить обновления: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't check for updates: %@"
+          }
+        }
+      }
+    },
+    "Не удалось разобрать ответ сайта (%@). Возможно, изменилась вёрстка.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't read the site's response (%@). The page layout may have changed."
+          }
+        }
+      }
+    },
+    "Не удалось распаковать архив обновления.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't unpack the update archive."
+          }
+        }
+      }
+    },
+    "Не удалось создать папку.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't create the folder."
+          }
+        }
+      }
+    },
+    "Не удалось убрать": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't Remove"
+          }
+        }
+      }
+    },
+    "Не удалось убрать из «Продолжить просмотр».": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't remove it from Continue Watching."
+          }
+        }
+      }
+    },
+    "Не удалось убрать из закладок.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't remove the bookmark."
+          }
+        }
+      }
+    },
+    "Не удалось удалить папку.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't delete the folder."
+          }
+        }
+      }
+    },
+    "Некорректный адрес": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invalid address"
+          }
+        }
+      }
+    },
+    "Некорректный адрес зеркала": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invalid mirror address"
+          }
+        }
+      }
+    },
+    "Неофициальный клиент HDrezka для Mac\nЗеркало: %@\nРазработчик: github.com/mrgsdev": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unofficial HDrezka client for Mac\nMirror: %@\nDeveloper: github.com/mrgsdev"
+          }
+        }
+      }
+    },
+    "Неофициальный клиент HDrezka для Mac. Проект не связан с HDrezka.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unofficial HDrezka client for Mac. The project is not affiliated with HDrezka."
+          }
+        }
+      }
+    },
+    "Нет прав на запись в %@. Скачайте новую версию со страницы релиза.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No permission to write to %@. Download the new version from the release page."
+          }
+        }
+      }
+    },
+    "Нет сезона %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Without Season %@"
+          }
+        }
+      }
+    },
+    "Ник": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nickname"
+          }
+        }
+      }
+    },
+    "Ничего не найдено": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing Found"
+          }
+        }
+      }
+    },
+    "Новая папка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Folder"
+          }
+        }
+      }
+    },
+    "Новая папка закладок": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Bookmark Folder"
+          }
+        }
+      }
+    },
+    "Новая папка…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Folder…"
+          }
+        }
+      }
+    },
+    "Новинки": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Arrivals"
+          }
+        }
+      }
+    },
+    "Новые ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New "
+          }
+        }
+      }
+    },
+    "Нужно войти в аккаунт HDrezka.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You need to sign in to your HDrezka account."
+          }
+        }
+      }
+    },
+    "О приложении": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About"
+          }
+        }
+      }
+    },
+    "О программе REZKA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About REZKA"
+          }
+        }
+      }
+    },
+    "Обновить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Update"
+          }
+        }
+      }
+    },
+    "Обновить (⌘R)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh (⌘R)"
+          }
+        }
+      }
+    },
+    "Обновить главную": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refresh Home"
+          }
+        }
+      }
+    },
+    "Обновление REZKA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REZKA Update"
+          }
+        }
+      }
+    },
+    "Обновление до версии %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updating to version %@"
+          }
+        }
+      }
+    },
+    "Обновление установлено, но перезапустить REZKA не получилось. Откройте приложение снова.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The update is installed, but REZKA couldn't relaunch. Open the app again."
+          }
+        }
+      }
+    },
+    "Обычная": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Normal"
+          }
+        }
+      }
+    },
+    "Обычный аккаунт": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regular account"
+          }
+        }
+      }
+    },
+    "Ожидается": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upcoming"
+          }
+        }
+      }
+    },
+    "Озвучка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dub"
+          }
+        }
+      }
+    },
+    "Окна": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Windows"
+          }
+        }
+      }
+    },
+    "Описание изменений не указано.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No release notes."
+          }
+        }
+      }
+    },
+    "Отзывы (%lld)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reviews (%lld)"
+          }
+        }
+      }
+    },
+    "Открыть страницу релиза": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Release Page"
+          }
+        }
+      }
+    },
+    "Отмена": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "Отметить просмотренной": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark as Watched"
+          }
+        }
+      }
+    },
+    "Отметить эпизод как просмотренный": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark the episode as watched"
+          }
+        }
+      }
+    },
+    "Оформление": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appearance"
+          }
+        }
+      }
+    },
+    "Оценить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rate"
+          }
+        }
+      }
+    },
+    "Оценить на %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rate %lld"
+          }
+        }
+      }
+    },
+    "Оценить на %lld из 10?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rate it %lld out of 10?"
+          }
+        }
+      }
+    },
+    "Папка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Folder"
+          }
+        }
+      }
+    },
+    "Пароль": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Password"
+          }
+        }
+      }
+    },
+    "Пауза и воспроизведение": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pause and play"
+          }
+        }
+      }
+    },
+    "Перезапустить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Relaunch"
+          }
+        }
+      }
+    },
+    "Переименовать": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename"
+          }
+        }
+      }
+    },
+    "Переименовать или удалить папку «%@»": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename or delete the folder “%@”"
+          }
+        }
+      }
+    },
+    "Переименовать папку": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rename Folder"
+          }
+        }
+      }
+    },
+    "Переместите REZKA в папку «Программы», запустите её оттуда и обновите снова.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move REZKA to the Applications folder, open it from there and update again."
+          }
+        }
+      }
+    },
+    "Перемотка на 10 секунд назад или вперёд": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip 10 seconds back or forward"
+          }
+        }
+      }
+    },
+    "Перенести в «%@»": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move to “%@”"
+          }
+        }
+      }
+    },
+    "Плеер": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Player"
+          }
+        }
+      }
+    },
+    "По запросу «%@» ничего не найдено": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing found for “%@”"
+          }
+        }
+      }
+    },
+    "По умолчанию": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default"
+          }
+        }
+      }
+    },
+    "Повторить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try Again"
+          }
+        }
+      }
+    },
+    "Подборки": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collections"
+          }
+        }
+      }
+    },
+    "Подписка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subscription"
+          }
+        }
+      }
+    },
+    "Подпись обновления не совпадает с подписью REZKA. Обновление не установлено.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The update's signature doesn't match REZKA's. The update wasn't installed."
+          }
+        }
+      }
+    },
+    "Позже": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Later"
+          }
+        }
+      }
+    },
+    "Поиск": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search"
+          }
+        }
+      }
+    },
+    "Показать все (%lld)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show All (%lld)"
+          }
+        }
+      }
+    },
+    "Показать ещё отзывы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show More Reviews"
+          }
+        }
+      }
+    },
+    "Показать спойлер": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Spoiler"
+          }
+        }
+      }
+    },
+    "Популярность озвучек": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dub Popularity"
+          }
+        }
+      }
+    },
+    "Популярные": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Popular"
+          }
+        }
+      }
+    },
+    "Популярные сериалы": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Popular Series"
+          }
+        }
+      }
+    },
+    "Популярные фильмы": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Popular Movies"
+          }
+        }
+      }
+    },
+    "Последние": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Latest"
+          }
+        }
+      }
+    },
+    "Применить зеркало": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apply Mirror"
+          }
+        }
+      }
+    },
+    "Пробел": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Space"
+          }
+        }
+      }
+    },
+    "Проверить обновления…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check for Updates…"
+          }
+        }
+      }
+    },
+    "Проверка обновлений": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking for Updates"
+          }
+        }
+      }
+    },
+    "Продолжить просмотр": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue Watching"
+          }
+        }
+      }
+    },
+    "Продолжить с %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume from %@"
+          }
+        }
+      }
+    },
+    "Продолжить: %@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume: %1$@, %2$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Продолжить: %1$@, %2$@"
+          }
+        }
+      }
+    },
+    "Просмотрено": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watched"
+          }
+        }
+      }
+    },
+    "Рабочих зеркал не нашли. %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No working mirrors found. %@"
+          }
+        }
+      }
+    },
+    "Разделы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sections"
+          }
+        }
+      }
+    },
+    "Разработчик": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Developer"
+          }
+        }
+      }
+    },
+    "Режиссёр": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Director"
+          }
+        }
+      }
+    },
+    "Рейтинг на сайте": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Site Rating"
+          }
+        }
+      }
+    },
+    "Сайт не выдал сессию. Попробуйте ещё раз или смените зеркало.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The site didn't start a session. Try again or switch the mirror."
+          }
+        }
+      }
+    },
+    "Сайт не принял оценку. Возможно, вы уже оценивали этот тайтл.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The site didn't accept the rating. You may have rated this title already."
+          }
+        }
+      }
+    },
+    "Сайт принимает одну оценку от аккаунта — изменить её потом не получится.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The site takes one rating per account — you won't be able to change it later."
+          }
+        }
+      }
+    },
+    "Свернуть": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Less"
+          }
+        }
+      }
+    },
+    "Свернуть окно": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minimize window"
+          }
+        }
+      }
+    },
+    "Светлая": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Light"
+          }
+        }
+      }
+    },
+    "Сезон": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Season"
+          }
+        }
+      }
+    },
+    "Сезон %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Season %@"
+          }
+        }
+      }
+    },
+    "Сейчас": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current"
+          }
+        }
+      }
+    },
+    "Сейчас смотрят": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watching Now"
+          }
+        }
+      }
+    },
+    "Сервер ответил ошибкой %lld. Попробуйте позже или смените зеркало в настройках.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server returned error %lld. Try later or switch the mirror in Settings."
+          }
+        }
+      }
+    },
+    "Сериал": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Series"
+          }
+        }
+      }
+    },
+    "Сериалы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Series"
+          }
+        }
+      }
+    },
+    "Серии": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Episodes"
+          }
+        }
+      }
+    },
+    "Серия %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Episode %@"
+          }
+        }
+      }
+    },
+    "Системная": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "System"
+          }
+        }
+      }
+    },
+    "Скорость": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speed"
+          }
+        }
+      }
+    },
+    "Скрыть спойлер": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide Spoiler"
+          }
+        }
+      }
+    },
+    "Следующая серия": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next Episode"
+          }
+        }
+      }
+    },
+    "Следующая серия (⇧⌘N)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next Episode (⇧⌘N)"
+          }
+        }
+      }
+    },
+    "Смотреть": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch"
+          }
+        }
+      }
+    },
+    "Смотреть в этой озвучке": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch in this dub"
+          }
+        }
+      }
+    },
+    "Смотреть или продолжить в карточке": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch or resume on the title page"
+          }
+        }
+      }
+    },
+    "Смотреть: %@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch: %1$@, %2$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Смотреть: %1$@, %2$@"
+          }
+        }
+      }
+    },
+    "Смотрите также": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "See Also"
+          }
+        }
+      }
+    },
+    "Сначала": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From the Start"
+          }
+        }
+      }
+    },
+    "Снять отметку «просмотрено»": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark as Unwatched"
+          }
+        }
+      }
+    },
+    "Создать": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create"
+          }
+        }
+      }
+    },
+    "Создать и добавить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create and Add"
+          }
+        }
+      }
+    },
+    "Создать папку": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create Folder"
+          }
+        }
+      }
+    },
+    "Сортировка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sort"
+          }
+        }
+      }
+    },
+    "Сохранено: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved: %@"
+          }
+        }
+      }
+    },
+    "Сохранить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save"
+          }
+        }
+      }
+    },
+    "Статус": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status"
+          }
+        }
+      }
+    },
+    "Студии": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Studios"
+          }
+        }
+      }
+    },
+    "Субтитры": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subtitles"
+          }
+        }
+      }
+    },
+    "Текущее": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current"
+          }
+        }
+      }
+    },
+    "Текущее зеркало не отвечает — выберите одно из найденных.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The current mirror isn't responding — choose one of those found."
+          }
+        }
+      }
+    },
+    "Текущее зеркало работает. Можно выбрать и другое из найденных.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The current mirror works. You can also choose another one found."
+          }
+        }
+      }
+    },
+    "Тема": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Theme"
+          }
+        }
+      }
+    },
+    "Только %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only %@"
+          }
+        }
+      }
+    },
+    "Тёмная": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dark"
+          }
+        }
+      }
+    },
+    "У вас последняя версия": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're up to date"
+          }
+        }
+      }
+    },
+    "Убрать из «%@»": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove from “%@”"
+          }
+        }
+      }
+    },
+    "Убрать из «Продолжить просмотр»": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove from Continue Watching"
+          }
+        }
+      }
+    },
+    "Удалить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete"
+          }
+        }
+      }
+    },
+    "Удалить папку": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete Folder"
+          }
+        }
+      }
+    },
+    "Удалить папку «%@»?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete the folder “%@”?"
+          }
+        }
+      }
+    },
+    "Удалить эпизод из просмотренных": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove the episode from watched"
+          }
+        }
+      }
+    },
+    "Фильм": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movie"
+          }
+        }
+      }
+    },
+    "Фильмография": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filmography"
+          }
+        }
+      }
+    },
+    "Фильмы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movies"
+          }
+        }
+      }
+    },
+    "Фильмы, сериалы, мультфильмы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movies, series, cartoons"
+          }
+        }
+      }
+    },
+    "Часть %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Part %@"
+          }
+        }
+      }
+    },
+    "Что нового": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What's New"
+          }
+        }
+      }
+    },
+    "Эта озвучка только для HDrezka Premium — без подписки покажут короткое превью. Выберите озвучку без короны.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This dub is HDrezka Premium only — without a subscription you get a short preview. Choose a dub without a crown."
+          }
+        }
+      }
+    },
+    "Эта справка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This help"
+          }
+        }
+      }
+    },
+    "Этой озвучки нет среди доступных для просмотра": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This dub isn't available to watch"
+          }
+        }
+      }
+    },
+    "Язык": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Language"
+          }
+        }
+      }
+    },
+    "Язык сменится после перезапуска.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The language changes after a relaunch."
+          }
+        }
+      }
+    },
+    "аниме": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "anime"
+          }
+        }
+      }
+    },
+    "все новинки": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "all new"
+          }
+        }
+      }
+    },
+    "мультфильмы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "cartoons"
+          }
+        }
+      }
+    },
+    "отзывы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "reviews"
+          }
+        }
+      }
+    },
+    "оценка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "rating"
+          }
+        }
+      }
+    },
+    "сезон %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "season %lld"
+          }
+        }
+      }
+    },
+    "сезонов: %lld": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld season"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld seasons"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "сезоны %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "seasons %@"
+          }
+        }
+      }
+    },
+    "сериалы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "series"
+          }
+        }
+      }
+    },
+    "ссылка на видео": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "video link"
+          }
+        }
+      }
+    },
+    "фильмы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "movies"
+          }
+        }
+      }
+    },
+    "•": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "•"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

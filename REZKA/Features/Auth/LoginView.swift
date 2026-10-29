@@ -79,7 +79,7 @@ struct LoginView: View {
             errorText = nil
             auth.refresh()
         } else {
-            errorText = "Некорректный адрес зеркала"
+            errorText = String(localized: "Некорректный адрес зеркала")
         }
     }
 

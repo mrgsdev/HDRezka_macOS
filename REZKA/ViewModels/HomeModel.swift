@@ -12,11 +12,11 @@ enum NewestSection: Int, CaseIterable {
 
     var word: String {
         switch self {
-        case .all: "все новинки"
-        case .films: "фильмы"
-        case .series: "сериалы"
-        case .cartoons: "мультфильмы"
-        case .anime: "аниме"
+        case .all: String(localized: "все новинки")
+        case .films: String(localized: "фильмы")
+        case .series: String(localized: "сериалы")
+        case .cartoons: String(localized: "мультфильмы")
+        case .anime: String(localized: "аниме")
         }
     }
 

@@ -88,7 +88,7 @@ enum RezkaParser {
                 path: item.hasClass("current") ? nil : href.flatMap { sitePath($0, base: base) }
             )
         }
-        let title = try doc.select(".b-post__franchise_link_title").first()?.text().nonEmpty ?? "Все части франшизы"
+        let title = try doc.select(".b-post__franchise_link_title").first()?.text().nonEmpty ?? String(localized: "Все части франшизы")
         return Franchise(title: title, parts: parts)
     }
 
@@ -103,7 +103,9 @@ enum RezkaParser {
                 let numbers = label.matches(of: /\d+/).map { String($0.output) }
                 return ScheduleEpisode(
                     id: try number.attr("data-id").nonEmpty ?? label,
-                    label: label.range(of: "сезон ").map { String(label[$0.upperBound...]) } ?? label,
+                    label: numbers.count == 2
+                        ? String(localized: "\(numbers[1]) серия")
+                        : label.range(of: "сезон ").map { String(label[$0.upperBound...]) } ?? label,
                     seasonNumber: numbers.count == 2 ? numbers[0] : nil,
                     episodeNumber: numbers.count == 2 ? numbers[1] : nil,
                     title: try names?.select("b").first()?.text() ?? "",
@@ -116,8 +118,7 @@ enum RezkaParser {
             guard !episodes.isEmpty else { return nil }
             // "Игры Биста - даты выхода серий 2 сезона" → "2 сезон", like the older blocks are titled.
             let title = try block.select(".b-post__schedule_block_title .title").first()?.text() ?? ""
-            let season = title.range(of: #"(\d+) сезона$"#, options: .regularExpression)
-                .map { title[$0].replacingOccurrences(of: "сезона", with: "сезон") } ?? title
+            let season = title.firstMatch(of: /(\d+) сезона?$/).map { String(localized: "\(String($0.1)) сезон") } ?? title
             return ScheduleSeason(title: season, episodes: episodes)
         }
     }
@@ -171,7 +172,7 @@ enum RezkaParser {
             let items = try items(in: section, base: base)
             guard !items.isEmpty else { return nil }
             return PersonDetails.Career(
-                title: try section.select("h2").first()?.text().nonEmpty ?? "Фильмография",
+                title: try section.select("h2").first()?.text().nonEmpty ?? String(localized: "Фильмография"),
                 stats: try section.select(".b-person__career_stats").first()?.text().nonEmpty,
                 items: items
             )
@@ -264,7 +265,7 @@ enum RezkaParser {
             ?? (seriesArgs ?? movieArgs).flatMap { $0.count > 1 ? $0[1] : nil }
 
         if translators.isEmpty, let id = activeTranslatorId {
-            let name = info.first { $0.title.hasPrefix("В переводе") }?.value ?? "По умолчанию"
+            let name = info.first { $0.title.hasPrefix("В переводе") }?.value ?? String(localized: "По умолчанию")
             var single = Translator(id: id, name: name)
             if let args = movieArgs, args.count >= 5 {
                 single.isCamrip = args[2]
@@ -303,7 +304,7 @@ enum RezkaParser {
             schedule: try schedule(in: doc),
             // Nothing to play: no dub list and no player config, only the site's status and maybe a trailer.
             upcomingStatus: translators.isEmpty
-                ? try doc.select(".b-post__go_status").first()?.text().nonEmpty ?? "Ожидается"
+                ? try doc.select(".b-post__go_status").first()?.text().nonEmpty ?? String(localized: "Ожидается")
                 : nil,
             siteRating: try siteRating(in: doc),
             dubPopularity: try dubPopularity(in: doc)
@@ -335,7 +336,7 @@ enum RezkaParser {
         }
         guard !entries.isEmpty else { return nil }
         return DubPopularity(
-            title: try table.select(".b-rgstats__title").first()?.text().nonEmpty ?? "Популярность озвучек",
+            title: try table.select(".b-rgstats__title").first()?.text().nonEmpty ?? String(localized: "Популярность озвучек"),
             entries: entries,
             note: try table.select(".b-rgstats__info").first()?.text() ?? ""
         )
@@ -472,7 +473,9 @@ enum RezkaParser {
             let episodeId = try element.attr("data-episode_id")
             guard !seasonId.isEmpty, !episodeId.isEmpty else { continue }
             if episodesBySeason[seasonId] == nil { order.append(seasonId) }
-            let title = try element.text().nonEmpty ?? "Серия \(episodeId)"
+            // The site's usual "Серия 3" follows the interface language; a name of its own stays.
+            let text = try element.text()
+            let title = text.isEmpty || text == "Серия \(episodeId)" ? String(localized: "Серия \(episodeId)") : text
             episodesBySeason[seasonId, default: []].append(Episode(id: episodeId, seasonId: seasonId, title: title))
         }
 
@@ -488,7 +491,8 @@ enum RezkaParser {
 
         return seasonOrder.compactMap { id in
             guard let episodes = episodesBySeason[id], !episodes.isEmpty else { return nil }
-            return Season(id: id, title: titles[id] ?? "Сезон \(id)", episodes: episodes)
+            let title = titles[id].flatMap { $0 == "Сезон \(id)" ? nil : $0 } ?? String(localized: "Сезон \(id)")
+            return Season(id: id, title: title, episodes: episodes)
         }
     }
 

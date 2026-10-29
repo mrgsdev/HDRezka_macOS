@@ -94,7 +94,7 @@ struct PlayerView: View {
     private static func jumpText(_ seconds: Double) -> String {
         let sign = seconds < 0 ? "−" : "+"
         let size = abs(seconds)
-        return sign + (size < 60 ? "\(Int(size)) с" : size.playbackTime)
+        return sign + (size < 60 ? String(localized: "\(Int(size)) с") : size.playbackTime)
     }
 
     private var qualityMenu: some View {
@@ -112,7 +112,7 @@ struct PlayerView: View {
                 }
             }
         } label: {
-            Label(controller.quality?.label ?? "Качество", systemImage: "slider.horizontal.3")
+            Label(controller.quality?.label ?? String(localized: "Качество"), systemImage: "slider.horizontal.3")
                 .labelStyle(.titleAndIcon)
         }
         // A toolbar shows only icons by default; the current quality has to be readable.
@@ -136,7 +136,7 @@ struct PlayerView: View {
                 }
             }
         } label: {
-            Label(controller.speed == 1 ? "Скорость" : PlayerController.speedLabel(controller.speed), systemImage: "gauge.with.dots.needle.67percent")
+            Label(controller.speed == 1 ? String(localized: "Скорость") : PlayerController.speedLabel(controller.speed), systemImage: "gauge.with.dots.needle.67percent")
                 .labelStyle(.titleAndIcon)
         }
         .fixedSize()
@@ -169,7 +169,7 @@ struct PlayerView: View {
                     }
                 }
             } label: {
-                Label(controller.subtitle?.label ?? "Субтитры", systemImage: "captions.bubble")
+                Label(controller.subtitle?.label ?? String(localized: "Субтитры"), systemImage: "captions.bubble")
                     .labelStyle(.titleAndIcon)
             }
             .fixedSize()

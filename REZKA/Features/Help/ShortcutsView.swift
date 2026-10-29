@@ -4,16 +4,14 @@ import SwiftUI
 struct ShortcutsView: View {
     private struct Shortcut: Identifiable {
         let keys: [String]
-        let action: String
-
-        var id: String { action }
+        let action: LocalizedStringKey
+        let id = UUID()
     }
 
     private struct ShortcutGroup: Identifiable {
-        let title: String
+        let title: LocalizedStringKey
         let shortcuts: [Shortcut]
-
-        var id: String { title }
+        let id = UUID()
     }
 
     /// Two columns, so the whole list is in view at once.
@@ -86,7 +84,8 @@ private struct KeyCap: View {
     let key: String
 
     var body: some View {
-        Text(key)
+        // "Пробел" is a word to translate; the rest are symbols.
+        Text(LocalizedStringKey(key))
             .font(.system(.callout, design: .rounded).weight(.semibold))
             .frame(minWidth: 22)
             .padding(.horizontal, 6)

@@ -13,10 +13,10 @@ enum MediaKind: String, Codable, Hashable {
 
     var title: String? {
         switch self {
-        case .film: "Фильм"
-        case .series: "Сериал"
-        case .cartoon: "Мультфильм"
-        case .anime: "Аниме"
+        case .film: String(localized: "Фильм")
+        case .series: String(localized: "Сериал")
+        case .cartoon: String(localized: "Мультфильм")
+        case .anime: String(localized: "Аниме")
         case .unknown: nil
         }
     }
@@ -48,7 +48,7 @@ struct Listing: Identifiable, Hashable {
 
     var id: String { path }
 
-    static let announcements = Listing(title: "Анонсы", path: "announce/", isSortable: false)
+    static let announcements = Listing(title: String(localized: "Анонсы"), path: "announce/", isSortable: false)
 }
 
 /// What the site's top menu offers inside a section.

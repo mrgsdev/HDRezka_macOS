@@ -11,9 +11,13 @@ struct SettingsView: View {
     @State private var isSearchingMirrors = false
     @State private var quality = QualityPreference.current
     @State private var appearance = AppearancePreference.current
+    @State private var language = AppLanguage.current
     @State private var confirmLogout = false
 
-    static let mirrorHint = "Напишите на mirror@hdrezka.org, чтобы узнать актуальное зеркало, и введите его сюда."
+    static let mirrorHint = String(localized: "Напишите на mirror@hdrezka.org, чтобы узнать актуальное зеркало, и введите его сюда.")
+
+    /// The language the app runs in; another choice takes a relaunch.
+    private static let launchLanguage = AppLanguage.current
 
     private static let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "—"
     private static let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "—"
@@ -30,8 +34,8 @@ struct SettingsView: View {
                         }
                     }
                 }
-                LabeledContent("Статус", value: auth.isLoggedIn ? "Вход выполнен" : "Не выполнен вход")
-                LabeledContent("Подписка", value: auth.isPremium ? "HDrezka Premium" : "Обычный аккаунт")
+                LabeledContent("Статус", value: auth.isLoggedIn ? String(localized: "Вход выполнен") : String(localized: "Не выполнен вход"))
+                LabeledContent("Подписка", value: auth.isPremium ? "HDrezka Premium" : String(localized: "Обычный аккаунт"))
                 if auth.isLoggedIn {
                     Button("Выйти из аккаунта", role: .destructive) { confirmLogout = true }
                 }
@@ -60,7 +64,7 @@ struct SettingsView: View {
             } header: {
                 Text("Зеркало сайта")
             } footer: {
-                Text(mirrorStatus ?? "\(Self.mirrorHint) Сессия перенесётся на новое зеркало.")
+                Text(mirrorStatus ?? String(localized: "\(Self.mirrorHint) Сессия перенесётся на новое зеркало."))
                     .foregroundStyle(.secondary)
             }
 
@@ -70,11 +74,23 @@ struct SettingsView: View {
                 }
                 .pickerStyle(.segmented)
                 .onChange(of: appearance) { _, value in AppearancePreference.current = value }
+                Picker("Язык", selection: $language) {
+                    ForEach(AppLanguage.allCases) { Text($0.title).tag($0) }
+                }
+                .onChange(of: language) { _, value in AppLanguage.current = value }
+                if language != Self.launchLanguage {
+                    HStack {
+                        Text("Язык сменится после перезапуска.")
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Button("Перезапустить") { try? AppRelaunch.relaunch() }
+                    }
+                }
             }
 
             Section("Воспроизведение") {
                 Picker("Качество по умолчанию", selection: $quality) {
-                    ForEach(QualityPreference.options, id: \.self) { Text($0).tag($0) }
+                    ForEach(QualityPreference.options, id: \.self) { Text(LocalizedStringKey($0)).tag($0) }
                 }
                 .onChange(of: quality) { _, value in QualityPreference.current = value }
             }
@@ -104,7 +120,7 @@ struct SettingsView: View {
 
     private func applyMirror() {
         guard let url = Mirror.normalize(mirror) else {
-            mirrorStatus = "Некорректный адрес"
+            mirrorStatus = String(localized: "Некорректный адрес")
             return
         }
         apply(url)
@@ -113,7 +129,7 @@ struct SettingsView: View {
     private func apply(_ url: URL) {
         Mirror.current = url
         mirror = url.absoluteString
-        mirrorStatus = "Сохранено: \(url.host() ?? url.absoluteString)"
+        mirrorStatus = String(localized: "Сохранено: \(url.host() ?? url.absoluteString)")
         auth.refresh()
     }
 
@@ -124,11 +140,11 @@ struct SettingsView: View {
         isSearchingMirrors = false
 
         if foundMirrors.isEmpty {
-            mirrorStatus = "Рабочих зеркал не нашли. \(Self.mirrorHint)"
+            mirrorStatus = String(localized: "Рабочих зеркал не нашли. \(Self.mirrorHint)")
         } else if foundMirrors.contains(Mirror.current) {
-            mirrorStatus = "Текущее зеркало работает. Можно выбрать и другое из найденных."
+            mirrorStatus = String(localized: "Текущее зеркало работает. Можно выбрать и другое из найденных.")
         } else {
-            mirrorStatus = "Текущее зеркало не отвечает — выберите одно из найденных."
+            mirrorStatus = String(localized: "Текущее зеркало не отвечает — выберите одно из найденных.")
         }
     }
 }

@@ -161,8 +161,8 @@ final class DetailsModel {
     /// Runs of numbers collapsed: "сезоны 1–12, 15", or "сезон 5" for one.
     private static func seasonsLabel(_ seasons: [Season]) -> String {
         let numbers = seasons.compactMap { Int($0.id) }.sorted()
-        guard let first = numbers.first, numbers.count == seasons.count else { return "сезонов: \(seasons.count)" }
-        if numbers.count == 1 { return "сезон \(first)" }
+        guard let first = numbers.first, numbers.count == seasons.count else { return String(localized: "сезонов: \(seasons.count)") }
+        if numbers.count == 1 { return String(localized: "сезон \(first)") }
         var runs: [String] = []
         var (start, end) = (first, first)
         for number in numbers.dropFirst() {
@@ -174,7 +174,7 @@ final class DetailsModel {
             (start, end) = (number, number)
         }
         runs.append(start == end ? "\(start)" : "\(start)–\(end)")
-        return "сезоны " + runs.joined(separator: ", ")
+        return String(localized: "сезоны \(runs.joined(separator: ", "))")
     }
 
     // MARK: Comments

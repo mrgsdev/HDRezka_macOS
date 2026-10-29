@@ -9,10 +9,10 @@ enum CatalogSection: String, CaseIterable, Identifiable, Hashable {
 
     var title: String {
         switch self {
-        case .films: "Фильмы"
-        case .series: "Сериалы"
-        case .cartoons: "Мультфильмы"
-        case .animation: "Аниме"
+        case .films: String(localized: "Фильмы")
+        case .series: String(localized: "Сериалы")
+        case .cartoons: String(localized: "Мультфильмы")
+        case .animation: String(localized: "Аниме")
         }
     }
 
@@ -43,10 +43,10 @@ enum CatalogFilter: String, CaseIterable, Identifiable, Hashable {
 
     var title: String {
         switch self {
-        case .last: "Последние"
-        case .popular: "Популярные"
-        case .watching: "Сейчас смотрят"
-        case .soon: "В ожидании"
+        case .last: String(localized: "Последние")
+        case .popular: String(localized: "Популярные")
+        case .watching: String(localized: "Сейчас смотрят")
+        case .soon: String(localized: "В ожидании")
         }
     }
 }
@@ -182,7 +182,7 @@ final class RezkaClient {
     func createBookmarkFolder(name: String) async throws -> BookmarkFolder {
         let json = try await favorites(["name": name, "action": "add_cat"], fallback: "Не удалось создать папку.")
         let id = (json["id"] as? Int).map(String.init) ?? (json["id"] as? String) ?? ""
-        guard !id.isEmpty, id != "0" else { throw RezkaError.parsing("id новой папки") }
+        guard !id.isEmpty, id != "0" else { throw RezkaError.parsing(String(localized: "id новой папки")) }
         return BookmarkFolder(id: id, name: (json["name"] as? String)?.nonEmpty ?? name, count: 0)
     }
 
@@ -210,7 +210,7 @@ final class RezkaClient {
     }
 
     @discardableResult
-    private func favorites(_ form: [String: String], fallback: String) async throws -> [String: Any] {
+    private func favorites(_ form: [String: String], fallback: String.LocalizationValue) async throws -> [String: Any] {
         let json = try await postJSON("ajax/favorites/", form: form, timestamped: false)
         guard json["success"] as? Bool == true else { throw siteError(json, fallback: fallback) }
         return json
@@ -238,7 +238,7 @@ final class RezkaClient {
         let data = try await perform(request)
         guard let json = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any] else {
             if String(decoding: data, as: UTF8.self).contains("loginForm") { throw RezkaError.loginRequired }
-            throw RezkaError.parsing("отзывы")
+            throw RezkaError.parsing(String(localized: "отзывы"))
         }
         let comments = try RezkaParser.comments(in: SwiftSoup.parseBodyFragment(json["comments"] as? String ?? ""))
         let navigator = try SwiftSoup.parseBodyFragment(json["navigation"] as? String ?? "")
@@ -274,7 +274,7 @@ final class RezkaClient {
         let json = try await postJSON("ajax/get_cdn_series/", form: form)
         guard json["success"] as? Bool == true else { throw siteError(json, fallback: "Не удалось получить ссылку на видео.") }
         guard let encoded = json["url"] as? String, !encoded.isEmpty else { throw RezkaError.noStreams }
-        guard let decoded = StreamDecoder.decode(encoded) else { throw RezkaError.parsing("ссылка на видео") }
+        guard let decoded = StreamDecoder.decode(encoded) else { throw RezkaError.parsing(String(localized: "ссылка на видео")) }
 
         let qualities = StreamDecoder.qualities(from: decoded)
         guard !qualities.isEmpty else { throw RezkaError.noStreams }
@@ -334,7 +334,7 @@ final class RezkaClient {
         let data = try await perform(request, retryingTimeout: false)
         guard let json = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any] else {
             if String(decoding: data, as: UTF8.self).contains("loginForm") { throw RezkaError.loginRequired }
-            throw RezkaError.parsing("оценка")
+            throw RezkaError.parsing(String(localized: "оценка"))
         }
         guard json["success"] as? Bool == true else {
             throw siteError(json, fallback: "Сайт не принял оценку. Возможно, вы уже оценивали этот тайтл.")
@@ -459,7 +459,7 @@ final class RezkaClient {
         let data = try await post(path, form: form, timestamped: timestamped)
         guard let json = (try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)) as? [String: Any] else {
             if String(decoding: data, as: UTF8.self).contains("loginForm") { throw RezkaError.loginRequired }
-            throw RezkaError.parsing("JSON \(path)")
+            throw RezkaError.parsing(String(localized: "JSON \(path)"))
         }
         return json
     }
@@ -470,12 +470,13 @@ final class RezkaClient {
         guard (200..<400).contains(http.statusCode) else { throw RezkaError.badStatus(http.statusCode) }
     }
 
-    private func siteError(_ json: [String: Any], fallback: String) -> RezkaError {
+    /// The site's own message (Russian), or `fallback` in the interface language.
+    private func siteError(_ json: [String: Any], fallback: String.LocalizationValue) -> RezkaError {
         let message = (json["message"] as? String)?
             .replacingOccurrences(of: "<[^>]+>", with: " ", options: .regularExpression)
             .trimmingCharacters(in: .whitespacesAndNewlines)
         if let message, message.localizedCaseInsensitiveContains("авториз") { return .loginRequired }
-        return .site(message?.nonEmpty ?? fallback)
+        return .site(message?.nonEmpty ?? String(localized: fallback))
     }
 
     private static func formEncode(_ form: [String: String]) -> String {

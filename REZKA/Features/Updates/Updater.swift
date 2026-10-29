@@ -114,7 +114,7 @@ final class Updater {
             state = Self.isVersion(release.version, newerThan: Self.currentVersion) ? .available(release) : .upToDate
         } catch {
             Self.log.error("update check failed: \(error.localizedDescription, privacy: .public)")
-            state = .failed("Не удалось проверить обновления: \(error.localizedDescription)", release: nil)
+            state = .failed(String(localized: "Не удалось проверить обновления: \(error.localizedDescription)"), release: nil)
         }
     }
 
@@ -219,18 +219,11 @@ final class Updater {
         guard SecStaticCodeCheckValidity(newCode, flags, requirement) == errSecSuccess else { throw UpdateError.badSignature }
     }
 
-    /// Quits and opens the new app once this process is gone; opened earlier, macOS would
-    /// just bring the running copy forward. `-n` starts this copy even if another one
-    /// with the same bundle ID is running, e.g. a build from Xcode.
     private func relaunch(_ app: URL) {
-        let process = Process()
-        process.executableURL = URL(filePath: "/bin/sh")
-        process.arguments = ["-c", "while kill -0 \(ProcessInfo.processInfo.processIdentifier) 2>/dev/null; do sleep 0.2; done; /usr/bin/open -n \"$0\"", app.path]
         do {
-            try process.run()
-            NSApp.terminate(nil)
+            try AppRelaunch.relaunch(app)
         } catch {
-            state = .failed("Обновление установлено, но перезапустить REZKA не получилось. Откройте приложение снова.", release: nil)
+            state = .failed(String(localized: "Обновление установлено, но перезапустить REZKA не получилось. Откройте приложение снова."), release: nil)
         }
     }
 
@@ -269,15 +262,15 @@ enum UpdateError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case let .server(status): "GitHub ответил ошибкой \(status)."
-        case .translocated: "Переместите REZKA в папку «Программы», запустите её оттуда и обновите снова."
-        case let .notWritable(path): "Нет прав на запись в \(path). Скачайте новую версию со страницы релиза."
-        case .noArchive: "К релизу не приложен архив с приложением."
-        case .unpack: "Не удалось распаковать архив обновления."
-        case .noApp: "В архиве обновления нет приложения."
-        case .wrongApp: "В архиве обновления другое приложение."
-        case let .notNewer(version): "В архиве версия \(version) — она не новее установленной."
-        case .badSignature: "Подпись обновления не совпадает с подписью REZKA. Обновление не установлено."
+        case let .server(status): String(localized: "GitHub ответил ошибкой \(status).")
+        case .translocated: String(localized: "Переместите REZKA в папку «Программы», запустите её оттуда и обновите снова.")
+        case let .notWritable(path): String(localized: "Нет прав на запись в \(path). Скачайте новую версию со страницы релиза.")
+        case .noArchive: String(localized: "К релизу не приложен архив с приложением.")
+        case .unpack: String(localized: "Не удалось распаковать архив обновления.")
+        case .noApp: String(localized: "В архиве обновления нет приложения.")
+        case .wrongApp: String(localized: "В архиве обновления другое приложение.")
+        case let .notNewer(version): String(localized: "В архиве версия \(version) — она не новее установленной.")
+        case .badSignature: String(localized: "Подпись обновления не совпадает с подписью REZKA. Обновление не установлено.")
         }
     }
 }

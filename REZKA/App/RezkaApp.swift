@@ -171,7 +171,7 @@ enum AboutPanel {
     static func show() {
         let mirror = Mirror.current.host() ?? Mirror.current.absoluteString
         let credits = NSAttributedString(
-            string: "Неофициальный клиент HDrezka для Mac\nЗеркало: \(mirror)\nРазработчик: github.com/mrgsdev",
+            string: String(localized: "Неофициальный клиент HDrezka для Mac\nЗеркало: \(mirror)\nРазработчик: github.com/mrgsdev"),
             attributes: [
                 .font: NSFont.systemFont(ofSize: 11),
                 .foregroundColor: NSColor.secondaryLabelColor,

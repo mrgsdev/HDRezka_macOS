@@ -19,7 +19,7 @@ struct MainView: View {
                 }
                 Section("Каталог") {
                     ForEach(CatalogSection.allCases) { section in
-                        row(.section(section), section.title, section.systemImage)
+                        row(.section(section), LocalizedStringKey(section.title), section.systemImage)
                     }
                 }
                 Section("Моё") {
@@ -58,7 +58,7 @@ struct MainView: View {
         }
     }
 
-    private func row(_ item: SidebarItem, _ title: String, _ icon: String) -> some View {
+    private func row(_ item: SidebarItem, _ title: LocalizedStringKey, _ icon: String) -> some View {
         Label(title, systemImage: icon).tag(item)
     }
 
