@@ -559,13 +559,19 @@ struct CommentsSection: View {
 
             LazyVStack(alignment: .leading, spacing: 12) {
                 ForEach(model.comments) { comment in
-                    CommentCard(comment: comment, isRevealed: revealedSpoilers.contains(comment.id)) {
-                        if revealedSpoilers.contains(comment.id) {
-                            revealedSpoilers.remove(comment.id)
-                        } else {
-                            revealedSpoilers.insert(comment.id)
-                        }
-                    }
+                    CommentCard(
+                        comment: comment,
+                        isRevealed: revealedSpoilers.contains(comment.id),
+                        isLiking: model.likingComments.contains(comment.id),
+                        toggleSpoiler: {
+                            if revealedSpoilers.contains(comment.id) {
+                                revealedSpoilers.remove(comment.id)
+                            } else {
+                                revealedSpoilers.insert(comment.id)
+                            }
+                        },
+                        toggleLike: { Task { await model.toggleLike(comment) } }
+                    )
                 }
             }
 
@@ -594,7 +600,9 @@ struct CommentsSection: View {
 private struct CommentCard: View {
     let comment: Comment
     let isRevealed: Bool
+    let isLiking: Bool
     let toggleSpoiler: () -> Void
+    let toggleLike: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -605,7 +613,9 @@ private struct CommentCard: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()
-                if comment.likes > 0 {
+                if comment.canLike {
+                    LikeButton(likes: comment.likes, isLiked: comment.isLiked, isBusy: isLiking, action: toggleLike)
+                } else if comment.likes > 0 {
                     Label("\(comment.likes)", systemImage: "hand.thumbsup.fill")
                         .font(.caption)
                         .foregroundStyle(.secondary)
@@ -635,5 +645,41 @@ private struct CommentCard: View {
             result += piece
         }
         return result
+    }
+}
+
+/// The site's "Поддерживаю!": a thumb with the count, filled once the account has liked the comment;
+/// a second click takes the like back.
+private struct LikeButton: View {
+    let likes: Int
+    let isLiked: Bool
+    let isBusy: Bool
+    let action: () -> Void
+
+    @State private var isHovered = false
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: 5) {
+                Image(systemName: isLiked ? "hand.thumbsup.fill" : "hand.thumbsup")
+                if likes > 0 {
+                    Text("\(likes)").monospacedDigit()
+                }
+            }
+            .font(.caption)
+            .foregroundStyle(isLiked ? AnyShapeStyle(Color.accentColor) : AnyShapeStyle(isHovered ? .primary : .secondary))
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(isHovered ? Brand.hover : .clear, in: Capsule())
+            .contentShape(Capsule())
+        }
+        .buttonStyle(.plain)
+        .disabled(isBusy)
+        .opacity(isBusy ? 0.5 : 1)
+        .onHover { isHovered = $0 }
+        .help(isLiked ? "Убрать лайк" : "Поддерживаю!")
+        .accessibilityLabel(isLiked ? "Убрать лайк" : "Поддерживаю!")
+        .accessibilityValue("\(likes)")
+        .animation(.easeOut(duration: 0.15), value: isLiked)
     }
 }

@@ -294,7 +294,11 @@ struct Comment: Identifiable, Hashable {
     let author: String
     let date: String
     let parts: [Part]
-    let likes: Int
+    var likes: Int
+    /// The account's own like, which the site lets it take back.
+    var isLiked: Bool
+    /// False on the account's own comments: the site doesn't let them be liked.
+    let canLike: Bool
     /// 0 for a comment on the title, 1 and more for replies.
     let depth: Int
 

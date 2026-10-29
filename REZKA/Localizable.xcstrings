@@ -1761,6 +1761,16 @@
         }
       }
     },
+    "Поддерживаю!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Like"
+          }
+        }
+      }
+    },
     "Подписка": {
       "localizations": {
         "en": {
@@ -2027,6 +2037,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "The site didn't start a session. Try again or switch the mirror."
+          }
+        }
+      }
+    },
+    "Сайт не принял лайк.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The site didn't accept the like."
           }
         }
       }
@@ -2478,6 +2498,16 @@
         }
       }
     },
+    "Убрать лайк": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove Like"
+          }
+        }
+      }
+    },
     "Удалить": {
       "localizations": {
         "en": {
@@ -2644,6 +2674,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "all new"
+          }
+        }
+      }
+    },
+    "лайк": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "like"
           }
         }
       }

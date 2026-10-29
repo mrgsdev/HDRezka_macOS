@@ -348,6 +348,26 @@ final class RezkaClient {
         )
     }
 
+    /// Puts the account's like on a comment, or takes it back if it is there: the site toggles it.
+    /// Returns the new number of likes and whether the comment is liked now.
+    func toggleCommentLike(id: String) async throws -> (likes: Int, isLiked: Bool) {
+        var request = URLRequest(url: url("engine/ajax/comments_like.php", query: [URLQueryItem(name: "id", value: id)]))
+        // A GET that changes state, like the vote: never from the cache, never resent.
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        request.setValue("XMLHttpRequest", forHTTPHeaderField: "X-Requested-With")
+        request.setValue(baseURL.absoluteString, forHTTPHeaderField: "Referer")
+        let data = try await perform(request, retryingTimeout: false)
+        guard let json = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any] else {
+            if String(decoding: data, as: UTF8.self).contains("loginForm") { throw RezkaError.loginRequired }
+            throw RezkaError.parsing(String(localized: "лайк"))
+        }
+        guard json["success"] as? Bool == true, let likes = (json["count"] as? NSNumber)?.intValue else {
+            throw siteError(json, fallback: "Сайт не принял лайк.")
+        }
+        // "plus" for a like put, "minus" for one taken back.
+        return (likes, json["type"] as? String != "minus")
+    }
+
     /// Removes an entry from the site's "continue watching" list.
     func removeFromContinue(id: String) async throws {
         let json = try await postJSON("engine/ajax/cdn_saves_remove.php", form: ["id": id], timestamped: false)

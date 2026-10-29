@@ -22,7 +22,7 @@ final class DetailsModel {
     /// The account's bookmark folders; nil hides the bookmark button (logged out).
     private(set) var bookmarkFolders: [BookmarkFolder]?
     private(set) var bookmarkedIn: Set<String> = []
-    /// Shown in a "Не получилось" alert: a failed bookmark, watched-mark change or vote.
+    /// Shown in a "Не получилось" alert: a failed bookmark, watched-mark change, vote or like.
     var actionError: String?
     /// Schedule ids of the episodes marked "просмотрено" in the account.
     private(set) var watchedEpisodes: Set<String> = []
@@ -31,6 +31,8 @@ final class DetailsModel {
     private(set) var isLoadingComments = false
     private(set) var commentsError: Error?
     private var commentsPage = 0
+    /// Comments whose like is on its way to the site.
+    private(set) var likingComments: Set<String> = []
     /// The site's rating of the title; changes once the account votes.
     private(set) var siteRating: SiteRating?
     /// The vote sent from this Mac, if any: after voting the site no longer says which one it was.
@@ -195,6 +197,21 @@ final class DetailsModel {
             AuthSession.shared.handle(error)
         } catch {}
         isLoadingComments = false
+    }
+
+    /// Likes a comment or takes the like back, then shows the count the site returns.
+    func toggleLike(_ comment: Comment) async {
+        guard comment.canLike, !likingComments.contains(comment.id) else { return }
+        likingComments.insert(comment.id)
+        defer { likingComments.remove(comment.id) }
+        do {
+            let result = try await RezkaClient.shared.toggleCommentLike(id: comment.id)
+            guard let index = comments.firstIndex(where: { $0.id == comment.id }) else { return }
+            comments[index].likes = result.likes
+            comments[index].isLiked = result.isLiked
+        } catch {
+            report(error)
+        }
     }
 
     // MARK: Watched marks
