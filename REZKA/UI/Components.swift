@@ -262,14 +262,15 @@ struct PosterCard: View {
 }
 
 /// A titled horizontal shelf of posters.
-struct MediaRow: View {
-    let title: String
+/// A titled shelf of posters. The title is plain text, or any view, like the home's "Новые …" with its section links.
+struct MediaRow<Title: View>: View {
     let items: [MediaItem]
     var actions: (MediaItem) -> [CardAction] = { _ in [] }
+    @ViewBuilder let title: Title
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(title)
+            title
                 .font(.title2.bold())
                 .padding(.horizontal, 28)
             ScrollView(.horizontal, showsIndicators: false) {
@@ -282,6 +283,12 @@ struct MediaRow: View {
                 .padding(.vertical, 10)
             }
         }
+    }
+}
+
+extension MediaRow where Title == Text {
+    init(title: String, items: [MediaItem], actions: @escaping (MediaItem) -> [CardAction] = { _ in [] }) {
+        self.init(items: items, actions: actions) { Text(title) }
     }
 }
 

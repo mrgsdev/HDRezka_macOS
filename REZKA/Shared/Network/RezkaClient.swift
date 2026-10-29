@@ -141,9 +141,10 @@ final class RezkaClient {
     }
 
     /// The home page's "Новые фильмы, сериалы, мультфильмы и аниме" slider: recently added titles and episodes.
-    /// `id` 0 mixes all sections, like the slider before a section link is clicked.
-    func newest() async throws -> [MediaItem] {
-        let html = String(decoding: try await post("engine/ajax/get_newest_slider_content.php", form: ["id": "0"], timestamped: false), as: UTF8.self)
+    /// `section` 0 mixes all sections; 1, 2, 3 and 82 are films, series, cartoons and anime,
+    /// the ids behind the words of the slider's title.
+    func newest(section: Int = 0) async throws -> [MediaItem] {
+        let html = String(decoding: try await post("engine/ajax/get_newest_slider_content.php", form: ["id": String(section)], timestamped: false), as: UTF8.self)
         if html.contains("loginForm") { throw RezkaError.loginRequired }
         return try RezkaParser.items(in: SwiftSoup.parseBodyFragment(html), base: baseURL)
     }

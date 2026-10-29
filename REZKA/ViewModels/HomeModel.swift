@@ -1,6 +1,34 @@
 import Foundation
 import Observation
 
+/// What the "Новые фильмы, сериалы, мультфильмы и аниме" shelf shows: the words of its title pick
+/// one section, as on the site. The raw values are the site's own ids for its slider.
+enum NewestSection: Int, CaseIterable {
+    case all = 0
+    case films = 1
+    case series = 2
+    case cartoons = 3
+    case anime = 82
+
+    var word: String {
+        switch self {
+        case .all: "все новинки"
+        case .films: "фильмы"
+        case .series: "сериалы"
+        case .cartoons: "мультфильмы"
+        case .anime: "аниме"
+        }
+    }
+
+    private static let key = "newestSection"
+
+    /// Kept between launches, as the site keeps it in a cookie.
+    static var saved: NewestSection {
+        get { NewestSection(rawValue: UserDefaults.standard.integer(forKey: key)) ?? .all }
+        set { UserDefaults.standard.set(newValue.rawValue, forKey: key) }
+    }
+}
+
 @MainActor
 @Observable
 final class HomeModel {
@@ -9,12 +37,15 @@ final class HomeModel {
         let items: [MediaItem]
         var id: String { title }
         var isContinue: Bool { title == HomeModel.continueTitle }
+        var isNewest: Bool { title == HomeModel.newestTitle }
     }
 
     private(set) var shelves: [Shelf] = []
     private(set) var isLoading = false
     private(set) var error: Error?
     var removalError: String?
+    private(set) var newestSection = NewestSection.saved
+    private(set) var isLoadingNewest = false
     /// Bumped per load so a superseded or cancelled load never overwrites a newer result.
     private var generation = 0
     /// What the current load has brought so far, by shelf title.
@@ -26,17 +57,18 @@ final class HomeModel {
         case newest
         case catalog(CatalogSection?, CatalogFilter)
 
-        func items() async throws -> [MediaItem] {
+        func items(newest section: NewestSection) async throws -> [MediaItem] {
             switch self {
-            case .newest: try await RezkaClient.shared.newest()
+            case .newest: try await RezkaClient.shared.newest(section: section.rawValue)
             case let .catalog(section, filter): try await RezkaClient.shared.catalog(section, filter: filter).items
             }
         }
     }
 
     nonisolated static let continueTitle = "Продолжить просмотр"
+    nonisolated static let newestTitle = "Новые фильмы, сериалы, мультфильмы и аниме"
     private static let sources: [(String, Source)] = [
-        ("Новые фильмы, сериалы, мультфильмы и аниме", .newest),
+        (newestTitle, .newest),
         ("Новинки", .catalog(nil, .last)),
         ("Популярные фильмы", .catalog(.films, .popular)),
         ("Популярные сериалы", .catalog(.series, .popular)),
@@ -60,6 +92,7 @@ final class HomeModel {
         error = nil
         loaded = [:]
         firstError = nil
+        let newest = newestSection
 
         // Shelves appear as they arrive; RezkaClient limits how many requests run at once.
         // Each result goes through `receive` on the model: collected in locals captured by the group's
@@ -70,7 +103,7 @@ final class HomeModel {
             }
             for (title, source) in Self.sources {
                 group.addTask {
-                    await self.receive(title, load: current) { try await source.items() }
+                    await self.receive(title, load: current) { try await source.items(newest: newest) }
                 }
             }
         }
@@ -91,13 +124,36 @@ final class HomeModel {
         switch result {
         case let .success(items):
             loaded[title] = items
-            shelves = ([Self.continueTitle] + Self.sources.map(\.0)).compactMap { title in
-                loaded[title].flatMap { $0.isEmpty ? nil : Shelf(title: title, items: $0) }
-            }
+            arrangeShelves()
         case let .failure(error) where !error.isCancellation && title != Self.continueTitle:
             firstError = firstError ?? error
         default:
             break
+        }
+    }
+
+    /// The loaded shelves in their fixed order. An empty shelf is left out, except "Новые …":
+    /// its title is where the section is picked, so it has to stay to pick another.
+    private func arrangeShelves() {
+        shelves = ([Self.continueTitle] + Self.sources.map(\.0)).compactMap { title in
+            loaded[title].flatMap { $0.isEmpty && title != Self.newestTitle ? nil : Shelf(title: title, items: $0) }
+        }
+    }
+
+    /// Shows one section in the "Новые …" shelf, or all of them again; only that shelf reloads.
+    func showNewest(_ section: NewestSection) async {
+        guard section != newestSection, !isLoadingNewest else { return }
+        let previous = newestSection
+        newestSection = section
+        isLoadingNewest = true
+        defer { isLoadingNewest = false }
+        do {
+            loaded[Self.newestTitle] = try await RezkaClient.shared.newest(section: section.rawValue)
+            NewestSection.saved = section
+            arrangeShelves()
+        } catch {
+            newestSection = previous
+            if !error.isCancellation { AuthSession.shared.handle(error) }
         }
     }
 

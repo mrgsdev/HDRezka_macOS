@@ -13,6 +13,10 @@ struct HomeView: View {
                                 Task { await model.removeFromContinue(item) }
                             }]
                         }
+                    } else if shelf.isNewest {
+                        MediaRow(items: shelf.items) {
+                            NewestTitle(model: model)
+                        }
                     } else {
                         MediaRow(title: shelf.title, items: shelf.items)
                     }
@@ -52,6 +56,60 @@ struct HomeView: View {
             Button("OK", role: .cancel) {}
         } message: {
             Text(model.removalError ?? "")
+        }
+    }
+}
+
+/// "Новые фильмы, сериалы, мультфильмы и аниме" as on the site: a word shows only that section,
+/// the one shown is plain text, and "(все новинки)" brings the mix back.
+private struct NewestTitle: View {
+    let model: HomeModel
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 0) {
+            Text("Новые ")
+            word(.films)
+            Text(", ")
+            word(.series)
+            Text(", ")
+            word(.cartoons)
+            Text(" и ")
+            word(.anime)
+            if model.newestSection != .all {
+                Button {
+                    Task { await model.showNewest(.all) }
+                } label: {
+                    Text("(\(NewestSection.all.word))")
+                        .underline(pattern: .dot)
+                        .foregroundStyle(Color.accentColor)
+                }
+                .buttonStyle(.plain)
+                .font(.title3)
+                .padding(.leading, 10)
+            }
+            if model.isLoadingNewest {
+                ProgressView()
+                    .controlSize(.small)
+                    .padding(.leading, 10)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func word(_ section: NewestSection) -> some View {
+        if section == model.newestSection {
+            Text(section.word)
+                .foregroundStyle(.secondary)
+        } else {
+            Button {
+                Task { await model.showNewest(section) }
+            } label: {
+                Text(section.word)
+                    .underline(pattern: .dot)
+                    .foregroundStyle(Color.accentColor)
+            }
+            .buttonStyle(.plain)
+            .help("Только \(section.word)")
         }
     }
 }
