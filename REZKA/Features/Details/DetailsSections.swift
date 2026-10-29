@@ -204,70 +204,96 @@ private struct ScheduleRow: View {
 
 // MARK: Franchise
 
+/// The parts as rows in one panel, like the schedule, so the page scrolls past them with the wheel.
+/// A long franchise shows its first few until expanded.
 struct FranchiseSection: View {
     let franchise: Franchise
 
+    @State private var isExpanded = false
+    private let collapsedCount = 6
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            SectionTitle(text: franchise.title)
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(alignment: .top, spacing: 14) {
-                    ForEach(franchise.parts) { part in
-                        FranchiseCard(part: part)
+        let isCollapsible = franchise.parts.count > collapsedCount
+        let parts = isCollapsible && !isExpanded ? Array(franchise.parts.prefix(collapsedCount)) : franchise.parts
+        VStack(alignment: .leading, spacing: 14) {
+            Text(franchise.title)
+                .font(.title2.bold())
+
+            VStack(spacing: 0) {
+                ForEach(parts) { part in
+                    FranchiseRow(part: part)
+                    if part.id != parts.last?.id || isCollapsible {
+                        Divider().opacity(0.4)
                     }
                 }
-                .padding(.horizontal, 28)
-                .padding(.vertical, 8)
+                if isCollapsible {
+                    Button {
+                        isExpanded.toggle()
+                    } label: {
+                        Label(isExpanded ? "Свернуть" : "Показать все (\(franchise.parts.count))",
+                              systemImage: isExpanded ? "chevron.up" : "chevron.down")
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.borderless)
+                    .foregroundStyle(Color.accentColor)
+                }
             }
+            .background(Brand.panel)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .frame(maxWidth: 1100, alignment: .leading)
         }
+        .padding(.horizontal, 28)
     }
 }
 
 /// A part of the franchise; the one being viewed is marked and not a link.
-private struct FranchiseCard: View {
+private struct FranchiseRow: View {
     let part: FranchisePart
+    @State private var isHovered = false
 
     var body: some View {
         if let path = part.path {
             NavigationLink(value: MediaItem(path: path, title: part.title, subtitle: part.year, posterURL: nil, kind: .unknown, badge: nil)) {
-                content.hoverLift()
+                content
             }
             .buttonStyle(.plain)
+            .onHover { isHovered = $0 }
         } else {
             content
-                .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Color.accentColor, lineWidth: 2))
         }
     }
 
     private var content: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text("Часть \(part.number)")
-                    .font(.caption.bold())
-                    .foregroundStyle(.secondary)
-                Spacer()
+        HStack(spacing: 18) {
+            Text("Часть \(part.number)")
+                .font(.headline)
+                .frame(width: 90, alignment: .leading)
+            Text(part.title)
+                .lineLimit(1)
+                .foregroundStyle(part.isCurrent ? Color.accentColor : .primary)
+                .help(part.title)
+            Spacer()
+            Text(part.year)
+                .foregroundStyle(.secondary)
+            Group {
                 if part.isCurrent {
                     Text("Сейчас")
-                        .font(.caption.bold())
+                        .font(.callout.bold())
                         .foregroundStyle(Color.accentColor)
                 } else if let rating = part.rating {
                     Label(rating, systemImage: "star.fill")
-                        .font(.caption)
+                        .font(.callout)
                         .foregroundStyle(.yellow)
                 }
             }
-            Text(part.title)
-                .font(.headline)
-                .lineLimit(2)
-                .frame(maxWidth: .infinity, alignment: .topLeading)
-            Spacer(minLength: 0)
-            Text(part.year)
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            .frame(width: 80, alignment: .leading)
         }
-        .padding(14)
-        .frame(width: 230, height: 120, alignment: .topLeading)
-        .background(Color.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 10))
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .background(isHovered ? Color.white.opacity(0.06) : .clear)
+        .animation(.easeOut(duration: 0.15), value: isHovered)
         .contentShape(Rectangle())
     }
 }
