@@ -141,31 +141,62 @@ struct SiteRatingView: View {
     private static let russian = Locale(identifier: "ru_RU")
 
     var body: some View {
-        HStack(spacing: 12) {
-            stars
-            Text(rating.value.formatted(.number.precision(.fractionLength(2)).locale(Self.russian)))
-                .font(.headline.monospacedDigit())
-            Text("\(rating.votes.formatted(.number.locale(Self.russian))) \(Self.votesWord(rating.votes))")
-                .foregroundStyle(.secondary)
-            status
-                .font(.callout)
+        // A narrow window drops the idle hint first, then moves the votes under the stars;
+        // nothing gets squeezed into a column.
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 12) {
+                stars
+                average
+                votes
+                status(showsHint: true)
+            }
+            HStack(spacing: 12) {
+                stars
+                average
+                votes
+                status(showsHint: false)
+            }
+            VStack(alignment: .leading, spacing: 6) {
+                HStack(spacing: 12) {
+                    stars
+                    average
+                }
+                HStack(spacing: 12) {
+                    votes
+                    status(showsHint: false)
+                }
+            }
         }
         .animation(.easeOut(duration: 0.12), value: hovered)
     }
 
+    private var average: some View {
+        Text(rating.value.formatted(.number.precision(.fractionLength(2)).locale(Self.russian)))
+            .font(.headline.monospacedDigit())
+    }
+
+    private var votes: some View {
+        Text("\(rating.votes.formatted(.number.locale(Self.russian))) \(Self.votesWord(rating.votes))")
+            .foregroundStyle(.secondary)
+    }
+
     @ViewBuilder
-    private var status: some View {
-        if isRating {
-            ProgressView().controlSize(.small)
-        } else if let hovered {
-            Text("Оценить на \(hovered)").foregroundStyle(Color.accentColor)
-        } else if let myRating {
-            Label("Ваша оценка: \(myRating)", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
-        } else if !rating.canVote {
-            Label("Вы уже оценили", systemImage: "checkmark.circle").foregroundStyle(.secondary)
-        } else {
-            Text("Наведите на звёзды, чтобы оценить").foregroundStyle(.tertiary)
+    private func status(showsHint: Bool) -> some View {
+        Group {
+            if isRating {
+                ProgressView().controlSize(.small)
+            } else if let hovered {
+                Text("Оценить на \(hovered)").foregroundStyle(Color.accentColor)
+            } else if let myRating {
+                Label("Ваша оценка: \(myRating)", systemImage: "checkmark.circle.fill").foregroundStyle(.green)
+            } else if !rating.canVote {
+                Label("Вы уже оценили", systemImage: "checkmark.circle").foregroundStyle(.secondary)
+            } else if showsHint {
+                Text("Наведите на звёзды, чтобы оценить").foregroundStyle(.tertiary)
+            }
         }
+        .font(.callout)
+        .lineLimit(1)
     }
 
     private var row: some View {

@@ -224,7 +224,8 @@ struct DetailsView: View {
 
     @ViewBuilder
     private func actions(_ details: MediaDetails) -> some View {
-        HStack(spacing: 12) {
+        // Wraps rather than squeezing labels down to icons when the window is narrow.
+        FlowLayout(spacing: 12, lineSpacing: 10) {
             if details.upcomingStatus != nil {
                 Label("В ожидании", systemImage: "clock.fill")
                     .font(.headline)

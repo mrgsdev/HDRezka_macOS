@@ -46,7 +46,8 @@ enum Brand {
 // MARK: Flow
 
 /// Lays its views out in lines like words, starting a new line when the width runs out:
-/// every chip in view without scrolling sideways, which a mouse wheel can't do.
+/// every chip in view without scrolling sideways, which a mouse wheel can't do, and buttons
+/// that keep their full labels in a narrow window instead of being squeezed.
 struct FlowLayout: Layout {
     var spacing: CGFloat = 8
     var lineSpacing: CGFloat = 8
@@ -65,7 +66,9 @@ struct FlowLayout: Layout {
                 let size = subviews[index].sizeThatFits(.unspecified)
                 // A view wider than the whole line gets the line's width, and truncates.
                 let width = min(size.width, bounds.width)
-                subviews[index].place(at: CGPoint(x: x, y: y), proposal: ProposedViewSize(width: width, height: size.height))
+                // Centered in its line, so a link sits level with the buttons beside it.
+                let origin = CGPoint(x: x, y: y + (line.height - size.height) / 2)
+                subviews[index].place(at: origin, proposal: ProposedViewSize(width: width, height: size.height))
                 x += width + spacing
             }
             y += line.height + lineSpacing
