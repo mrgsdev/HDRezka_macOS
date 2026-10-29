@@ -17,6 +17,9 @@ final class HomeModel {
     var removalError: String?
     /// Bumped per load so a superseded or cancelled load never overwrites a newer result.
     private var generation = 0
+    /// What the current load has brought so far, by shelf title.
+    @ObservationIgnored private var loaded: [String: [MediaItem]] = [:]
+    @ObservationIgnored private var firstError: Error?
 
     private enum Source {
         /// The site's home page slider of recently added titles and episodes.
@@ -55,36 +58,19 @@ final class HomeModel {
         let current = generation
         isLoading = true
         error = nil
-
-        let continueTitle = Self.continueTitle
-        let titles = [continueTitle] + Self.sources.map(\.0)
-        var loaded: [String: [MediaItem]] = [:]
-        var firstError: Error?
+        loaded = [:]
+        firstError = nil
 
         // Shelves appear as they arrive; RezkaClient limits how many requests run at once.
-        await withTaskGroup(of: (String, Result<[MediaItem], Error>).self) { group in
+        // Each result goes through `receive` on the model: collected in locals captured by the group's
+        // closure instead, results got lost in optimized (Release) builds and the home stayed empty.
+        await withTaskGroup(of: Void.self) { group in
             group.addTask {
-                do { return (continueTitle, .success(try await RezkaClient.shared.continueWatching())) }
-                catch { return (continueTitle, .failure(error)) }
+                await self.receive(Self.continueTitle, load: current) { try await RezkaClient.shared.continueWatching() }
             }
-            for source in Self.sources {
+            for (title, source) in Self.sources {
                 group.addTask {
-                    do { return (source.0, .success(try await source.1.items())) }
-                    catch { return (source.0, .failure(error)) }
-                }
-            }
-            for await (title, result) in group {
-                guard current == generation, !Task.isCancelled else { continue }
-                switch result {
-                case let .success(items):
-                    loaded[title] = items
-                    shelves = titles.compactMap { title in
-                        loaded[title].flatMap { $0.isEmpty ? nil : Shelf(title: title, items: $0) }
-                    }
-                case let .failure(error) where !error.isCancellation && title != Self.continueTitle:
-                    firstError = firstError ?? error
-                default:
-                    break
+                    await self.receive(title, load: current) { try await source.items() }
                 }
             }
         }
@@ -95,6 +81,24 @@ final class HomeModel {
             AuthSession.shared.handle(firstError)
         }
         isLoading = false
+    }
+
+    /// Fetches one shelf and puts it in place, keeping the shelves in their fixed order.
+    private func receive(_ title: String, load: Int, _ fetch: @Sendable () async throws -> [MediaItem]) async {
+        let result: Result<[MediaItem], Error>
+        do { result = .success(try await fetch()) } catch { result = .failure(error) }
+        guard load == generation, !Task.isCancelled else { return }
+        switch result {
+        case let .success(items):
+            loaded[title] = items
+            shelves = ([Self.continueTitle] + Self.sources.map(\.0)).compactMap { title in
+                loaded[title].flatMap { $0.isEmpty ? nil : Shelf(title: title, items: $0) }
+            }
+        case let .failure(error) where !error.isCancellation && title != Self.continueTitle:
+            firstError = firstError ?? error
+        default:
+            break
+        }
     }
 
     /// Re-reads only "continue watching", e.g. after the player closed.
