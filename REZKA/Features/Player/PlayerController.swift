@@ -19,6 +19,8 @@ final class PlayerController {
     private(set) var isLoading = true
     private(set) var speed: Float = 1
     var errorMessage: String?
+    /// The sum of the latest run of ← → jumps, shown over the video for a moment; nil hides it.
+    private(set) var seekHint: Double?
     /// Closes the window; set by the view.
     var onClose: (() -> Void)?
 
@@ -34,6 +36,9 @@ final class PlayerController {
     @ObservationIgnored private var lastLocalSave = Date.distantPast
     @ObservationIgnored private var lastRemoteSave = Date()
     @ObservationIgnored private var isStarted = false
+    /// Where a jump in flight is headed, so quick presses add up instead of starting from the old time.
+    @ObservationIgnored private var seekTarget: Double?
+    @ObservationIgnored private var seekHintTask: Task<Void, Never>?
     @ObservationIgnored private var isTornDown = false
 
     init(request: PlaybackRequest) {
@@ -155,6 +160,29 @@ final class PlayerController {
             playNext()
         } else {
             onClose?()
+        }
+    }
+
+    // MARK: Jumps
+
+    /// ← and → in the player: moves by `seconds` within the episode and adds the run up on screen.
+    func seek(by seconds: Double) {
+        guard player.currentItem?.status == .readyToPlay, pendingSeek == nil else { return }
+        let end = currentDuration > 0 ? currentDuration - 1 : .greatestFiniteMagnitude
+        let target = min(max((seekTarget ?? currentPosition) + seconds, 0), end)
+        seekTarget = target
+        player.seek(to: CMTime(seconds: target, preferredTimescale: 600)) { [weak self] _ in
+            Task { @MainActor in
+                if self?.seekTarget == target { self?.seekTarget = nil }
+            }
+        }
+
+        seekHint = (seekHint ?? 0) + seconds
+        seekHintTask?.cancel()
+        seekHintTask = Task { [weak self] in
+            try? await Task.sleep(for: .milliseconds(900))
+            guard !Task.isCancelled else { return }
+            self?.seekHint = nil
         }
     }
 
@@ -299,6 +327,7 @@ final class PlayerController {
         }
         loadTask?.cancel()
         subtitleTask?.cancel()
+        seekHintTask?.cancel()
         if let timeObserver { player.removeTimeObserver(timeObserver) }
         if let endObserver { NotificationCenter.default.removeObserver(endObserver) }
         timeObserver = nil

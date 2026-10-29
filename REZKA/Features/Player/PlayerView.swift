@@ -14,7 +14,7 @@ struct PlayerView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             // Under the title bar too: the toolbar floats over the picture with no background of its own.
-            PlayerSurface(player: controller.player)
+            PlayerSurface(player: controller.player) { controller.seek(by: $0) }
                 .ignoresSafeArea()
 
             if let text = controller.subtitleText {
@@ -36,7 +36,20 @@ struct PlayerView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .allowsHitTesting(false)
             }
+
+            if let jump = controller.seekHint {
+                Label(Self.jumpText(jump), systemImage: jump < 0 ? "gobackward" : "goforward")
+                    .font(.title2.weight(.semibold).monospacedDigit())
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background(.black.opacity(0.55), in: Capsule())
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .allowsHitTesting(false)
+                    .transition(.opacity)
+            }
         }
+        .animation(.easeOut(duration: 0.2), value: controller.seekHint == nil)
         .background(.black)
         .frame(minWidth: 640, minHeight: 360)
         .navigationTitle(controller.request.title)
@@ -75,6 +88,13 @@ struct PlayerView: View {
         } message: {
             Text(controller.errorMessage ?? "")
         }
+    }
+
+    /// "+30 с", "−10 с", "+1:10" for a run of arrow presses.
+    private static func jumpText(_ seconds: Double) -> String {
+        let sign = seconds < 0 ? "−" : "+"
+        let size = abs(seconds)
+        return sign + (size < 60 ? "\(Int(size)) с" : size.playbackTime)
     }
 
     private var qualityMenu: some View {
@@ -163,27 +183,45 @@ struct PlayerView: View {
 /// so the subtitles drawn over it stay visible.
 private struct PlayerSurface: NSViewRepresentable {
     let player: AVPlayer
+    let onSeek: (Double) -> Void
 
-    func makeNSView(context: Context) -> AVPlayerView {
+    func makeNSView(context: Context) -> TitleBarHidingPlayerView {
         let view = TitleBarHidingPlayerView()
         view.player = player
         view.controlsStyle = .floating
         view.showsFullScreenToggleButton = false
         view.allowsPictureInPicturePlayback = true
+        view.onSeek = onSeek
         // Space, arrows and J/K/L reach the player without clicking it first.
         DispatchQueue.main.async { view.window?.makeFirstResponder(view) }
         return view
     }
 
-    func updateNSView(_ view: AVPlayerView, context: Context) {
+    func updateNSView(_ view: TitleBarHidingPlayerView, context: Context) {
         if view.player !== player { view.player = player }
+        view.onSeek = onSeek
     }
 }
 
 /// Hides the window's title bar along with the floating controls, as QuickTime does: a few seconds
 /// after the mouse stops while the video plays. It stays while paused, under the pointer or with a
 /// menu open; in full screen the system hides it.
+/// ← and → jump 10 seconds, as in web players, instead of AVPlayerView's step of a frame.
 private final class TitleBarHidingPlayerView: AVPlayerView {
+    /// Called with ±10 for the arrow keys.
+    var onSeek: ((Double) -> Void)?
+
+    /// The jump for ← or →. Taken in the window's event monitor: the keys go to the player's inner
+    /// controls, not to this view. With a modifier, or for any other key, the system player keeps them.
+    private func jump(for event: NSEvent) -> Double? {
+        guard event.type == .keyDown, event.modifierFlags.intersection([.command, .option, .control, .shift]).isEmpty else { return nil }
+        switch event.keyCode {
+        case 123: return -10
+        case 124: return 10
+        default: return nil
+        }
+    }
+
     private var monitor: Any?
     private var observers: [NSObjectProtocol] = []
     private var hideTimer: Timer?
@@ -196,10 +234,14 @@ private final class TitleBarHidingPlayerView: AVPlayerView {
         guard let window else { return }
         window.acceptsMouseMovedEvents = true
         monitor = NSEvent.addLocalMonitorForEvents(matching: [.mouseMoved, .leftMouseDown, .rightMouseDown, .scrollWheel, .keyDown]) { [weak self] event in
-            MainActor.assumeIsolated {
-                if let self, event.window === self.window { self.userDidSomething() }
+            let handled = MainActor.assumeIsolated {
+                guard let self, event.window === self.window else { return false }
+                self.userDidSomething()
+                guard let jump = self.jump(for: event), let onSeek = self.onSeek else { return false }
+                onSeek(jump)
+                return true
             }
-            return event
+            return handled ? nil : event
         }
         let center = NotificationCenter.default
         observers = [

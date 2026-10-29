@@ -37,8 +37,7 @@ struct ShortcutsView: View {
     private static let right: [ShortcutGroup] = [
         ShortcutGroup(title: "Плеер", shortcuts: [
             Shortcut(keys: ["Пробел"], action: "Пауза и воспроизведение"),
-            // AVPlayerView's own keys, as in QuickTime Player.
-            Shortcut(keys: ["←", "→"], action: "Пауза и шаг на кадр назад или вперёд"),
+            Shortcut(keys: ["←", "→"], action: "Перемотка на 10 секунд назад или вперёд"),
             Shortcut(keys: ["⇧", "⌘", "N"], action: "Следующая серия"),
             Shortcut(keys: ["⌃", "⌘", "F"], action: "Во весь экран"),
             Shortcut(keys: ["⌘", "W"], action: "Закрыть плеер, позиция сохранится"),
