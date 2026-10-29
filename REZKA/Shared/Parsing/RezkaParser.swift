@@ -398,8 +398,8 @@ enum RezkaParser {
                 date: try item.select(".date").first()?.text().replacingOccurrences(of: "оставлен ", with: "") ?? "",
                 parts: try commentParts(text),
                 likes: Int(try like?.attr("data-likes_num") ?? "") ?? 0,
-                isLiked: try like?.hasClass("disabled") ?? false,
-                canLike: try like.map { !$0.hasClass("self-disabled") && !$0.hasClass("guest") } ?? false,
+                isLiked: like?.hasClass("disabled") ?? false,
+                canLike: like.map { !$0.hasClass("self-disabled") && !$0.hasClass("guest") } ?? false,
                 depth: Int(try item.attr("data-indent")) ?? 0
             )
         }
