@@ -251,6 +251,16 @@ enum RezkaParser {
         )
     }
 
+    /// "Никнейм" on the profile settings page: a label followed by a plain `div` with the name.
+    static func accountName(in doc: Document) throws -> String? {
+        for group in try doc.select(".b-profile_input-group").array()
+        where try group.select("label").first()?.text() == "Никнейм" {
+            // `select` would match the group itself, which is a `div` too.
+            return try group.children().array().first { $0.tagName() == "div" }?.text().nonEmpty
+        }
+        return nil
+    }
+
     /// The account's bookmark folders from a details page and those holding the title;
     /// nil when the page has no bookmark controls (logged out).
     private static func bookmarkFolders(onDetails doc: Document) throws -> (folders: [BookmarkFolder], checked: Set<String>)? {

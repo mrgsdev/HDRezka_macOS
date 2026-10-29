@@ -308,6 +308,11 @@ final class RezkaClient {
         }
     }
 
+    /// The account's nickname, from the profile settings page.
+    func accountName() async throws -> String? {
+        try RezkaParser.accountName(in: try await document(url("settings/")))
+    }
+
     /// Removes an entry from the site's "continue watching" list.
     func removeFromContinue(id: String) async throws {
         let json = try await postJSON("engine/ajax/cdn_saves_remove.php", form: ["id": id], timestamped: false)

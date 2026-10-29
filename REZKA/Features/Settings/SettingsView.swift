@@ -20,6 +20,15 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section("Аккаунт") {
+                if auth.isLoggedIn {
+                    LabeledContent("Ник") {
+                        if let name = auth.userName {
+                            Text(name).textSelection(.enabled)
+                        } else {
+                            ProgressView().controlSize(.small)
+                        }
+                    }
+                }
                 LabeledContent("Статус", value: auth.isLoggedIn ? "Вход выполнен" : "Не выполнен вход")
                 LabeledContent("Подписка", value: auth.isPremium ? "HDrezka Premium" : "Обычный аккаунт")
                 if auth.isLoggedIn {
@@ -77,6 +86,8 @@ struct SettingsView: View {
         .formStyle(.grouped)
         .frame(width: 560)
         .frame(minHeight: 560)
+        // The site may have renamed the account since; the last known name shows meanwhile.
+        .task { await auth.refreshUserName() }
         .confirmationDialog("Выйти из аккаунта?", isPresented: $confirmLogout) {
             Button("Выйти", role: .destructive) { Task { await auth.logout() } }
         }
