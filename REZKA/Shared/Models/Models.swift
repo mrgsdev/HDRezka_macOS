@@ -169,6 +169,8 @@ struct MediaDetails {
     let commentsCount: Int
     /// The collections in the "Из серии" row, e.g. "Сериалы Amazon".
     let collections: [Listing]
+    /// "Входит в списки": the site's best-of lists that rank the title.
+    let rankings: [RankedListing]
     /// Other films and series of the same franchise, as the site lists them (newest first).
     let franchise: Franchise?
     /// Episode release dates by season, latest season first; empty for films.
@@ -184,6 +186,14 @@ struct MediaDetails {
     func info(_ title: String) -> String? {
         info.first { $0.title.hasPrefix(title) }?.value
     }
+}
+
+/// A best-of list that ranks a title, e.g. "Лучшие сериалы триллеры 2022 года", 10th place.
+struct RankedListing: Identifiable, Hashable {
+    let listing: Listing
+    let place: Int?
+
+    var id: String { listing.id }
 }
 
 /// The share of the site's viewers watching a title in each dub, most popular first.

@@ -151,8 +151,17 @@ struct DetailsView: View {
                         .foregroundStyle(.secondary)
                         .frame(maxWidth: 820, alignment: .leading)
                 }
+                if !details.rankings.isEmpty {
+                    listRow("Входит в списки") {
+                        ForEach(details.rankings) { ranked in
+                            listChip(ranked.listing, systemImage: "trophy.fill", place: ranked.place)
+                        }
+                    }
+                }
                 if !details.collections.isEmpty {
-                    collections(details.collections)
+                    listRow("Из серии") {
+                        ForEach(details.collections) { listChip($0, systemImage: "square.stack") }
+                    }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -171,23 +180,44 @@ struct DetailsView: View {
             .foregroundStyle(.secondary)
     }
 
-    /// The "Из серии" row as buttons into those collections.
-    private func collections(_ listings: [Listing]) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
-                ForEach(listings) { listing in
-                    NavigationLink(value: listing) {
-                        Label(listing.title, systemImage: "square.stack")
-                            .font(.callout)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .background(Brand.panel, in: Capsule())
-                    }
-                    .buttonStyle(.plain)
-                }
+    /// A labelled row of the site's info table, "Входит в списки" or "Из серии", whose chips wrap
+    /// onto new lines: all of them in view, nothing to scroll sideways.
+    private func listRow(_ title: String, @ViewBuilder chips: () -> some View) -> some View {
+        HStack(alignment: .top, spacing: 14) {
+            Text(title)
+                .font(.callout.weight(.semibold))
+                .foregroundStyle(.secondary)
+                .frame(width: 128, alignment: .leading)
+                // Level with the text inside the chips.
+                .padding(.top, 6)
+            FlowLayout {
+                chips()
             }
         }
         .frame(maxWidth: 820, alignment: .leading)
+    }
+
+    /// A list to open: a best-of list with the title's place in it, or a collection.
+    private func listChip(_ listing: Listing, systemImage: String, place: Int? = nil) -> some View {
+        NavigationLink(value: listing) {
+            HStack(spacing: 6) {
+                Image(systemName: systemImage)
+                    .foregroundStyle(place.map { $0 <= 10 } == true ? Brand.gold : .secondary)
+                Text(listing.title)
+                    .lineLimit(1)
+                if let place {
+                    Text("\(place) место")
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .font(.callout)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(Brand.panel, in: Capsule())
+            .contentShape(Capsule())
+        }
+        .buttonStyle(.plain)
+        .help(place.map { "\(listing.title): \($0) место" } ?? listing.title)
     }
 
     // MARK: Actions

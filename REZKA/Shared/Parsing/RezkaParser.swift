@@ -124,10 +124,23 @@ enum RezkaParser {
 
     /// Links in the details row "Из серии", which point to collections.
     private static func collectionLinks(in doc: Document) throws -> [Listing] {
-        let row = try doc.select(".b-post__info tr").array().first { try $0.select("td").first()?.text().hasPrefix("Из серии") == true }
-        return try row?.select("a").array().compactMap { link in
+        try infoRow("Из серии", in: doc)?.select("a").array().compactMap { link in
             try listingPath(link.attr("href")).map { Listing(title: try link.text(), path: $0) }
         } ?? []
+    }
+
+    /// The details row "Входит в списки": links to best-of lists, each followed by "(10 место)".
+    private static func rankings(in doc: Document) throws -> [RankedListing] {
+        try infoRow("Входит в списки", in: doc)?.select("a").array().compactMap { link in
+            guard let path = listingPath(try link.attr("href")) else { return nil }
+            let place = (link.nextSibling() as? TextNode)?.text().filter(\.isNumber)
+            // A ranked list has no "Последние"/"Популярные" of its own.
+            return RankedListing(listing: Listing(title: try link.text(), path: path, isSortable: false), place: place.flatMap { Int($0) })
+        } ?? []
+    }
+
+    private static func infoRow(_ title: String, in doc: Document) throws -> Element? {
+        try doc.select(".b-post__info tr").array().first { try $0.select("td").first()?.text().hasPrefix(title) == true }
     }
 
     /// `https://rezka.fi/films/drama/` or `/films/drama/` → `films/drama/`, the form `Listing.path` uses.
@@ -237,6 +250,7 @@ enum RezkaParser {
             bookmarkedIn: bookmarks?.checked ?? [],
             commentsCount: try Int(doc.select("#comments-list-button em").first()?.text() ?? "") ?? 0,
             collections: try collectionLinks(in: doc),
+            rankings: try rankings(in: doc),
             franchise: try franchise(in: doc, base: base),
             schedule: try schedule(in: doc),
             // Nothing to play: no dub list and no player config, only the site's status and maybe a trailer.

@@ -43,6 +43,60 @@ enum Brand {
     }
 }
 
+// MARK: Flow
+
+/// Lays its views out in lines like words, starting a new line when the width runs out:
+/// every chip in view without scrolling sideways, which a mouse wheel can't do.
+struct FlowLayout: Layout {
+    var spacing: CGFloat = 8
+    var lineSpacing: CGFloat = 8
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let lines = arrange(subviews, width: proposal.width ?? .infinity)
+        let height = lines.map(\.height).reduce(0, +) + lineSpacing * CGFloat(max(lines.count - 1, 0))
+        return CGSize(width: proposal.width ?? lines.map(\.width).max() ?? 0, height: height)
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        var y = bounds.minY
+        for line in arrange(subviews, width: bounds.width) {
+            var x = bounds.minX
+            for index in line.indices {
+                let size = subviews[index].sizeThatFits(.unspecified)
+                // A view wider than the whole line gets the line's width, and truncates.
+                let width = min(size.width, bounds.width)
+                subviews[index].place(at: CGPoint(x: x, y: y), proposal: ProposedViewSize(width: width, height: size.height))
+                x += width + spacing
+            }
+            y += line.height + lineSpacing
+        }
+    }
+
+    private struct Line {
+        var indices: [Int] = []
+        var width: CGFloat = 0
+        var height: CGFloat = 0
+    }
+
+    private func arrange(_ subviews: Subviews, width: CGFloat) -> [Line] {
+        var lines: [Line] = []
+        var line = Line()
+        for index in subviews.indices {
+            let size = subviews[index].sizeThatFits(.unspecified)
+            let itemWidth = min(size.width, width)
+            if !line.indices.isEmpty, line.width + spacing + itemWidth > width {
+                lines.append(line)
+                line = Line()
+            }
+            line.width += (line.indices.isEmpty ? 0 : spacing) + itemWidth
+            line.height = max(line.height, size.height)
+            line.indices.append(index)
+        }
+        if !line.indices.isEmpty { lines.append(line) }
+        return lines
+    }
+}
+
 // MARK: Posters
 
 /// Decoded posters kept in memory so rows scrolling back into view show them at once.
