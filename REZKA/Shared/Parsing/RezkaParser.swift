@@ -139,6 +139,52 @@ enum RezkaParser {
         } ?? []
     }
 
+    /// The people in a details row, "Режиссер" or "В ролях актеры", each with a link and a small photo.
+    private static func people(_ title: String, in doc: Document, base: URL) throws -> [PersonLink] {
+        try infoRow(title, in: doc)?.select(".person-name-item").array().compactMap { item in
+            let link = try item.select("a").first()
+            let name = try (link ?? item).text()
+            guard !name.isEmpty else { return nil }
+            let path = try link.flatMap { listingPath(try $0.attr("href")) }
+            return PersonLink(
+                id: try item.attr("data-id").nonEmpty ?? path ?? name,
+                name: name,
+                path: path,
+                photoURL: absoluteURL(try item.attr("data-photo"), base: base)
+            )
+        } ?? []
+    }
+
+    /// A person's page: `.t1`/`.t2` names, a photo, the info table, and a `.b-person__career` block per role.
+    static func person(in doc: Document, base: URL) throws -> PersonDetails {
+        let cover = try doc.select(".b-post__infotable_left .b-sidecover").first()
+        let largePhoto = try cover?.select("a").first()?.attr("href")
+        let photo = try cover?.select("img").first()?.attr("src")
+        let info = try doc.select(".b-post__infotable_right_inner tr").array().compactMap { row -> InfoRow? in
+            let cells = try row.select("td").array()
+            guard cells.count == 2 else { return nil }
+            let title = try cells[0].text().trimmingCharacters(in: CharacterSet(charactersIn: ": "))
+            let value = try cells[1].text()
+            return title.isEmpty || value.isEmpty ? nil : InfoRow(title: title, value: value)
+        }
+        let careers = try doc.select(".b-person__career").array().compactMap { section -> PersonDetails.Career? in
+            let items = try items(in: section, base: base)
+            guard !items.isEmpty else { return nil }
+            return PersonDetails.Career(
+                title: try section.select("h2").first()?.text().nonEmpty ?? "Фильмография",
+                stats: try section.select(".b-person__career_stats").first()?.text().nonEmpty,
+                items: items
+            )
+        }
+        return PersonDetails(
+            name: try doc.select(".b-post__title .t1").first()?.text().nonEmpty ?? doc.select(".b-post__title").text(),
+            originalName: try doc.select(".b-post__title .t2").first()?.text().nonEmpty,
+            photoURL: absoluteURL(largePhoto?.hasImageExtension == true ? largePhoto : photo, base: base),
+            info: info,
+            careers: careers
+        )
+    }
+
     private static func infoRow(_ title: String, in doc: Document) throws -> Element? {
         try doc.select(".b-post__info tr").array().first { try $0.select("td").first()?.text().hasPrefix(title) == true }
     }
@@ -251,6 +297,8 @@ enum RezkaParser {
             commentsCount: try Int(doc.select("#comments-list-button em").first()?.text() ?? "") ?? 0,
             collections: try collectionLinks(in: doc),
             rankings: try rankings(in: doc),
+            directors: try people("Режиссер", in: doc, base: base),
+            cast: try people("В ролях", in: doc, base: base),
             franchise: try franchise(in: doc, base: base),
             schedule: try schedule(in: doc),
             // Nothing to play: no dub list and no player config, only the site's status and maybe a trailer.

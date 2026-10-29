@@ -145,7 +145,16 @@ struct DetailsView: View {
                         .frame(maxWidth: 820, alignment: .leading)
                         .textSelection(.enabled)
                 }
-                if let cast = details.info("В ролях") {
+                if !details.directors.isEmpty {
+                    listRow("Режиссёр") {
+                        ForEach(details.directors) { personChip($0) }
+                    }
+                }
+                if !details.cast.isEmpty {
+                    listRow("В ролях") {
+                        ForEach(details.cast) { personChip($0) }
+                    }
+                } else if let cast = details.info("В ролях") {
                     Text("В ролях: \(cast)")
                         .font(.callout)
                         .foregroundStyle(.secondary)
@@ -178,6 +187,32 @@ struct DetailsView: View {
         ].compactMap { $0 }
         return Text(parts.joined(separator: "  ·  "))
             .foregroundStyle(.secondary)
+    }
+
+    /// A director or an actor with their photo; opens their page with all their titles.
+    @ViewBuilder
+    private func personChip(_ person: PersonLink) -> some View {
+        let chip = HStack(spacing: 6) {
+            PersonPhoto(url: person.photoURL)
+                .frame(width: 22, height: 22)
+            Text(person.name)
+                .lineLimit(1)
+        }
+        .font(.callout)
+        .padding(.leading, 4)
+        .padding(.trailing, 12)
+        .padding(.vertical, 4)
+        .background(Brand.panel, in: Capsule())
+
+        if person.path != nil {
+            NavigationLink(value: person) {
+                chip.contentShape(Capsule())
+            }
+            .buttonStyle(.plain)
+            .help("Все фильмы и сериалы: \(person.name)")
+        } else {
+            chip
+        }
     }
 
     /// A labelled row of the site's info table, "Входит в списки" or "Из серии", whose chips wrap

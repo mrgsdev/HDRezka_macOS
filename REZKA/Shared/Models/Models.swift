@@ -171,6 +171,9 @@ struct MediaDetails {
     let collections: [Listing]
     /// "Входит в списки": the site's best-of lists that rank the title.
     let rankings: [RankedListing]
+    /// "Режиссер" and "В ролях актеры", with links to their pages.
+    let directors: [PersonLink]
+    let cast: [PersonLink]
     /// Other films and series of the same franchise, as the site lists them (newest first).
     let franchise: Franchise?
     /// Episode release dates by season, latest season first; empty for films.
@@ -186,6 +189,34 @@ struct MediaDetails {
     func info(_ title: String) -> String? {
         info.first { $0.title.hasPrefix(title) }?.value
     }
+}
+
+/// Someone in a title's cast or crew; `path` leads to their page, e.g. `person/3775-gari-oldman/`.
+struct PersonLink: Identifiable, Hashable {
+    let id: String
+    let name: String
+    /// nil for a name the site doesn't link to a page.
+    let path: String?
+    let photoURL: URL?
+}
+
+/// A person's page: the info table and their titles, a list per role ("Актер", "Режиссер"…).
+struct PersonDetails {
+    struct Career: Identifiable {
+        let title: String
+        /// "В базе 6 фильмов и 13 сериалов".
+        let stats: String?
+        let items: [MediaItem]
+
+        var id: String { title }
+    }
+
+    let name: String
+    let originalName: String?
+    let photoURL: URL?
+    /// "Карьера", "Дата рождения", "Место рождения", "Рост"…
+    let info: [InfoRow]
+    let careers: [Career]
 }
 
 /// A best-of list that ranks a title, e.g. "Лучшие сериалы триллеры 2022 года", 10th place.

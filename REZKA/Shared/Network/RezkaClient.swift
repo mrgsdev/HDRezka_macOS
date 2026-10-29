@@ -309,6 +309,11 @@ final class RezkaClient {
         }
     }
 
+    /// A person's page with their titles by role; `path` as in `PersonLink`.
+    func person(path: String) async throws -> PersonDetails {
+        try RezkaParser.person(in: try await document(url(path)), base: baseURL)
+    }
+
     /// The account's nickname, from the profile settings page.
     func accountName() async throws -> String? {
         try RezkaParser.accountName(in: try await document(url("settings/")))
