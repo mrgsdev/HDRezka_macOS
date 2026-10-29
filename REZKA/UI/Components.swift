@@ -261,28 +261,127 @@ struct PosterCard: View {
     }
 }
 
-/// A titled horizontal shelf of posters.
-/// A titled shelf of posters. The title is plain text, or any view, like the home's "Новые …" with its section links.
+/// A titled shelf of posters that scrolls sideways. The title is plain text, or any view, like the home's
+/// "Новые …" with its section links.
+///
+/// A mouse wheel scrolls the page, not the shelf: taking it over here would leave the page no place to
+/// scroll from, shelves cover most of it. So, as in the site's slider, arrows on the edges turn the shelf
+/// a screen at a time, shown while the pointer is over it; ⇧ with the wheel turns it a poster at a time,
+/// and a trackpad scrolls it sideways as usual.
 struct MediaRow<Title: View>: View {
     let items: [MediaItem]
-    var actions: (MediaItem) -> [CardAction] = { _ in [] }
-    @ViewBuilder let title: Title
+    let actions: (MediaItem) -> [CardAction]
+    let title: Title
+
+    /// The first poster in view; follows trackpad scrolling too.
+    @State private var position: MediaItem.ID?
+    @State private var isHovered = false
+    @State private var width: CGFloat = 0
+    @State private var wheelMonitor: Any?
+    /// Wheel travel not yet turned into a whole poster.
+    @State private var wheelTravel: CGFloat = 0
+
+    // Computed: a generic type can't store statics.
+    private static var cardWidth: CGFloat { 170 }
+    private static var spacing: CGFloat { 20 }
+    private static var margin: CGFloat { 28 }
+
+    init(items: [MediaItem], actions: @escaping (MediaItem) -> [CardAction] = { _ in [] }, @ViewBuilder title: () -> Title) {
+        self.items = items
+        self.actions = actions
+        self.title = title()
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             title
                 .font(.title2.bold())
-                .padding(.horizontal, 28)
+                .padding(.horizontal, Self.margin)
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(alignment: .top, spacing: 20) {
+                LazyHStack(alignment: .top, spacing: Self.spacing) {
                     ForEach(items) { item in
-                        PosterCard(item: item, actions: actions(item))
+                        PosterCard(item: item, width: Self.cardWidth, actions: actions(item))
                     }
                 }
-                .padding(.horizontal, 28)
+                .scrollTargetLayout()
                 .padding(.vertical, 10)
             }
+            .contentMargins(.horizontal, Self.margin, for: .scrollContent)
+            .scrollPosition(id: $position, anchor: .leading)
+            .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { width = $0 }
+            .overlay(alignment: .topLeading) {
+                if isHovered, firstIndex > 0 { arrow(back: true) }
+            }
+            .overlay(alignment: .topTrailing) {
+                if isHovered, firstIndex + pageSize < items.count { arrow(back: false) }
+            }
+            .onHover { inside in
+                isHovered = inside
+                if inside { watchShiftWheel() } else { stopWatchingShiftWheel() }
+            }
+            .onDisappear { stopWatchingShiftWheel() }
+            .animation(.easeOut(duration: 0.15), value: isHovered)
         }
+    }
+
+    /// How many posters fit in the visible width.
+    private var pageSize: Int {
+        max(1, Int((width - 2 * Self.margin + Self.spacing) / (Self.cardWidth + Self.spacing)))
+    }
+
+    private var firstIndex: Int {
+        position.flatMap { id in items.firstIndex { $0.id == id } } ?? 0
+    }
+
+    /// Moves the shelf by whole posters; the last page is a full one, not a lone poster at the edge.
+    private func move(by posters: Int) {
+        let target = min(max(firstIndex + posters, 0), max(items.count - pageSize, 0))
+        guard items.indices.contains(target) else { return }
+        withAnimation(.easeInOut(duration: 0.3)) { position = items[target].id }
+    }
+
+    /// While the pointer is over the shelf, ⇧ with the wheel turns it instead of the page. A wheel the
+    /// system already turned sideways, or a trackpad, has a horizontal delta and is left to the scroll view.
+    private func watchShiftWheel() {
+        guard wheelMonitor == nil else { return }
+        wheelMonitor = NSEvent.addLocalMonitorForEvents(matching: .scrollWheel) { event in
+            guard event.modifierFlags.contains(.shift), event.scrollingDeltaX == 0, event.scrollingDeltaY != 0 else { return event }
+            // A notched wheel counts lines, one per click; a smooth one counts points.
+            let perPoster: CGFloat = event.hasPreciseScrollingDeltas ? 80 : 1
+            wheelTravel += event.scrollingDeltaY
+            let posters = Int(wheelTravel / perPoster)
+            if posters != 0 {
+                wheelTravel -= CGFloat(posters) * perPoster
+                // Down, or toward the user, moves on.
+                move(by: -posters)
+            }
+            return nil
+        }
+    }
+
+    private func stopWatchingShiftWheel() {
+        if let wheelMonitor { NSEvent.removeMonitor(wheelMonitor) }
+        wheelMonitor = nil
+        wheelTravel = 0
+    }
+
+    private func arrow(back: Bool) -> some View {
+        Button {
+            move(by: back ? -pageSize : pageSize)
+        } label: {
+            Image(systemName: back ? "chevron.left" : "chevron.right")
+                .font(.system(size: 20, weight: .semibold))
+                .frame(width: 36, height: 72)
+                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 10))
+                .contentShape(RoundedRectangle(cornerRadius: 10))
+        }
+        .buttonStyle(.plain)
+        .help(back ? "Назад" : "Дальше")
+        .accessibilityLabel(back ? "Назад" : "Дальше")
+        // Level with the middle of the posters.
+        .padding(.top, 10 + (Self.cardWidth * 1.5 - 72) / 2)
+        .padding(.horizontal, 6)
+        .transition(.opacity)
     }
 }
 
