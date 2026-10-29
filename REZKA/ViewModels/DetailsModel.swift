@@ -15,6 +15,8 @@ final class DetailsModel {
     private(set) var translator: Translator?
     private(set) var seasons: [Season] = []
     var selectedSeasonId: String?
+    /// Every dub's seasons by translator id, filled in the background for the dub menu.
+    private(set) var seasonsByTranslator: [String: [Season]] = [:]
     private(set) var isLoadingEpisodes = false
     private(set) var episodesError: Error?
     /// The account's bookmark folders; nil hides the bookmark button (logged out).
@@ -64,6 +66,9 @@ final class DetailsModel {
             state = .loaded(details)
 
             if details.isSeries, let chosen {
+                if let active = details.activeTranslatorId, !details.seasons.isEmpty {
+                    seasonsByTranslator[active] = details.seasons
+                }
                 if chosen.id == details.activeTranslatorId, !details.seasons.isEmpty {
                     apply(details.seasons, postId: details.postId)
                 } else {
@@ -72,6 +77,7 @@ final class DetailsModel {
             }
             // After the episodes, so the play button is not kept waiting on the site.
             if details.commentsCount > 0 { await loadMoreComments() }
+            if details.isSeries, details.translators.count > 1 { await loadAllSeasons(details) }
         } catch where !error.isCancellation {
             state = .failed(error)
             AuthSession.shared.handle(error)
@@ -81,7 +87,13 @@ final class DetailsModel {
     func select(_ translator: Translator) async {
         guard let details, translator != self.translator else { return }
         self.translator = translator
-        if details.isSeries { await loadSeasons(details, translator) }
+        guard details.isSeries else { return }
+        if let seasons = seasonsByTranslator[translator.id] {
+            episodesError = nil
+            apply(seasons, postId: details.postId)
+        } else {
+            await loadSeasons(details, translator)
+        }
     }
 
     private func loadSeasons(_ details: MediaDetails, _ translator: Translator) async {
@@ -89,6 +101,7 @@ final class DetailsModel {
         episodesError = nil
         do {
             let seasons = try await RezkaClient.shared.seasons(postId: details.postId, translatorId: translator.id, favs: details.favs)
+            seasonsByTranslator[translator.id] = seasons
             guard translator == self.translator else { return }
             apply(seasons, postId: details.postId)
         } catch where !error.isCancellation {
@@ -102,6 +115,59 @@ final class DetailsModel {
         self.seasons = seasons
         let lastSeason = WatchProgressStore.shared.last(postId: postId)?.seasonId
         selectedSeasonId = seasons.first { $0.id == lastSeason }?.id ?? seasons.first?.id
+    }
+
+    /// One dub at a time, so the menu hint never holds up the player's requests.
+    /// A dub that fails stays unknown: it only loses its hint.
+    private func loadAllSeasons(_ details: MediaDetails) async {
+        for translator in details.translators where seasonsByTranslator[translator.id] == nil {
+            guard !Task.isCancelled else { return }
+            guard let seasons = try? await RezkaClient.shared.seasons(postId: details.postId, translatorId: translator.id, favs: details.favs)
+            else { continue }
+            seasonsByTranslator[translator.id] = seasons
+        }
+    }
+
+    // MARK: Dub menu
+
+    /// "сезоны 1–12, 15" once the dubs are known to differ; nil while they all look the same.
+    func seasonsHint(for translator: Translator) -> String? {
+        guard let seasons = seasonsByTranslator[translator.id],
+              Set(seasonsByTranslator.values.map { $0.map(\.id) }).count > 1
+        else { return nil }
+        return Self.seasonsLabel(seasons)
+    }
+
+    /// The dubs with and without the season on screen, once every dub's seasons are in
+    /// and some lack it; nil otherwise, for one flat list.
+    var translatorsBySelectedSeason: (season: Season, with: [Translator], without: [Translator])? {
+        guard let details, let season = selectedSeason,
+              details.translators.allSatisfy({ seasonsByTranslator[$0.id] != nil })
+        else { return nil }
+        let has = { (translator: Translator) in
+            self.seasonsByTranslator[translator.id]?.contains { $0.id == season.id } == true
+        }
+        let without = details.translators.filter { !has($0) }
+        return without.isEmpty ? nil : (season, details.translators.filter(has), without)
+    }
+
+    /// Runs of numbers collapsed: "сезоны 1–12, 15", or "сезон 5" for one.
+    private static func seasonsLabel(_ seasons: [Season]) -> String {
+        let numbers = seasons.compactMap { Int($0.id) }.sorted()
+        guard let first = numbers.first, numbers.count == seasons.count else { return "сезонов: \(seasons.count)" }
+        if numbers.count == 1 { return "сезон \(first)" }
+        var runs: [String] = []
+        var (start, end) = (first, first)
+        for number in numbers.dropFirst() {
+            if number == end + 1 {
+                end = number
+                continue
+            }
+            runs.append(start == end ? "\(start)" : "\(start)–\(end)")
+            (start, end) = (number, number)
+        }
+        runs.append(start == end ? "\(start)" : "\(start)–\(end)")
+        return "сезоны " + runs.joined(separator: ", ")
     }
 
     // MARK: Comments

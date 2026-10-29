@@ -227,19 +227,16 @@ struct DetailsView: View {
 
             if details.translators.count > 1 {
                 Menu {
-                    ForEach(details.translators) { translator in
-                        Button {
-                            Task { await model.select(translator) }
-                        } label: {
-                            let title = translator.isPremium ? "\(translator.name) · Premium" : translator.name
-                            if translator == model.translator {
-                                Label(title, systemImage: "checkmark")
-                            } else if translator.isPremium {
-                                Label(title, systemImage: "crown.fill")
-                            } else {
-                                Text(title)
-                            }
+                    if let groups = model.translatorsBySelectedSeason {
+                        let number = Int(groups.season.id).map { "\($0)" } ?? "«\(groups.season.title)»"
+                        Section("Есть сезон \(number)") {
+                            ForEach(groups.with) { translatorButton($0) }
                         }
+                        Section("Нет сезона \(number)") {
+                            ForEach(groups.without) { translatorButton($0) }
+                        }
+                    } else {
+                        ForEach(details.translators) { translatorButton($0) }
                     }
                 } label: {
                     Label(model.translator?.name ?? "Озвучка", systemImage: model.translator?.isPremium == true ? "crown.fill" : "waveform")
@@ -256,6 +253,24 @@ struct DetailsView: View {
             }
         }
         .controlSize(.large)
+    }
+
+    /// A dub in the menu: its name, Premium, and its seasons once the dubs are known to differ.
+    private func translatorButton(_ translator: Translator) -> some View {
+        Button {
+            Task { await model.select(translator) }
+        } label: {
+            let title = [translator.name, translator.isPremium ? "Premium" : nil, model.seasonsHint(for: translator)]
+                .compactMap { $0 }
+                .joined(separator: " · ")
+            if translator == model.translator {
+                Label(title, systemImage: "checkmark")
+            } else if translator.isPremium {
+                Label(title, systemImage: "crown.fill")
+            } else {
+                Text(title)
+            }
+        }
     }
 
     /// Folders with a checkmark where the title is; picking one adds or removes it there.
