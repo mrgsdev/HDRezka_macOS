@@ -191,14 +191,9 @@ enum RezkaParser {
         let isSeries = seriesArgs != nil || hasEpisodeTabs
 
         var translators = try doc.select("#translators-list .b-translator__item").array().map { element in
-            var name = try element.attr("title").nonEmpty ?? element.text()
-            if let flag = try element.select("img").first()?.attr("title").nonEmpty ?? element.select("img").first()?.attr("alt").nonEmpty,
-               !name.localizedCaseInsensitiveContains(flag) {
-                name += " (\(flag))"
-            }
-            return Translator(
+            Translator(
                 id: try element.attr("data-translator_id"),
-                name: name,
+                name: try dubName(element.attr("title").nonEmpty ?? element.text(), flag: element.select("img").first()),
                 isCamrip: try element.attr("data-camrip").nonEmpty ?? "0",
                 isAds: try element.attr("data-ads").nonEmpty ?? "0",
                 isDirector: try element.attr("data-director").nonEmpty ?? "0",
@@ -248,7 +243,39 @@ enum RezkaParser {
             upcomingStatus: translators.isEmpty
                 ? try doc.select(".b-post__go_status").first()?.text().nonEmpty ?? "Ожидается"
                 : nil,
-            siteRating: try siteRating(in: doc)
+            siteRating: try siteRating(in: doc),
+            dubPopularity: try dubPopularity(in: doc)
+        )
+    }
+
+    /// A dub's name with its language when a flag marks it, e.g. "HDrezka Studio (Украинский)".
+    private static func dubName(_ text: String, flag: Element?) throws -> String {
+        var name = text.trimmingCharacters(in: .whitespaces)
+        if let language = try flag?.attr("title").nonEmpty ?? flag?.attr("alt").nonEmpty,
+           !name.localizedCaseInsensitiveContains(language) {
+            name += " (\(language))"
+        }
+        return name
+    }
+
+    /// "Не можешь выбрать озвучку?" next to the dub list: its tooltip is an HTML table of the dubs
+    /// with the share of viewers watching each.
+    private static func dubPopularity(in doc: Document) throws -> DubPopularity? {
+        guard let hint = try doc.select(".b-rgstats__help").first() else { return nil }
+        let table = try SwiftSoup.parseBodyFragment(try hint.attr("title"))
+        let entries = try table.select(".b-rgstats__list_item .inner").array().compactMap { row -> DubPopularity.Entry? in
+            guard let title = try row.select(".title").first(),
+                  let percent = Double(try row.select(".count").text()
+                    .filter { $0.isNumber || $0 == "," || $0 == "." }
+                    .replacingOccurrences(of: ",", with: "."))
+            else { return nil }
+            return DubPopularity.Entry(name: try dubName(title.text(), flag: title.select("img").first()), percent: percent)
+        }
+        guard !entries.isEmpty else { return nil }
+        return DubPopularity(
+            title: try table.select(".b-rgstats__title").first()?.text().nonEmpty ?? "Популярность озвучек",
+            entries: entries,
+            note: try table.select(".b-rgstats__info").first()?.text() ?? ""
         )
     }
 

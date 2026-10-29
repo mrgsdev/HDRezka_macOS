@@ -178,10 +178,29 @@ struct MediaDetails {
     let upcomingStatus: String?
     /// The viewers' rating on the site itself; nil when the page has none.
     let siteRating: SiteRating?
+    /// "Не можешь выбрать озвучку?": which dubs viewers pick; nil when the page has no such hint.
+    let dubPopularity: DubPopularity?
 
     func info(_ title: String) -> String? {
         info.first { $0.title.hasPrefix(title) }?.value
     }
+}
+
+/// The share of the site's viewers watching a title in each dub, most popular first.
+struct DubPopularity: Hashable {
+    struct Entry: Hashable, Identifiable {
+        /// Named like `Translator.name`, flag included, so the two can be matched.
+        let name: String
+        let percent: Double
+
+        var id: String { name }
+    }
+
+    /// "Популярность озвучек для данного сериала".
+    let title: String
+    let entries: [Entry]
+    /// The site's footnote on how the numbers are made.
+    let note: String
 }
 
 /// The site's own rating of a title: the average of its viewers' votes from 1 to 10.

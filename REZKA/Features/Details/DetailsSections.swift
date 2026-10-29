@@ -11,6 +11,121 @@ private struct SectionTitle: View {
     }
 }
 
+// MARK: Dub popularity
+
+/// "Не можешь выбрать озвучку?" next to the dub menu. Like the site's tooltip, the table opens on hover
+/// and stays while the pointer is on the link or the table; a click works too. A row picks that dub.
+struct DubPopularityLink: View {
+    let popularity: DubPopularity
+    let translators: [Translator]
+    let current: Translator?
+    let onSelect: (Translator) -> Void
+
+    @State private var isShown = false
+    @State private var overLink = false
+    @State private var overTable = false
+
+    var body: some View {
+        Button("Не можешь выбрать озвучку?") { isShown.toggle() }
+            .buttonStyle(.link)
+            .controlSize(.regular)
+            .onHover { inside in
+                overLink = inside
+                hoverChanged()
+            }
+            .popover(isPresented: $isShown, arrowEdge: .bottom) {
+                DubPopularityTable(popularity: popularity, translators: translators, current: current) { translator in
+                    isShown = false
+                    onSelect(translator)
+                }
+                .onHover { inside in
+                    overTable = inside
+                    hoverChanged()
+                }
+            }
+    }
+
+    /// A short pause either way: passing over the link doesn't open the table, and moving
+    /// from the link onto the table doesn't close it.
+    private func hoverChanged() {
+        let opening = overLink || overTable
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(opening ? 250 : 350))
+            if opening, overLink || overTable {
+                isShown = true
+            } else if !opening, !overLink, !overTable {
+                isShown = false
+            }
+        }
+    }
+}
+
+private struct DubPopularityTable: View {
+    let popularity: DubPopularity
+    let translators: [Translator]
+    let current: Translator?
+    let onSelect: (Translator) -> Void
+
+    private static let russian = Locale(identifier: "ru_RU")
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(popularity.title)
+                .font(.title3.bold())
+            VStack(spacing: 4) {
+                ForEach(popularity.entries) { row($0) }
+            }
+            if !popularity.note.isEmpty {
+                Text(popularity.note)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .padding(16)
+        .frame(width: 520)
+    }
+
+    private func row(_ entry: DubPopularity.Entry) -> some View {
+        let translator = translators.first { $0.name == entry.name }
+        let isCurrent = translator != nil && translator == current
+        return Button {
+            if let translator { onSelect(translator) }
+        } label: {
+            HStack(spacing: 6) {
+                Text(entry.name)
+                    .fontWeight(isCurrent ? .bold : .medium)
+                    .lineLimit(1)
+                if isCurrent {
+                    Image(systemName: "checkmark")
+                } else if translator?.isPremium == true {
+                    Image(systemName: "crown.fill").foregroundStyle(.orange)
+                }
+                Spacer(minLength: 12)
+                // "42,59%" as on the site; the Russian percent format would put a space before the sign.
+                Text(entry.percent.formatted(.number.precision(.fractionLength(0...2)).locale(Self.russian)) + "%")
+                    .fontWeight(.semibold)
+                    .monospacedDigit()
+            }
+            .font(.callout)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(alignment: .leading) {
+                GeometryReader { proxy in
+                    Color.accentColor.opacity(0.35)
+                        .frame(width: proxy.size.width * min(max(entry.percent, 0), 100) / 100)
+                }
+            }
+            .background(Brand.panel)
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(translator == nil)
+        .help(translator == nil ? "Этой озвучки нет среди доступных для просмотра" : "Смотреть в этой озвучке")
+    }
+}
+
 // MARK: Rating
 
 /// The site's rating as ten stars filled to the average, like on the site. Until the account votes,

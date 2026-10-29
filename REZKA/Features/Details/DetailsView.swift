@@ -259,6 +259,11 @@ struct DetailsView: View {
                 }
                 .fixedSize()
                 .help("Озвучка")
+                if let popularity = details.dubPopularity {
+                    DubPopularityLink(popularity: popularity, translators: details.translators, current: model.translator) { translator in
+                        Task { await model.select(translator) }
+                    }
+                }
             } else if let translator = model.translator {
                 Label(translator.name, systemImage: "waveform")
                     .foregroundStyle(.secondary)
