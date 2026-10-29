@@ -132,9 +132,10 @@ struct BookmarksView: View {
                         HStack(spacing: 6) {
                             Text(folder.name)
                             if let count = folder.count {
-                                Text("\(count)").foregroundStyle(isSelected ? .primary : .secondary)
+                                Text("\(count)").foregroundStyle(isSelected ? Color.white.opacity(0.85) : .secondary)
                             }
                         }
+                        .foregroundStyle(isSelected ? Color.white : .primary)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 7)
                         .background(isSelected ? Color.accentColor : Brand.panel, in: Capsule())

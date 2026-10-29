@@ -1,17 +1,46 @@
 import AppKit
 import SwiftUI
 
-/// The REZKA look shared with the Apple TV app: pink wordmark on dark navy.
+/// The REZKA look shared with the Apple TV app: pink wordmark on dark navy, and a cool light gray
+/// version of it for the light theme. Every color here follows the window's appearance.
 enum Brand {
     static let navy = Color(red: 2 / 255, green: 18 / 255, blue: 25 / 255)
     static let pink = Color(red: 1, green: 221 / 255, blue: 221 / 255)
-    static let panel = Color.white.opacity(0.06)
+
+    /// Cards, chips and table rows.
+    static let panel = adaptive(light: NSColor(white: 0, alpha: 0.05), dark: NSColor(white: 1, alpha: 0.06))
+    /// A row under the mouse pointer.
+    static let hover = adaptive(light: NSColor(white: 0, alpha: 0.04), dark: NSColor(white: 1, alpha: 0.06))
+    /// The thin outline around posters.
+    static let stroke = adaptive(light: NSColor(white: 0, alpha: 0.08), dark: NSColor(white: 1, alpha: 0.08))
+    /// Ratings and stars: the system yellow on dark, a deeper gold that stays readable on light.
+    static let gold = adaptive(light: rgb(196, 134, 0), dark: .systemYellow)
+    /// The window's plain background, under a details page's blurred poster.
+    static let canvas = adaptive(light: rgb(236, 241, 244), dark: rgb(2, 18, 25))
 
     static let background = LinearGradient(
-        colors: [Color(red: 10 / 255, green: 32 / 255, blue: 42 / 255), navy],
+        colors: [adaptive(light: rgb(245, 248, 250), dark: rgb(10, 32, 42)), canvas],
         startPoint: .top,
         endPoint: .bottom
     )
+
+    /// Where a poster or a cover is still loading or missing.
+    static let placeholder = LinearGradient(
+        colors: [adaptive(light: NSColor(white: 0.9, alpha: 1), dark: NSColor(white: 0.2, alpha: 1)),
+                 adaptive(light: NSColor(white: 0.82, alpha: 1), dark: NSColor(white: 0.11, alpha: 1))],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+
+    static func adaptive(light: NSColor, dark: NSColor) -> Color {
+        Color(nsColor: NSColor(name: nil) { appearance in
+            appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua ? dark : light
+        })
+    }
+
+    private static func rgb(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat) -> NSColor {
+        NSColor(srgbRed: red / 255, green: green / 255, blue: blue / 255, alpha: 1)
+    }
 }
 
 // MARK: Posters
@@ -50,7 +79,7 @@ struct PosterImage: View {
                     .transition(.opacity)
             } else {
                 ZStack {
-                    LinearGradient(colors: [Color(white: 0.18), Color(white: 0.1)], startPoint: .top, endPoint: .bottom)
+                    Brand.placeholder
                     if failed {
                         Image(systemName: "film").font(.system(size: 28)).foregroundStyle(.secondary)
                     }
@@ -144,12 +173,14 @@ struct PosterCard: View {
                                 .lineLimit(1)
                                 .padding(.horizontal, 7)
                                 .padding(.vertical, 3)
+                                // On the poster itself, so white in both themes.
+                                .foregroundStyle(.white)
                                 .background(.black.opacity(0.75), in: Capsule())
                                 .padding(7)
                         }
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(.white.opacity(0.08)))
+                    .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(Brand.stroke))
                     .hoverLift()
 
                 VStack(alignment: .leading, spacing: 2) {
@@ -229,7 +260,7 @@ struct ErrorStateView: View {
         VStack(spacing: 16) {
             Image(systemName: "exclamationmark.triangle")
                 .font(.system(size: 40))
-                .foregroundStyle(.yellow)
+                .foregroundStyle(Brand.gold)
             Text(error.localizedDescription)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 520)

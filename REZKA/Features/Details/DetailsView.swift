@@ -59,7 +59,7 @@ struct DetailsView: View {
     }
 
     private var backdrop: some View {
-        Brand.navy
+        Brand.canvas
             .overlay(alignment: .top) {
                 PosterImage(url: model.details?.posterURL ?? item.posterURL)
                     .frame(height: 520)
@@ -123,7 +123,7 @@ struct DetailsView: View {
                 metaLine(details)
                 if let ratings = details.info("Рейтинги") {
                     Label(ratings, systemImage: "star.fill")
-                        .foregroundStyle(.yellow)
+                        .foregroundStyle(Brand.gold)
                 }
                 if let rating = model.siteRating {
                     SiteRatingView(rating: rating, myRating: model.myRating, isRating: model.isRating) { score in
@@ -200,7 +200,7 @@ struct DetailsView: View {
                     .font(.headline)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
-                    .background(.white.opacity(0.1), in: Capsule())
+                    .background(Brand.panel, in: Capsule())
             } else if details.isSeries {
                 if let target = model.resumeEpisode(progress: progress) {
                     let season = model.seasons.first { $0.id == target.episode.seasonId }?.title ?? ""

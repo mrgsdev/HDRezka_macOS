@@ -10,6 +10,7 @@ struct SettingsView: View {
     @State private var foundMirrors: [URL] = []
     @State private var isSearchingMirrors = false
     @State private var quality = QualityPreference.current
+    @State private var appearance = AppearancePreference.current
     @State private var confirmLogout = false
 
     static let mirrorHint = "Напишите на mirror@hdrezka.org, чтобы узнать актуальное зеркало, и введите его сюда."
@@ -61,6 +62,14 @@ struct SettingsView: View {
             } footer: {
                 Text(mirrorStatus ?? "\(Self.mirrorHint) Сессия перенесётся на новое зеркало.")
                     .foregroundStyle(.secondary)
+            }
+
+            Section("Оформление") {
+                Picker("Тема", selection: $appearance) {
+                    ForEach(AppearancePreference.allCases) { Text($0.title).tag($0) }
+                }
+                .pickerStyle(.segmented)
+                .onChange(of: appearance) { _, value in AppearancePreference.current = value }
             }
 
             Section("Воспроизведение") {

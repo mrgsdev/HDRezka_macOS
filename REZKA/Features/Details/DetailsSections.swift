@@ -64,11 +64,11 @@ struct SiteRatingView: View {
 
     private var stars: some View {
         row
-            .foregroundStyle(.white.opacity(0.18))
+            .foregroundStyle(Color.primary.opacity(0.18))
             .overlay(alignment: .leading) {
                 GeometryReader { proxy in
                     Rectangle()
-                        .fill(hovered == nil ? Color.yellow : Color.accentColor)
+                        .fill(hovered == nil ? Brand.gold : Color.accentColor)
                         .frame(width: proxy.size.width * fill)
                 }
                 .mask(row)
@@ -178,10 +178,10 @@ private struct EpisodeCard: View {
     var body: some View {
         Button(action: action) {
             ZStack(alignment: .bottomLeading) {
-                LinearGradient(colors: [Color(white: 0.24), Color(white: 0.13)], startPoint: .topLeading, endPoint: .bottomTrailing)
+                Brand.placeholder
                 Image(systemName: "play.fill")
                     .font(.system(size: 22))
-                    .foregroundStyle(.white.opacity(0.25))
+                    .foregroundStyle(Color.primary.opacity(0.25))
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
@@ -385,14 +385,14 @@ private struct FranchiseRow: View {
                 } else if let rating = part.rating {
                     Label(rating, systemImage: "star.fill")
                         .font(.callout)
-                        .foregroundStyle(.yellow)
+                        .foregroundStyle(Brand.gold)
                 }
             }
             .frame(width: 80, alignment: .leading)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
-        .background(isHovered ? Color.white.opacity(0.06) : .clear)
+        .background(isHovered ? Brand.hover : .clear)
         .animation(.easeOut(duration: 0.15), value: isHovered)
         .contentShape(Rectangle())
     }

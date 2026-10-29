@@ -52,7 +52,7 @@ private struct CollectionCard: View {
                 Group {
                     if let icon {
                         ZStack {
-                            LinearGradient(colors: [Color(white: 0.24), Color(white: 0.12)], startPoint: .topLeading, endPoint: .bottomTrailing)
+                            Brand.placeholder
                             Image(systemName: icon).font(.system(size: 44)).foregroundStyle(.secondary)
                         }
                     } else {
@@ -66,6 +66,7 @@ private struct CollectionCard: View {
                             .font(.system(size: 11, weight: .semibold))
                             .padding(.horizontal, 8)
                             .padding(.vertical, 3)
+                            .foregroundStyle(.white)
                             .background(.black.opacity(0.75), in: Capsule())
                             .padding(7)
                     }

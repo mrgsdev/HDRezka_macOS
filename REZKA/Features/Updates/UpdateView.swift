@@ -71,7 +71,7 @@ struct UpdateView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .frame(maxHeight: 260)
-                .background(Color.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 10))
+                .background(Brand.panel, in: RoundedRectangle(cornerRadius: 10))
             }
             buttons {
                 Button("Позже", role: .cancel) { dismiss() }

@@ -5,6 +5,7 @@ import SwiftUI
 struct RezkaApp: App {
     init() {
         URLCache.shared = URLCache(memoryCapacity: 80 * 1024 * 1024, diskCapacity: 400 * 1024 * 1024)
+        AppearancePreference.current.apply()
     }
 
     var body: some Scene {
@@ -12,7 +13,6 @@ struct RezkaApp: App {
             RootView()
                 .environment(AuthSession.shared)
                 .environment(WatchProgressStore.shared)
-                .preferredColorScheme(.dark)
                 .frame(minWidth: 960, minHeight: 620)
         }
         .defaultSize(width: 1320, height: 860)
@@ -22,6 +22,7 @@ struct RezkaApp: App {
             if let request {
                 PlayerView(request: request)
                     .environment(AuthSession.shared)
+                    // Video looks best framed in dark, whatever the app's theme.
                     .preferredColorScheme(.dark)
             }
         }
@@ -31,7 +32,6 @@ struct RezkaApp: App {
 
         Window("Обновление REZKA", id: "update") {
             UpdateView()
-                .preferredColorScheme(.dark)
         }
         .windowResizability(.contentSize)
         .defaultPosition(.center)
@@ -42,7 +42,6 @@ struct RezkaApp: App {
         Settings {
             SettingsView()
                 .environment(AuthSession.shared)
-                .preferredColorScheme(.dark)
         }
     }
 }
