@@ -2121,6 +2121,16 @@
         }
       }
     },
+    "Пропустить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip"
+          }
+        }
+      }
+    },
     "Просмотрено": {
       "localizations": {
         "en": {

@@ -8,9 +8,13 @@ struct LoginView: View {
     @State private var mirror = Mirror.current.absoluteString
     @State private var isLoading = false
     @State private var errorText: String?
-    @State private var backdrop = Int.random(in: 0..<Self.backdrops.count)
+    /// Once per launch, before the form: posters orbiting the logo, the last one becoming the background.
+    @State private var showsIntro = !LoginView.introShown
+    /// The intro ends on the first photo, so the screen starts there after it.
+    @State private var backdrop = LoginView.introShown ? Int.random(in: 0..<Self.backdrops.count) : 0
 
-    private static let backdrops = ["LoginBackdrop1", "LoginBackdrop2"]
+    private static let backdrops = [PosterIntro.heroStill, "LoginBackdrop1", "LoginBackdrop2"]
+    @MainActor private static var introShown = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -78,8 +82,18 @@ struct LoginView: View {
         }
         .frame(width: 340)
         .padding(32)
+        .opacity(showsIntro ? 0 : 1)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background { Backdrop(name: Self.backdrops[backdrop]) }
+        .overlay {
+            if showsIntro {
+                PosterIntro {
+                    withAnimation(.easeOut(duration: 0.8)) { showsIntro = false }
+                }
+                .transition(.opacity)
+            }
+        }
+        .onAppear { Self.introShown = true }
         // The photos are dark whatever the app's theme, and run up under the title bar.
         .environment(\.colorScheme, .dark)
         .toolbar(removing: .title)
