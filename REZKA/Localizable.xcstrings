@@ -1139,6 +1139,16 @@
         }
       }
     },
+    "Лицензия": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "License"
+          }
+        }
+      }
+    },
     "Лучшее": {
       "extractionState": "manual",
       "localizations": {

@@ -21,6 +21,15 @@ struct LegalView: View {
                     bullet("Вход, история просмотра и «Итоги» хранятся только на этом Mac.")
                 }
 
+                section("Лицензия") {
+                    license(
+                        name: "REZKA",
+                        url: "https://github.com/mrgsdev/HDRezka_macOS",
+                        kind: "MIT License",
+                        text: Self.rezkaLicense
+                    )
+                }
+
                 section("Открытые библиотеки") {
                     license(
                         name: "SwiftSoup",
@@ -78,6 +87,31 @@ struct LegalView: View {
                 .background(Brand.panel, in: RoundedRectangle(cornerRadius: 8))
         }
     }
+
+    /// The LICENSE file at the root of the repository.
+    private static let rezkaLicense = """
+        MIT License
+
+        Copyright (c) 2026 mrgsdev
+
+        Permission is hereby granted, free of charge, to any person obtaining a copy \
+        of this software and associated documentation files (the "Software"), to deal \
+        in the Software without restriction, including without limitation the rights \
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell \
+        copies of the Software, and to permit persons to whom the Software is \
+        furnished to do so, subject to the following conditions:
+
+        The above copyright notice and this permission notice shall be included in all \
+        copies or substantial portions of the Software.
+
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR \
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, \
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE \
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER \
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, \
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE \
+        SOFTWARE.
+        """
 
     /// As shipped with SwiftSoup 2.14.3.
     private static let swiftSoupLicense = """
