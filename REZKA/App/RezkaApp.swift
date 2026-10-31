@@ -85,6 +85,7 @@ struct RootView: View {
     private func persist() {
         CookieVault.save()
         WatchProgressStore.shared.persist()
+        WatchStats.shared.persist()
     }
 
     /// Looks for a new release at launch and then at most twice a day; the window opens only when there is one.
@@ -142,6 +143,8 @@ struct AppCommands: Commands {
                 .keyboardShortcut("7")
             Button("Что посмотреть?") { Router.shared.selection = .roulette }
                 .keyboardShortcut("8")
+            Button("Итоги") { Router.shared.selection = .stats }
+                .keyboardShortcut("9")
         }
     }
 }

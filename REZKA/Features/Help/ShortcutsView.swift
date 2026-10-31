@@ -25,6 +25,7 @@ struct ShortcutsView: View {
             Shortcut(keys: ["⌘", "6"], action: "Подборки"),
             Shortcut(keys: ["⌘", "7"], action: "Закладки"),
             Shortcut(keys: ["⌘", "8"], action: "Что посмотреть?"),
+            Shortcut(keys: ["⌘", "9"], action: "Итоги"),
             Shortcut(keys: ["⌘", "F"], action: "Поиск"),
         ]),
         ShortcutGroup(title: "Главная и карточка", shortcuts: [

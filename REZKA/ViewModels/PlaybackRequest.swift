@@ -13,4 +13,8 @@ struct PlaybackRequest: Codable, Hashable {
     var episodeId: String?
     /// nil resumes from the saved position, 0 starts over.
     var startPosition: Double?
+    /// For «Итоги»; optional so windows saved before them still restore.
+    var genres: [String]?
+    var kind: MediaKind?
+    var path: String?
 }

@@ -293,6 +293,16 @@
         }
       }
     },
+    "Больше всего смотрели": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Most Watched"
+          }
+        }
+      }
+    },
     "В архиве версия %@ — она не новее установленной.": {
       "localizations": {
         "en": {
@@ -509,6 +519,16 @@
         }
       }
     },
+    "Всё время": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Time"
+          }
+        }
+      }
+    },
     "Вход выполнен": {
       "localizations": {
         "en": {
@@ -719,12 +739,32 @@
         }
       }
     },
+    "Дата": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Date"
+          }
+        }
+      }
+    },
     "Для этой озвучки нет доступных видео. Попробуйте другую озвучку.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "No videos are available for this dub. Try another dub."
+          }
+        }
+      }
+    },
+    "Дней с просмотром": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Days Watched"
           }
         }
       }
@@ -765,6 +805,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Genres"
+          }
+        }
+      }
+    },
+    "Жанры появятся у того, что вы посмотрите теперь.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genres will show for what you watch from now on."
           }
         }
       }
@@ -899,6 +949,16 @@
         }
       }
     },
+    "Здесь появятся итоги, когда вы что-нибудь посмотрите в REZKA на этом Mac.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your recap will appear here once you watch something in REZKA on this Mac."
+          }
+        }
+      }
+    },
     "Зеркало сайта": {
       "localizations": {
         "en": {
@@ -915,6 +975,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "In Collections"
+          }
+        }
+      }
+    },
+    "Итоги": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recap"
           }
         }
       }
@@ -1026,6 +1096,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Best"
+          }
+        }
+      }
+    },
+    "Любимые жанры": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favorite Genres"
+          }
+        }
+      }
+    },
+    "Месяц": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Month"
           }
         }
       }
@@ -1821,6 +1911,16 @@
         }
       }
     },
+    "Период": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Period"
+          }
+        }
+      }
+    },
     "Плеер": {
       "localizations": {
         "en": {
@@ -1831,12 +1931,32 @@
         }
       }
     },
+    "По дням": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "By Day"
+          }
+        }
+      }
+    },
     "По запросу «%@» ничего не найдено": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Nothing found for “%@”"
+          }
+        }
+      }
+    },
+    "По месяцам": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "By Month"
           }
         }
       }
@@ -2023,6 +2143,16 @@
         }
       }
     },
+    "Посмотрено": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time Watched"
+          }
+        }
+      }
+    },
     "Постеры и страницы сайта, чтобы не скачивать их заново; не больше 400 МБ. Видео не сохраняется.": {
       "localizations": {
         "en": {
@@ -2181,6 +2311,16 @@
         }
       }
     },
+    "Раньше": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Earlier"
+          }
+        }
+      }
+    },
     "Режиссёр": {
       "localizations": {
         "en": {
@@ -2332,6 +2472,16 @@
       }
     },
     "Сериал": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Series"
+          }
+        }
+      }
+    },
+    "Сериалов": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2748,6 +2898,16 @@
         }
       }
     },
+    "Фильмов": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movies"
+          }
+        }
+      }
+    },
     "Фильмография": {
       "localizations": {
         "en": {
@@ -2794,6 +2954,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Part %@"
+          }
+        }
+      }
+    },
+    "Часы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hours"
           }
         }
       }

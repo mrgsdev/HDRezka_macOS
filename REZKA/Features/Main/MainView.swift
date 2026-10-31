@@ -27,6 +27,7 @@ struct MainView: View {
                 Section("Моё") {
                     row(.collections, "Подборки", "square.stack")
                     row(.bookmarks, "Закладки", "bookmark")
+                    row(.stats, "Итоги", "chart.bar.xaxis")
                 }
             }
             .safeAreaInset(edge: .top) {
@@ -86,6 +87,8 @@ struct MainView: View {
             CollectionsView(model: collections)
         case .bookmarks:
             BookmarksView(model: bookmarks)
+        case .stats:
+            StatsView()
         }
     }
 }

@@ -46,6 +46,8 @@ final class PlayerController {
     @ObservationIgnored private var seekTarget: Double?
     @ObservationIgnored private var seekHintTask: Task<Void, Never>?
     @ObservationIgnored private var isTornDown = false
+    /// The last tick's position, to count what played since for «Итоги».
+    @ObservationIgnored private var lastTickTime: Double?
 
     init(request: PlaybackRequest) {
         self.request = request
@@ -289,6 +291,22 @@ final class PlayerController {
             if text != subtitleText { subtitleText = text }
         }
         if Date().timeIntervalSince(lastLocalSave) > 5 { recordProgress() }
+        countWatched(upTo: time)
+    }
+
+    /// Adds the video that played since the last tick; a jump or a pause adds nothing.
+    private func countWatched(upTo time: Double) {
+        defer { lastTickTime = time }
+        guard let last = lastTickTime, player.timeControlStatus == .playing, pendingSeek == nil, !isPreviewClip else { return }
+        let played = time - last
+        guard played > 0, played < 1.5 * Double(max(player.rate, 1)) else { return }
+        WatchStats.shared.add(played, postId: request.postId, title: WatchStats.Title(
+            name: request.title,
+            kind: request.kind ?? .unknown,
+            genres: request.genres ?? WatchStats.shared.titles[request.postId]?.genres ?? [],
+            posterURL: request.posterURL,
+            path: request.path ?? WatchStats.shared.titles[request.postId]?.path
+        ))
     }
 
     private func savedPosition() -> Double {

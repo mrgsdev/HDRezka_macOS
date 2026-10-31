@@ -35,6 +35,8 @@ final class WatchProgressStore {
         }
     }
 
+    var allEntries: [Entry] { Array(entries.values) }
+
     /// The most recently played episode (or the movie itself) of a title.
     func last(postId: String) -> Entry? {
         entries.values.filter { $0.postId == postId }.max { $0.updatedAt < $1.updatedAt }
