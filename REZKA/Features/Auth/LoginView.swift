@@ -42,15 +42,18 @@ struct LoginView: View {
                 Button {
                     Task { await signIn() }
                 } label: {
-                    HStack(spacing: 8) {
-                        if isLoading { ProgressView().controlSize(.small) }
+                    HStack(spacing: 10) {
+                        if isLoading {
+                            // Dark on the white button.
+                            ProgressView().controlSize(.small).environment(\.colorScheme, .light)
+                        }
                         Text(isLoading ? "Входим…" : "Войти")
                     }
                 }
                 .buttonStyle(PrimaryLoginButtonStyle())
                 .keyboardShortcut(.defaultAction)
                 .disabled(isLoading || email.isEmpty || password.isEmpty)
-                .padding(.top, 6)
+                .padding(.top, 10)
 
                 if let errorText {
                     Text(errorText)
@@ -167,24 +170,33 @@ private extension View {
     func loginField() -> some View {
         textFieldStyle(.plain)
             .font(.body)
-            .padding(.horizontal, 14)
-            .frame(height: 44)
-            .background(.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 10))
-            .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(.white.opacity(0.1)))
+            .padding(.horizontal, 20)
+            .frame(height: 50)
+            .background(.black.opacity(0.5), in: Capsule())
+            .overlay(Capsule().strokeBorder(.white.opacity(0.12)))
     }
 }
 
-/// The white button of the form.
+/// The form's button: a white pill giving off a soft white glow, which it loses while it can't be pressed.
 private struct PrimaryLoginButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var isEnabled
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.body.weight(.semibold))
-            .foregroundStyle(.black)
+            .font(.title3.weight(.semibold))
+            .foregroundStyle(.black.opacity(isEnabled ? 1 : 0.55))
             .frame(maxWidth: .infinity)
-            .frame(height: 44)
-            .background(.white.opacity(isEnabled ? (configuration.isPressed ? 0.8 : 1) : 0.55), in: RoundedRectangle(cornerRadius: 10))
-            .contentShape(RoundedRectangle(cornerRadius: 10))
+            .frame(height: 56)
+            .background {
+                Capsule()
+                    .fill(.white.opacity(isEnabled ? 1 : 0.4))
+                    .shadow(color: .white.opacity(isEnabled ? 0.45 : 0), radius: 14)
+                    .shadow(color: .white.opacity(isEnabled ? 0.2 : 0), radius: 40)
+            }
+            .contentShape(Capsule())
+            .scaleEffect(configuration.isPressed ? 0.98 : 1)
+            .brightness(configuration.isPressed ? -0.06 : 0)
+            .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
+            .animation(.easeOut(duration: 0.25), value: isEnabled)
     }
 }
