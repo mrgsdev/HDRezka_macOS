@@ -2,7 +2,7 @@ import Foundation
 import Observation
 
 enum SidebarItem: Hashable {
-    case home, search, collections, bookmarks
+    case home, search, roulette, collections, bookmarks
     case section(CatalogSection)
 }
 

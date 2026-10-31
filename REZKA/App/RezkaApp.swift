@@ -140,6 +140,8 @@ struct AppCommands: Commands {
                 .keyboardShortcut("6")
             Button("Закладки") { Router.shared.selection = .bookmarks }
                 .keyboardShortcut("7")
+            Button("Что посмотреть?") { Router.shared.selection = .roulette }
+                .keyboardShortcut("8")
         }
     }
 }

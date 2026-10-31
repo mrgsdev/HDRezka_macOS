@@ -7,6 +7,7 @@ struct MainView: View {
     @State private var home = HomeModel()
     @State private var collections = CollectionsModel()
     @State private var bookmarks = BookmarksModel()
+    @State private var roulette = RouletteModel()
     @State private var paths: [SidebarItem: NavigationPath] = [:]
 
     var body: some View {
@@ -16,6 +17,7 @@ struct MainView: View {
                 Section {
                     row(.home, "Главная", "house")
                     row(.search, "Поиск", "magnifyingglass")
+                    row(.roulette, "Что посмотреть?", "dice")
                 }
                 Section("Каталог") {
                     ForEach(CatalogSection.allCases) { section in
@@ -78,6 +80,8 @@ struct MainView: View {
             SearchView()
         case let .section(section):
             CatalogView(section: section)
+        case .roulette:
+            RouletteView(model: roulette)
         case .collections:
             CollectionsView(model: collections)
         case .bookmarks:

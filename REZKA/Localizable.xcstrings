@@ -273,6 +273,16 @@
         }
       }
     },
+    "Без анимации": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Without Animation"
+          }
+        }
+      }
+    },
     "Без названия": {
       "localizations": {
         "en": {
@@ -469,6 +479,16 @@
         }
       }
     },
+    "Все страны": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All Countries"
+          }
+        }
+      }
+    },
     "Все фильмы и сериалы: %@": {
       "localizations": {
         "en": {
@@ -649,6 +669,16 @@
         }
       }
     },
+    "Годы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Years"
+          }
+        }
+      }
+    },
     "Горячие клавиши": {
       "localizations": {
         "en": {
@@ -765,6 +795,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Downloading and installing. REZKA will relaunch on its own."
+          }
+        }
+      }
+    },
+    "Загружается, подождите…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading, please wait…"
           }
         }
       }
@@ -935,6 +975,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Default Quality"
+          }
+        }
+      }
+    },
+    "Крутить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spin"
+          }
+        }
+      }
+    },
+    "Крутить ещё": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spin Again"
           }
         }
       }
@@ -1561,6 +1621,16 @@
         }
       }
     },
+    "Открыть карточку": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Title Page"
+          }
+        }
+      }
+    },
     "Открыть страницу релиза": {
       "localizations": {
         "en": {
@@ -1791,6 +1861,16 @@
         }
       }
     },
+    "Под эти фильтры ничего не нашлось. Попробуйте расширить годы или выбрать другие жанры.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing fits these filters. Try a wider span of years or other genres."
+          }
+        }
+      }
+    },
     "Подборки": {
       "localizations": {
         "en": {
@@ -1994,6 +2074,16 @@
         }
       }
     },
+    "Продолжить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume"
+          }
+        }
+      }
+    },
     "Продолжить просмотр": {
       "extractionState": "manual",
       "localizations": {
@@ -2047,6 +2137,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "No working mirrors found. %@"
+          }
+        }
+      }
+    },
+    "Раздел": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Section"
           }
         }
       }
@@ -2127,6 +2227,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "The site takes one rating per account — you won't be able to change it later."
+          }
+        }
+      }
+    },
+    "Сбросить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
           }
         }
       }
@@ -2448,6 +2558,16 @@
         }
       }
     },
+    "Страны": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Countries"
+          }
+        }
+      }
+    },
     "Студии": {
       "localizations": {
         "en": {
@@ -2674,6 +2794,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "What's New"
+          }
+        }
+      }
+    },
+    "Что посмотреть?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What to Watch?"
           }
         }
       }
