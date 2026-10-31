@@ -118,6 +118,7 @@ struct SettingsView: View {
                 }
                 Text("Неофициальный клиент HDrezka для Mac. Проект не связан с HDrezka.")
                     .foregroundStyle(.secondary)
+                Button("Отказ от ответственности и лицензии…") { openWindow(id: "legal") }
             }
         }
         .formStyle(.grouped)

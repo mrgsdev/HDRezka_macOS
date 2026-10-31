@@ -193,6 +193,26 @@
         }
       }
     },
+    "REZKA не связана с HDrezka и не является её официальным клиентом.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REZKA is not affiliated with HDrezka and is not its official client."
+          }
+        }
+      }
+    },
+    "REZKA ничего не размещает и не хранит: она показывает страницы и видео сайта, который вы указали в настройках, через ваш аккаунт на нём.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REZKA hosts and stores nothing: it shows pages and videos of the site set in Settings, through your account there."
+          }
+        }
+      }
+    },
     "[спойлер]": {
       "localizations": {
         "en": {
@@ -229,6 +249,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "new folder id"
+          }
+        }
+      }
+    },
+    "Автор не поощряет какую-либо незаконную деятельность.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The author does not encourage any illegal activity."
           }
         }
       }
@@ -289,6 +319,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Untitled"
+          }
+        }
+      }
+    },
+    "Благодарности": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acknowledgements"
           }
         }
       }
@@ -535,6 +575,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Signed in"
+          }
+        }
+      }
+    },
+    "Вход, история просмотра и «Итоги» хранятся только на этом Mac.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your sign-in, watch history and Recap are kept only on this Mac."
           }
         }
       }
@@ -965,6 +1015,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "In Collections"
+          }
+        }
+      }
+    },
+    "Используйте программу на свой страх и риск и соблюдайте законы своей страны.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the app at your own risk and follow the laws of your country."
           }
         }
       }
@@ -1721,6 +1781,46 @@
         }
       }
     },
+    "Отказ от ответственности": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disclaimer"
+          }
+        }
+      }
+    },
+    "Отказ от ответственности и лицензии": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disclaimer and Licenses"
+          }
+        }
+      }
+    },
+    "Отказ от ответственности и лицензии…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disclaimer and Licenses…"
+          }
+        }
+      }
+    },
+    "Открытые библиотеки": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open-Source Libraries"
+          }
+        }
+      }
+    },
     "Открыть карточку": {
       "localizations": {
         "en": {
@@ -2173,6 +2273,16 @@
         }
       }
     },
+    "Правила сайта HDrezka": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HDrezka Site Rules"
+          }
+        }
+      }
+    },
     "Применить зеркало": {
       "localizations": {
         "en": {
@@ -2210,6 +2320,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Checking for Updates"
+          }
+        }
+      }
+    },
+    "Программа предоставляется «как есть», без каких-либо гарантий.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The app is provided “as is”, without any warranty."
           }
         }
       }
@@ -2287,6 +2407,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "No working mirrors found. %@"
+          }
+        }
+      }
+    },
+    "Разбор API сайта и идеи взяты из открытых проектов:": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The site API research and ideas come from these open-source projects:"
           }
         }
       }
@@ -2658,6 +2788,16 @@
         }
       }
     },
+    "Содержимое": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Content"
+          }
+        }
+      }
+    },
     "Создать": {
       "localizations": {
         "en": {
@@ -2954,6 +3094,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Movies, series, cartoons"
+          }
+        }
+      }
+    },
+    "Фильмы, сериалы, постеры, описания и отзывы принадлежат их правообладателям и авторам.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movies, series, posters, descriptions and reviews belong to their rights holders and authors."
           }
         }
       }

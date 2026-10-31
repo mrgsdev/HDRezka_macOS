@@ -48,6 +48,15 @@ struct RezkaApp: App {
         // It opens from the Help menu.
         .commandsRemoved()
 
+        Window("Отказ от ответственности и лицензии", id: "legal") {
+            LegalView()
+        }
+        .windowResizability(.contentSize)
+        .defaultPosition(.center)
+        .restorationBehavior(.disabled)
+        // It opens from the Help menu.
+        .commandsRemoved()
+
         Settings {
             SettingsView()
                 .environment(AuthSession.shared)
@@ -125,6 +134,8 @@ struct AppCommands: Commands {
         CommandGroup(replacing: .help) {
             Button("Горячие клавиши") { openWindow(id: "shortcuts") }
                 .keyboardShortcut("/")
+            Divider()
+            Button("Отказ от ответственности и лицензии") { openWindow(id: "legal") }
         }
         CommandMenu("Разделы") {
             Button("Главная") { Router.shared.selection = .home }
