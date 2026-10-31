@@ -48,7 +48,12 @@ struct RouletteView: View {
     /// As on Kinopoisk's random film page: what kind, which genres and countries, and which years.
     private var filters: some View {
         FlowLayout(spacing: 12, lineSpacing: 12) {
-            SectionTabs(selection: $model.section, isLoading: model.phase == .loading)
+            Picker("Раздел", selection: $model.section) {
+                ForEach(CatalogSection.allCases) { Text($0.title).tag($0) }
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+            .fixedSize()
 
             MultiChoice(
                 empty: String(localized: "Все жанры"), many: String(localized: "Жанры"),
@@ -391,53 +396,6 @@ private struct YearRangeSlider: View {
     }
 }
 
-/// The section tabs: the chosen one a dark pill that slides over when another is picked, and while
-/// its titles load, a light runs round its border.
-private struct SectionTabs: View {
-    @Binding var selection: CatalogSection
-    let isLoading: Bool
-
-    @Namespace private var pill
-    @State private var hovered: CatalogSection?
-
-    var body: some View {
-        HStack(spacing: 4) {
-            ForEach(CatalogSection.allCases) { section in
-                let isSelected = section == selection
-                Button {
-                    withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) { selection = section }
-                } label: {
-                    Text(section.title)
-                        .font(.body.weight(isSelected ? .semibold : .regular))
-                        .foregroundStyle(isSelected ? AnyShapeStyle(.white) : AnyShapeStyle(hovered == section ? .primary : .secondary))
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background {
-                            if isSelected {
-                                Capsule()
-                                    .fill(LinearGradient(colors: [Color(white: 0.2), Color(white: 0.06)], startPoint: .top, endPoint: .bottom))
-                                    .overlay(Capsule().strokeBorder(.white.opacity(0.1)))
-                                    .overlay {
-                                        if isLoading { GlowingBorder(cornerRadius: 100) }
-                                    }
-                                    .matchedGeometryEffect(id: "pill", in: pill)
-                            } else if hovered == section {
-                                Capsule().fill(Brand.hover)
-                            }
-                        }
-                        .contentShape(Capsule())
-                }
-                .buttonStyle(.plain)
-                .onHover { hovered = $0 ? section : (hovered == section ? nil : hovered) }
-            }
-        }
-        .padding(4)
-        .background(Brand.panel, in: Capsule())
-        .accessibilityElement(children: .contain)
-        .accessibilityLabel("Раздел")
-    }
-}
-
 /// A light running round a border, white fading into violet, as on a button that glows while
 /// something happens behind it.
 private struct GlowingBorder: View {
@@ -470,7 +428,7 @@ private struct GlowingBorder: View {
     }
 }
 
-/// Over the reel while titles for the new filters load: a dark pill with the same running light.
+/// Over the reel while titles for the new filters load: a dark pill with a light running round it.
 private struct LoadingPill: View {
     var body: some View {
         Text("Загружается, подождите…")
