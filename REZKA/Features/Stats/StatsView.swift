@@ -31,6 +31,7 @@ struct StatsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 header
+                betaNotice
 
                 if summary.total < 60 {
                     EmptyStateView(text: "Здесь появятся итоги, когда вы что-нибудь посмотрите в REZKA на этом Mac.")
@@ -49,7 +50,6 @@ struct StatsView: View {
         }
         .navigationTitle("Итоги")
         .navigationSubtitle(periodTitle)
-        .task { await stats.resolveUnknown() }
     }
 
     // MARK: Header
@@ -78,6 +78,24 @@ struct StatsView: View {
             }
             Spacer()
         }
+    }
+
+    private var betaNotice: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            Text(verbatim: "BETA")
+                .font(.caption.weight(.bold))
+                .padding(.horizontal, 7)
+                .padding(.vertical, 2)
+                .foregroundStyle(.orange)
+                .background(.orange.opacity(0.18), in: Capsule())
+            Text("Итоги в бета-версии: возможны ошибки и неточные данные. Всё хранится только на этом Mac, и при удалении приложения данные пропадут. В будущем появятся экспорт и импорт.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Brand.panel, in: RoundedRectangle(cornerRadius: 12))
     }
 
     private var periodTitle: String {
@@ -253,7 +271,7 @@ struct StatsView: View {
             Text("Любимые жанры")
                 .font(.headline)
             if top.isEmpty {
-                Text("Жанры появятся у того, что вы посмотрите теперь.")
+                Text("У этих тайтлов не нашлось жанров.")
                     .foregroundStyle(.secondary)
             }
             ForEach(Array(top), id: \.key) { genre, value in

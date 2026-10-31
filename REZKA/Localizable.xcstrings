@@ -809,16 +809,6 @@
         }
       }
     },
-    "Жанры появятся у того, что вы посмотрите теперь.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Genres will show for what you watch from now on."
-          }
-        }
-      }
-    },
     "За всё время": {
       "localizations": {
         "en": {
@@ -985,6 +975,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Recap"
+          }
+        }
+      }
+    },
+    "Итоги в бета-версии: возможны ошибки и неточные данные. Всё хранится только на этом Mac, и при удалении приложения данные пропадут. В будущем появятся экспорт и импорт.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recap is in beta: expect bugs and inaccurate figures. Everything is kept only on this Mac, and deleting the app deletes the data. Export and import are planned."
           }
         }
       }
@@ -2814,6 +2814,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "You're up to date"
+          }
+        }
+      }
+    },
+    "У этих тайтлов не нашлось жанров.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No genres found for these titles."
           }
         }
       }

@@ -59,7 +59,6 @@ final class DetailsModel {
         state = .loading
         do {
             let details = try await RezkaClient.shared.details(path: item.path)
-            WatchStats.shared.remember(details, kind: item.kind == .unknown ? (details.isSeries ? .series : .film) : item.kind)
             let last = WatchProgressStore.shared.last(postId: details.postId)
             // Without Premium, premium dubs play only a teaser, so default to a free one.
             let playable = AuthSession.shared.isPremium ? details.translators : details.translators.filter { !$0.isPremium }
