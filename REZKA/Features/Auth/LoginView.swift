@@ -83,7 +83,7 @@ struct LoginView: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, 14)
         }
-        .frame(width: 340)
+        .frame(width: 300)
         .padding(32)
         .opacity(showsIntro ? 0 : 1)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -170,8 +170,8 @@ private extension View {
     func loginField() -> some View {
         textFieldStyle(.plain)
             .font(.body)
-            .padding(.horizontal, 20)
-            .frame(height: 50)
+            .padding(.horizontal, 18)
+            .frame(height: 42)
             .background(.black.opacity(0.5), in: Capsule())
             .overlay(Capsule().strokeBorder(.white.opacity(0.12)))
     }
@@ -186,7 +186,8 @@ private struct PrimaryLoginButtonStyle: ButtonStyle {
             .font(.title3.weight(.semibold))
             .foregroundStyle(.black.opacity(isEnabled ? 1 : 0.55))
             .frame(maxWidth: .infinity)
-            .frame(height: 56)
+            // The fields' height, so the form reads as one column.
+            .frame(height: 42)
             .background {
                 Capsule()
                     .fill(.white.opacity(isEnabled ? 1 : 0.4))
