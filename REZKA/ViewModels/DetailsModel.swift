@@ -314,6 +314,11 @@ final class DetailsModel {
 
     func play(episode: Episode? = nil, from position: Double? = nil) {
         guard let details, let translator else { return }
+        // The site gives no video for it here; the player would only say there is none for the dub.
+        guard details.restriction == nil else {
+            actionError = String(localized: "Это видео недоступно в вашем регионе.")
+            return
+        }
         PlayerPresenter.present(PlaybackRequest(
             postId: details.postId,
             title: details.title,

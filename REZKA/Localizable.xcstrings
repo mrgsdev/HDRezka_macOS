@@ -1420,6 +1420,16 @@
         }
       }
     },
+    "Недоступно в вашем регионе": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not Available in Your Region"
+          }
+        }
+      }
+    },
     "Некорректный адрес": {
       "localizations": {
         "en": {
@@ -3014,6 +3024,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "This help"
+          }
+        }
+      }
+    },
+    "Это видео недоступно в вашем регионе.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This video isn't available in your region."
           }
         }
       }

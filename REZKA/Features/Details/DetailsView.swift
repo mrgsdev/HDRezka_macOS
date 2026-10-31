@@ -261,7 +261,15 @@ struct DetailsView: View {
     private func actions(_ details: MediaDetails) -> some View {
         // Wraps rather than squeezing labels down to icons when the window is narrow.
         FlowLayout(spacing: 12, lineSpacing: 10) {
-            if details.upcomingStatus != nil {
+            if let restriction = details.restriction {
+                Label("Недоступно в вашем регионе", systemImage: "globe")
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(Brand.panel, in: Capsule())
+                    .help(restriction)
+            } else if details.upcomingStatus != nil {
                 Label("В ожидании", systemImage: "clock.fill")
                     .font(.headline)
                     .padding(.horizontal, 16)

@@ -181,6 +181,9 @@ struct MediaDetails {
     /// The site's note for a title that cannot be played yet, e.g. "Ожидаем фильм в хорошем качестве...";
     /// nil when it has something to watch.
     let upcomingStatus: String?
+    /// The site's note when the video is blocked where the viewer is, e.g. "К сожалению, это видео
+    /// не доступно в вашем регионе"; nil when it plays. The page still lists its seasons and dubs.
+    let restriction: String?
     /// The viewers' rating on the site itself; nil when the page has none.
     let siteRating: SiteRating?
     /// "Не можешь выбрать озвучку?": which dubs viewers pick; nil when the page has no such hint.

@@ -306,6 +306,8 @@ enum RezkaParser {
             upcomingStatus: translators.isEmpty
                 ? try doc.select(".b-post__go_status").first()?.text().nonEmpty ?? String(localized: "Ожидается")
                 : nil,
+            restriction: try doc.select(".b-player__restricted__block_message").first()?.ownText()
+                .trimmingCharacters(in: .whitespacesAndNewlines).nonEmpty,
             siteRating: try siteRating(in: doc),
             dubPopularity: try dubPopularity(in: doc)
         )

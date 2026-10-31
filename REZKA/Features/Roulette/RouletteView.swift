@@ -253,7 +253,10 @@ private struct RouletteResult: View {
     /// Same choice as the title page's main button: the next episode, or the film from where it stopped.
     @ViewBuilder
     private var watchButton: some View {
-        if let details = model.details, details.upcomingStatus == nil {
+        if model.details?.restriction != nil {
+            Label("Недоступно в вашем регионе", systemImage: "globe")
+                .foregroundStyle(.secondary)
+        } else if let details = model.details, details.upcomingStatus == nil {
             if details.isSeries {
                 if let target = model.resumeEpisode(progress: progress) {
                     Button {
