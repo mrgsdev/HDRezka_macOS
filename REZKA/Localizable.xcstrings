@@ -163,6 +163,26 @@
         }
       }
     },
+    "IMDb": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMDb"
+          }
+        }
+      }
+    },
+    "IMDb от %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMDb %@+"
+          }
+        }
+      }
+    },
     "JSON %@": {
       "localizations": {
         "en": {
@@ -1406,6 +1426,16 @@
         }
       }
     },
+    "Любой рейтинг IMDb": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Any IMDb Rating"
+          }
+        }
+      }
+    },
     "Месяц": {
       "localizations": {
         "en": {
@@ -2377,6 +2407,16 @@
         }
       }
     },
+    "Под эти фильтры ничего не нашлось. Попробуйте рейтинг IMDb пониже, другие годы или жанры.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing matches these filters. Try a lower IMDb rating, other years or genres."
+          }
+        }
+      }
+    },
     "Подборки": {
       "localizations": {
         "en": {
@@ -3300,6 +3340,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Only %@"
+          }
+        }
+      }
+    },
+    "Только с таким рейтингом IMDb или выше": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only titles with this IMDb rating or higher"
           }
         }
       }

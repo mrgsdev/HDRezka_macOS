@@ -75,6 +75,16 @@ struct RouletteView: View {
                 options: RouletteModel.countryOptions, selection: $model.countries, label: { $0 }
             )
 
+            Picker("IMDb", selection: $model.minIMDb) {
+                Text("Любой рейтинг IMDb").tag(Double?.none)
+                ForEach(RouletteModel.imdbOptions, id: \.self) { value in
+                    Text("IMDb от \(value.formatted(.number.locale(AppLanguage.locale)))").tag(Double?.some(value))
+                }
+            }
+            .labelsHidden()
+            .fixedSize()
+            .help("Только с таким рейтингом IMDb или выше")
+
             YearRangeSlider(range: $model.years, bounds: RouletteModel.allYears)
                 .frame(width: 300)
 

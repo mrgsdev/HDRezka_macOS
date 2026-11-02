@@ -259,6 +259,13 @@ final class RezkaClient {
         return try RezkaParser.seasons(in: fragment)
     }
 
+    /// The IMDb rating from the card the site shows on hovering a poster; lists don't have it.
+    /// nil when the title has none.
+    func imdbRating(postId: String) async throws -> Double? {
+        let data = try await post("engine/ajax/quick_content.php", form: ["id": postId, "is_touch": "1"], timestamped: false)
+        return try RezkaParser.imdbRating(inQuickContent: String(decoding: data, as: UTF8.self))
+    }
+
     func stream(postId: String, translator: Translator, seasonId: String?, episodeId: String?, favs: String) async throws -> StreamInfo {
         var form = ["id": postId, "translator_id": translator.id, "favs": favs]
         if let seasonId, let episodeId {

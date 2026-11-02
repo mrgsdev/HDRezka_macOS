@@ -542,6 +542,13 @@ enum RezkaParser {
         return URL(string: string, relativeTo: base)?.absoluteURL
     }
 
+    /// "IMDb: 7.8 (1 917)" in a title's hover card → 7.8.
+    static func imdbRating(inQuickContent html: String) throws -> Double? {
+        let text = try SwiftSoup.parseBodyFragment(html).text()
+        guard let match = text.firstMatch(of: /IMDb:?\s*(\d+(?:[.,]\d+)?)/) else { return nil }
+        return Double(match.1.replacingOccurrences(of: ",", with: "."))
+    }
+
     /// `/films/drama/12345-name-2020.html` → `12345`, the site's post id.
     static func idFromPath(_ path: String) -> String? {
         let last = path.split(separator: "/").last ?? ""

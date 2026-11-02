@@ -40,6 +40,12 @@ final class RouletteModel {
     var years = RouletteModel.allYears {
         didSet { if years != oldValue { reset() } }
     }
+    /// The lowest IMDb rating to draw; nil for any, titles without one included.
+    var minIMDb: Double? {
+        didSet { if minIMDb != oldValue { reset() } }
+    }
+
+    static let imdbOptions: [Double] = [6, 7, 7.5, 8]
 
     static let allYears = 1920...Calendar.current.component(.year, from: Date())
     /// The countries Kinopoisk offers, as the site names them.
@@ -49,7 +55,7 @@ final class RouletteModel {
         "Гонконг", "Турция",
     ]
 
-    var hasFilters: Bool { !genres.isEmpty || !countries.isEmpty || years != Self.allYears }
+    var hasFilters: Bool { !genres.isEmpty || !countries.isEmpty || years != Self.allYears || minIMDb != nil }
 
     /// The posters on the reel, left to right; the reel only grows while it spins.
     private(set) var reel: [MediaItem] = []
@@ -76,6 +82,9 @@ final class RouletteModel {
     /// Bumped by every load, so a slow one for filters changed since does not land.
     @ObservationIgnored private var loadID = 0
 
+    /// IMDb ratings asked this session by post id; nil inside for a title the site gives none.
+    private static var imdbRatings: [String: Double?] = [:]
+
     /// Not what anyone means by a film to watch tonight, unless they pick that very genre.
     private static let offTopic = ["Концерт", "Документальн", "Стендап", "Короткометраж"]
 
@@ -84,7 +93,8 @@ final class RouletteModel {
     /// Changes with the filters and with the kid mode age, so a new age in Settings refills the reel.
     var key: String {
         [section.rawValue, genres.map(\.path).sorted().joined(separator: ","), countries.sorted().joined(separator: ","),
-         "\(years.lowerBound)-\(years.upperBound)", ParentalControl.shared.limit?.title ?? ""].joined(separator: "|")
+         "\(years.lowerBound)-\(years.upperBound)", minIMDb.map { "\($0)" } ?? "", ParentalControl.shared.limit?.title ?? ""]
+            .joined(separator: "|")
     }
 
     var isBusy: Bool { phase == .loading || phase == .spinning }
@@ -123,6 +133,7 @@ final class RouletteModel {
         genres = []
         countries = []
         years = Self.allYears
+        minIMDb = nil
     }
 
     /// Picks a random title: with the reel spinning to it, or straight away.
@@ -221,19 +232,57 @@ final class RouletteModel {
     private func loadPool() async throws -> [MediaItem] {
         var found: [MediaItem] = []
         var seen: Set<String> = []
-        for attempt in 0..<8 where found.count < 30 {
+        // A rating is one more request per title and many fall short: more lists, a smaller reel.
+        let attempts = minIMDb == nil ? 8 : 12
+        let enough = minIMDb == nil ? 30 : 16
+        for attempt in 0..<attempts where found.count < enough {
             let source = source(for: attempt)
             let items = (try? await RezkaClient.shared.listing(source.path, filter: source.filter, page: source.page).items) ?? []
             try Task.checkCancellation()
             // A few from each list, so one year or one genre does not fill the whole reel.
-            let fitting = items.shuffled().filter { seen.insert($0.id).inserted && fits($0, from: source) }
+            var fitting = items.shuffled().filter { seen.insert($0.id).inserted && fits($0, from: source) }
+            if let minIMDb {
+                fitting = await rated(Array(fitting.prefix(10)), atLeast: minIMDb)
+                try Task.checkCancellation()
+            }
             found += fitting.prefix(8)
         }
         guard !found.isEmpty else {
             if ParentalControl.shared.isOn { throw EmptyForAge() }
-            throw RezkaError.site(String(localized: "Под эти фильтры ничего не нашлось. Попробуйте расширить годы или выбрать другие жанры."))
+            throw RezkaError.site(minIMDb == nil
+                ? String(localized: "Под эти фильтры ничего не нашлось. Попробуйте расширить годы или выбрать другие жанры.")
+                : String(localized: "Под эти фильтры ничего не нашлось. Попробуйте рейтинг IMDb пониже, другие годы или жанры."))
         }
         return found.shuffled()
+    }
+
+    /// The titles rated at least `minimum` on IMDb. The site gives ratings one title at a time, so a few
+    /// are asked at once; each answer is kept for the session, a failed request is asked again next time.
+    private func rated(_ items: [MediaItem], atLeast minimum: Double) async -> [MediaItem] {
+        var queue = items.compactMap { RezkaParser.idFromPath($0.path) }.filter { Self.imdbRatings[$0] == nil }[...]
+        await withTaskGroup(of: (String, Double??).self) { group in
+            for _ in 0..<4 {
+                guard let id = queue.popFirst() else { break }
+                group.addTask { await Self.askRating(id) }
+            }
+            while let (id, rating) = await group.next() {
+                if let rating { Self.imdbRatings[id] = rating }
+                if let next = queue.popFirst() { group.addTask { await Self.askRating(next) } }
+            }
+        }
+        return items.filter { item in
+            guard let id = RezkaParser.idFromPath(item.path), let rating = Self.imdbRatings[id] ?? nil else { return false }
+            return rating >= minimum
+        }
+    }
+
+    /// The rating, nil inside when the title has none, or nil outside when the request failed.
+    private nonisolated static func askRating(_ id: String) async -> (String, Double??) {
+        do {
+            return (id, .some(try await RezkaClient.shared.imdbRating(postId: id)))
+        } catch {
+            return (id, nil)
+        }
     }
 
     private func source(for attempt: Int) -> Source {
