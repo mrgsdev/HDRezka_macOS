@@ -62,3 +62,19 @@ final class WatchStats {
     static func dayKey(_ date: Date) -> String { dayFormat.string(from: date) }
     static func date(ofDay key: String) -> Date? { dayFormat.date(from: key) }
 }
+
+/// How many films to watch in a year, set in «Итоги»; kept with them, on this Mac only.
+enum WatchGoal {
+    private static let key = "watchGoals"
+
+    /// Films by year, as "2026".
+    static var all: [String: Int] {
+        UserDefaults.standard.dictionary(forKey: key) as? [String: Int] ?? [:]
+    }
+
+    static func set(_ films: Int?, for year: Int) {
+        var goals = all
+        goals[String(year)] = films
+        UserDefaults.standard.set(goals, forKey: key)
+    }
+}

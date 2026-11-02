@@ -93,6 +93,22 @@
         }
       }
     },
+    "%lld из %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld of %2$lld"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$lld из %2$lld"
+          }
+        }
+      }
+    },
     "%lld место": {
       "localizations": {
         "en": {
@@ -129,6 +145,16 @@
           "stringUnit": {
             "state": "translated",
             "value": ", "
+          }
+        }
+      }
+    },
+    "12 — фильм в месяц, 52 — фильм в неделю. Считаются фильмы, мультфильмы и аниме без серий, досмотренные в REZKA на этом Mac.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "12 is a movie a month, 52 a movie a week. Movies, cartoons and anime without episodes count once watched to the end in REZKA on this Mac."
           }
         }
       }
@@ -1225,6 +1251,16 @@
         }
       }
     },
+    "Идёте точно по плану.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Right on schedule."
+          }
+        }
+      }
+    },
     "Из серии": {
       "localizations": {
         "en": {
@@ -1241,6 +1277,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Change or Turn Off…"
+          }
+        }
+      }
+    },
+    "Изменить…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit…"
           }
         }
       }
@@ -1766,6 +1812,16 @@
         }
       }
     },
+    "Не хватило: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Short by %lld"
+          }
+        }
+      }
+    },
     "Неверно. Попробуйте ещё раз.": {
       "localizations": {
         "en": {
@@ -2067,12 +2123,38 @@
         }
       }
     },
+    "Опережаете план на %lld.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ahead of schedule."
+          }
+        }
+      }
+    },
     "Описание изменений не указано.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "No release notes."
+          }
+        }
+      }
+    },
+    "Осталось %lld — примерно %@ в неделю.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld to go, about %2$@ a week."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Осталось %1$lld — примерно %2$@ в неделю."
           }
         }
       }
@@ -2173,6 +2255,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mark the episode as watched"
+          }
+        }
+      }
+    },
+    "Отстаёте от плана на %lld.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld behind schedule."
           }
         }
       }
@@ -2333,6 +2425,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Period"
+          }
+        }
+      }
+    },
+    "План на сегодня": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today's target"
           }
         }
       }
@@ -2575,6 +2677,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Time Watched"
+          }
+        }
+      }
+    },
+    "Поставить цель…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set a Goal…"
           }
         }
       }
@@ -3017,6 +3129,26 @@
         }
       }
     },
+    "Сколько фильмов посмотреть в %@?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How many movies to watch in %@?"
+          }
+        }
+      }
+    },
+    "Сколько фильмов хотите посмотреть за год?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How many movies do you want to watch this year?"
+          }
+        }
+      }
+    },
     "Скопировать": {
       "localizations": {
         "en": {
@@ -3414,6 +3546,16 @@
         }
       }
     },
+    "Убрать цель": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove Goal"
+          }
+        }
+      }
+    },
     "Удалить": {
       "localizations": {
         "en": {
@@ -3530,6 +3672,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Storage"
+          }
+        }
+      }
+    },
+    "Цель": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Goal"
+          }
+        }
+      }
+    },
+    "Цель выполнена": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Goal reached"
+          }
+        }
+      }
+    },
+    "Цель на %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ Goal"
           }
         }
       }
@@ -3792,6 +3964,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "video link"
+          }
+        }
+      }
+    },
+    "фильмов посмотрено": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "movies watched"
           }
         }
       }

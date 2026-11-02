@@ -20,7 +20,12 @@ struct StatsView: View {
     /// A day inside the month or year on screen.
     @State private var anchor = Date()
 
+    @State private var goals = WatchGoal.all
+    @State private var isEditingGoal = false
+    @State private var goalDraft = 24
+
     private let stats = WatchStats.shared
+    private let progress = WatchProgressStore.shared
     private let calendar = Calendar.current
 
     /// Origin tags the site files among genres.
@@ -32,6 +37,9 @@ struct StatsView: View {
             VStack(alignment: .leading, spacing: 24) {
                 header
                 betaNotice
+                if span != .all {
+                    goal
+                }
 
                 if summary.total < 60 {
                     EmptyStateView(text: "Здесь появятся итоги, когда вы что-нибудь посмотрите в REZKA на этом Mac.")
@@ -345,11 +353,184 @@ struct StatsView: View {
         }
     }
 
+    // MARK: Goal
+
+    private static let goalPresets = [12, 24, 52, 100]
+
+    /// The goal of the year on screen, or an offer to set one for this year.
+    @ViewBuilder
+    private var goal: some View {
+        let year = calendar.component(.year, from: anchor)
+        if let interval = calendar.dateInterval(of: .year, for: anchor) {
+            if let target = goals[String(year)] {
+                goalProgress(target, films: progress.finishedFilms(in: interval), year: year, interval: interval)
+            } else if year == calendar.component(.year, from: Date()) {
+                HStack(spacing: 12) {
+                    Label("Цель на \(String(year))", systemImage: "target")
+                        .font(.headline)
+                    Text("Сколько фильмов хотите посмотреть за год?")
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Поставить цель…") { editGoal(year: year) }
+                        .popover(isPresented: $isEditingGoal, arrowEdge: .bottom) { goalEditor(year: year) }
+                }
+                .padding(18)
+                .background(Brand.panel, in: RoundedRectangle(cornerRadius: 14))
+            }
+        }
+    }
+
+    private func goalProgress(_ target: Int, films: [WatchProgressStore.Entry], year: Int, interval: DateInterval) -> some View {
+        let now = Date()
+        let isThisYear = interval.contains(now)
+        // Where an even pace would be by today; the whole year for a year that is over.
+        let elapsed = isThisYear ? now.timeIntervalSince(interval.start) / interval.duration : 1
+        let done = films.count
+        return VStack(alignment: .leading, spacing: 14) {
+            HStack {
+                Label("Цель на \(String(year))", systemImage: "target")
+                    .font(.headline)
+                Spacer()
+                if isThisYear {
+                    Button("Изменить…") { editGoal(year: year) }
+                        .popover(isPresented: $isEditingGoal, arrowEdge: .bottom) { goalEditor(year: year) }
+                }
+            }
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text("\(done) из \(target)")
+                    .font(.system(size: 30, weight: .bold, design: .rounded))
+                    .monospacedDigit()
+                Text("фильмов посмотрено")
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Text((Double(done) / Double(target)).formatted(.percent.precision(.fractionLength(0)).locale(AppLanguage.locale)))
+                    .font(.title3.weight(.semibold))
+                    .monospacedDigit()
+            }
+            GoalBar(done: min(Double(done) / Double(target), 1), pace: isThisYear ? elapsed : nil)
+            Label(goalPace(target: target, done: done, elapsed: elapsed, interval: interval, isThisYear: isThisYear),
+                  systemImage: done >= target ? "checkmark.seal.fill" : "speedometer")
+                .foregroundStyle(done >= target ? AnyShapeStyle(.green) : AnyShapeStyle(.secondary))
+            if !films.isEmpty {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(films, id: \.postId) { goalPoster($0.postId) }
+                    }
+                }
+            }
+        }
+        .padding(18)
+        .background(Brand.panel, in: RoundedRectangle(cornerRadius: 14))
+    }
+
+    /// Ahead or behind an even pace, and what it takes to make it by the end of the year.
+    private func goalPace(target: Int, done: Int, elapsed: Double, interval: DateInterval, isThisYear: Bool) -> String {
+        if done >= target { return String(localized: "Цель выполнена") }
+        guard isThisYear else { return String(localized: "Не хватило: \(target - done)") }
+        let behind = Int((Double(target) * elapsed).rounded(.down)) - done
+        let pace = behind > 0 ? String(localized: "Отстаёте от плана на \(behind).")
+            : behind < 0 ? String(localized: "Опережаете план на \(-behind).")
+            : String(localized: "Идёте точно по плану.")
+        let weeksLeft = max(interval.end.timeIntervalSinceNow / (7 * 86_400), 1)
+        let perWeek = (Double(target - done) / weeksLeft)
+            .formatted(.number.precision(.fractionLength(0...1)).locale(AppLanguage.locale))
+        return pace + " " + String(localized: "Осталось \(target - done) — примерно \(perWeek) в неделю.")
+    }
+
+    @ViewBuilder
+    private func goalPoster(_ postId: String) -> some View {
+        let title = stats.titles[postId]
+        let poster = PosterImage(url: title?.posterURL)
+            .frame(width: 48, height: 72)
+            .clipShape(RoundedRectangle(cornerRadius: 6))
+            .help(title?.name ?? "")
+        if let title, let path = title.path {
+            NavigationLink(value: MediaItem(path: path, title: title.name, subtitle: "", posterURL: title.posterURL, kind: title.kind, badge: nil)) {
+                poster
+            }
+            .buttonStyle(.plain)
+        } else {
+            poster
+        }
+    }
+
+    private func editGoal(year: Int) {
+        goalDraft = goals[String(year)] ?? 24
+        isEditingGoal = true
+    }
+
+    private func goalEditor(year: Int) -> some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Сколько фильмов посмотреть в \(String(year))?")
+                .font(.headline)
+            // None lit when the number is typed in.
+            Picker("Цель", selection: $goalDraft) {
+                ForEach(Self.goalPresets, id: \.self) { Text("\($0)").tag($0) }
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+            Stepper(value: $goalDraft, in: 1...999) {
+                TextField("Фильмов", value: $goalDraft, format: .number)
+                    .textFieldStyle(.roundedBorder)
+                    .frame(width: 70)
+            }
+            Text("12 — фильм в месяц, 52 — фильм в неделю. Считаются фильмы, мультфильмы и аниме без серий, досмотренные в REZKA на этом Mac.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            HStack {
+                if goals[String(year)] != nil {
+                    Button("Убрать цель", role: .destructive) { saveGoal(nil, year: year) }
+                }
+                Spacer()
+                Button("Отмена") { isEditingGoal = false }
+                    .keyboardShortcut(.cancelAction)
+                Button("Сохранить") { saveGoal(min(max(goalDraft, 1), 999), year: year) }
+                    .keyboardShortcut(.defaultAction)
+            }
+        }
+        .padding(18)
+        .frame(width: 360)
+    }
+
+    private func saveGoal(_ films: Int?, year: Int) {
+        WatchGoal.set(films, for: year)
+        goals = WatchGoal.all
+        isEditingGoal = false
+    }
+
     // MARK: Formatting
 
     /// "12 ч 40 мин", "35 мин".
     static func hours(_ seconds: Double) -> String {
         Duration.seconds(Int64(seconds.rounded()))
             .formatted(.units(allowed: [.hours, .minutes], width: .abbreviated).locale(AppLanguage.locale))
+    }
+}
+
+/// The goal's progress, with a tick where an even pace would be by today.
+private struct GoalBar: View {
+    /// Both from 0 to 1.
+    let done: Double
+    let pace: Double?
+
+    var body: some View {
+        GeometryReader { proxy in
+            let width = proxy.size.width
+            ZStack(alignment: .leading) {
+                Capsule().fill(.quaternary)
+                Capsule()
+                    .fill(Color.accentColor.gradient)
+                    .frame(width: max(done > 0 ? 10 : 0, width * done))
+                if let pace {
+                    RoundedRectangle(cornerRadius: 1)
+                        .fill(.primary.opacity(0.7))
+                        .frame(width: 2, height: 16)
+                        .offset(x: min(max(width * pace - 1, 0), width - 2))
+                        .help("План на сегодня")
+                }
+            }
+        }
+        .frame(height: 10)
     }
 }
