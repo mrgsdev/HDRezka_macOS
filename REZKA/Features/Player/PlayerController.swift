@@ -24,6 +24,9 @@ final class PlayerController {
     private(set) var seekHint: Double?
     /// Playback has waited for data for more than a moment, e.g. after a jump to a part not loaded yet.
     private(set) var isBuffering = false
+    /// How much of the video has loaded, in whole percent; nil until its length is known.
+    /// The system controls don't show it.
+    private(set) var loadedPercent: Int?
     /// Closes the window; set by the view.
     var onClose: (() -> Void)?
 
@@ -31,6 +34,7 @@ final class PlayerController {
     @ObservationIgnored private var timeObserver: Any?
     @ObservationIgnored private var endObserver: NSObjectProtocol?
     @ObservationIgnored private var statusObservation: NSKeyValueObservation?
+    @ObservationIgnored private var loadedObservation: NSKeyValueObservation?
     @ObservationIgnored private var waitingObservation: NSKeyValueObservation?
     @ObservationIgnored private var speedObservation: NSKeyValueObservation?
     @ObservationIgnored private var bufferingTask: Task<Void, Never>?
@@ -89,8 +93,20 @@ final class PlayerController {
         return [season?.title ?? String(localized: "Сезон \(seasonId)"), episode?.title ?? String(localized: "Серия \(episodeId)"), request.translator.name].joined(separator: " · ")
     }
 
+    /// The episode and dub, then how much has loaded until all of it has.
     var subtitleLine: String {
-        episodeLabel ?? request.translator.name
+        [episodeLabel ?? request.translator.name, loadedLine].compactMap { $0 }.joined(separator: " · ")
+    }
+
+    private var loadedLine: String? {
+        guard let loadedPercent, loadedPercent < 100 else { return nil }
+        let share = (Double(loadedPercent) / 100).formatted(.percent.locale(AppLanguage.locale))
+        if request.episodeId != nil { return String(localized: "Серия загружена на \(share)") }
+        return switch request.kind {
+        case .cartoon: String(localized: "Мультфильм загружен на \(share)")
+        case .anime: String(localized: "Аниме загружено на \(share)")
+        default: String(localized: "Фильм загружен на \(share)")
+        }
     }
 
     // MARK: Loading
@@ -133,6 +149,7 @@ final class PlayerController {
         pendingSeek = position > 1 ? position : nil
 
         let item = AVPlayerItem(url: fallback ? (quality.fallbackURL ?? quality.url) : quality.url)
+        loadedPercent = nil
         observe(item)
         player.replaceCurrentItem(with: item)
         player.defaultRate = speed
@@ -143,6 +160,11 @@ final class PlayerController {
         statusObservation = item.observe(\.status, options: [.new]) { [weak self] item, _ in
             DispatchQueue.main.async {
                 MainActor.assumeIsolated { self?.statusChanged(item) }
+            }
+        }
+        loadedObservation = item.observe(\.loadedTimeRanges, options: [.new]) { [weak self] _, _ in
+            DispatchQueue.main.async {
+                MainActor.assumeIsolated { self?.updateLoaded() }
             }
         }
         if let endObserver { NotificationCenter.default.removeObserver(endObserver) }
@@ -170,6 +192,18 @@ final class PlayerController {
         default:
             break
         }
+    }
+
+    /// All loaded stretches together: after a jump ahead there are several.
+    private func updateLoaded() {
+        let duration = currentDuration
+        guard duration > 0, let item = player.currentItem else { return }
+        let seconds = item.loadedTimeRanges.map(\.timeRangeValue.duration.seconds)
+            .filter { $0.isFinite && $0 > 0 }
+            .reduce(0, +)
+        // The last fraction of a second is often never reported as loaded.
+        let percent = seconds >= duration - 1 ? 100 : min(Int(seconds / duration * 100), 99)
+        if percent != loadedPercent { loadedPercent = percent }
     }
 
     private func itemDidFinish() {
@@ -395,6 +429,7 @@ final class PlayerController {
         timeObserver = nil
         endObserver = nil
         statusObservation = nil
+        loadedObservation = nil
         player.pause()
         player.replaceCurrentItem(with: nil)
     }

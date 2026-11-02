@@ -323,6 +323,16 @@
         }
       }
     },
+    "Аниме загружено на %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anime %@ loaded"
+          }
+        }
+      }
+    },
     "Анонсы": {
       "localizations": {
         "en": {
@@ -1422,6 +1432,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cartoon"
+          }
+        }
+      }
+    },
+    "Мультфильм загружен на %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cartoon %@ loaded"
           }
         }
       }
@@ -2937,6 +2957,16 @@
         }
       }
     },
+    "Серия загружена на %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Episode %@ loaded"
+          }
+        }
+      }
+    },
     "Системная": {
       "localizations": {
         "en": {
@@ -3380,6 +3410,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Movie"
+          }
+        }
+      }
+    },
+    "Фильм загружен на %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movie %@ loaded"
           }
         }
       }
