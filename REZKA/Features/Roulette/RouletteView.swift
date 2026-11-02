@@ -402,53 +402,22 @@ private struct YearRangeSlider: View {
     }
 }
 
-/// A light running round a border, white fading into violet, as on a button that glows while
-/// something happens behind it.
-private struct GlowingBorder: View {
-    let cornerRadius: CGFloat
-    /// Seconds per round.
-    var period: Double = 2.4
-
-    private static let light: [Gradient.Stop] = [
-        .init(color: .clear, location: 0),
-        .init(color: .clear, location: 0.5),
-        .init(color: Color(red: 0.3, green: 0.35, blue: 1), location: 0.72),
-        .init(color: Color(red: 0.8, green: 0.3, blue: 1), location: 0.86),
-        .init(color: .white, location: 0.96),
-        .init(color: .clear, location: 1),
-    ]
-
-    var body: some View {
-        TimelineView(.animation) { context in
-            let turn = context.date.timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: period) / period
-            let gradient = AngularGradient(stops: Self.light, center: .center, angle: .degrees(turn * 360))
-            // A corner radius past half the height draws a capsule.
-            let shape = RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-            ZStack {
-                shape.strokeBorder(gradient, lineWidth: 4).blur(radius: 5)
-                shape.strokeBorder(gradient, lineWidth: 1.5)
-            }
-        }
-        .allowsHitTesting(false)
-        .accessibilityHidden(true)
-    }
-}
-
-/// Over the reel while titles for the new filters load: a dark pill with a light running round it.
+/// Over the reel while titles for the new filters load: a quiet card in the app's own colours,
+/// a spinner beside the words, like the rest of the app's loading states.
 private struct LoadingPill: View {
     var body: some View {
-        Text("Загружается, подождите…")
-            .font(.headline)
-            .foregroundStyle(.white)
-            .padding(.horizontal, 30)
-            .padding(.vertical, 16)
-            .background {
-                Capsule()
-                    .fill(LinearGradient(colors: [Color(white: 0.17), Color(white: 0.05)], startPoint: .top, endPoint: .bottom))
-                    .overlay(Capsule().strokeBorder(.white.opacity(0.08)))
-                    .shadow(color: .black.opacity(0.35), radius: 16, y: 8)
-            }
-            .overlay { GlowingBorder(cornerRadius: 100) }
-            .transition(.opacity.combined(with: .scale(scale: 0.95)))
+        HStack(spacing: 10) {
+            ProgressView()
+                .controlSize(.small)
+            Text("Загружается, подождите…")
+                .font(.callout.weight(.medium))
+                .foregroundStyle(.secondary)
+        }
+        .padding(.horizontal, 18)
+        .padding(.vertical, 11)
+        .background(.regularMaterial, in: Capsule())
+        .overlay(Capsule().strokeBorder(Brand.stroke))
+        .shadow(color: .black.opacity(0.25), radius: 12, y: 4)
+        .transition(.opacity)
     }
 }
