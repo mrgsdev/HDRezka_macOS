@@ -14,14 +14,19 @@ struct RouletteView: View {
             VStack(spacing: 22) {
                 filters
                     .padding(.horizontal, 28)
-                RouletteReel(model: model)
-                    .frame(height: 420)
-                    .overlay {
-                        if model.phase == .loading { LoadingPill() }
-                    }
+                if model.isEmptyForAge, let limit = ParentalControl.shared.limit {
+                    emptyForAge(limit)
+                        .frame(height: 420)
+                } else {
+                    RouletteReel(model: model)
+                        .frame(height: 420)
+                        .overlay {
+                            if model.phase == .loading { LoadingPill() }
+                        }
 
-                // Right under the reel, so rolling again is never below the fold.
-                controls
+                    // Right under the reel, so rolling again is never below the fold.
+                    controls
+                }
 
                 if model.phase == .done, let pick = model.pick {
                     RouletteResult(model: pick)
@@ -80,6 +85,35 @@ struct RouletteView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .disabled(model.phase == .spinning)
+    }
+
+    /// In kid mode, where nothing in the section and filters fits the age: says so in place of the reel,
+    /// and offers what usually does.
+    private func emptyForAge(_ limit: AgeLimit) -> some View {
+        VStack(spacing: 14) {
+            Image(systemName: "lock.shield")
+                .font(.system(size: 40))
+                .foregroundStyle(.secondary)
+            Text("Для возраста \(limit.title) крутить \(model.section.title.lowercased()) нельзя")
+                .font(.title3.weight(.semibold))
+                .multilineTextAlignment(.center)
+            Text("Детский режим не нашёл здесь ничего подходящего. Возраст меняется в Настройках.")
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            HStack(spacing: 12) {
+                if model.section != .cartoons {
+                    Button("Крутить мультфильмы") { model.section = .cartoons }
+                        .buttonStyle(.borderedProminent)
+                }
+                if model.hasFilters {
+                    Button("Сбросить фильтры", action: model.resetFilters)
+                }
+            }
+            .controlSize(.large)
+            .padding(.top, 6)
+        }
+        .frame(maxWidth: 520)
+        .frame(maxWidth: .infinity)
     }
 
     private var controls: some View {

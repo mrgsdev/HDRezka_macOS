@@ -919,6 +919,16 @@
         }
       }
     },
+    "Детский режим не нашёл здесь ничего подходящего. Возраст меняется в Настройках.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kid Mode found nothing suitable here. The age is changed in Settings."
+          }
+        }
+      }
+    },
     "Детский режим скрывает фильмы и сериалы старше %@. Возраст меняется в Настройках.": {
       "localizations": {
         "en": {
@@ -929,22 +939,28 @@
         }
       }
     },
+    "Для возраста %@ крутить %@ нельзя": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spinning %2$@ isn't allowed for ages %1$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Для возраста %1$@ крутить %2$@ нельзя"
+          }
+        }
+      }
+    },
     "Для выбранного возраста здесь ничего нет": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Nothing here for the chosen age"
-          }
-        }
-      }
-    },
-    "Для выбранного возраста под эти фильтры ничего не нашлось. Попробуйте раздел «Мультфильмы» или другие жанры.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nothing fits these filters for the chosen age. Try Cartoons or other genres."
           }
         }
       }
@@ -1315,6 +1331,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Spin Again"
+          }
+        }
+      }
+    },
+    "Крутить мультфильмы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spin Cartoons"
           }
         }
       }
@@ -2767,6 +2793,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Reset"
+          }
+        }
+      }
+    },
+    "Сбросить фильтры": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset Filters"
           }
         }
       }

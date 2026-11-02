@@ -62,6 +62,8 @@ final class RouletteModel {
     /// The pick's poster colour for the glow behind the middle card, once the reel has stopped on it.
     private(set) var glow: Color?
     private(set) var error: Error?
+    /// Kid mode left nothing in the section and filters to spin.
+    private(set) var isEmptyForAge = false
 
     /// Titles to draw from, shuffled, for the current filters.
     @ObservationIgnored private var pool: [MediaItem] = []
@@ -79,9 +81,10 @@ final class RouletteModel {
 
     static let spinDuration: TimeInterval = 4.5
 
+    /// Changes with the filters and with the kid mode age, so a new age in Settings refills the reel.
     var key: String {
         [section.rawValue, genres.map(\.path).sorted().joined(separator: ","), countries.sorted().joined(separator: ","),
-         "\(years.lowerBound)-\(years.upperBound)"].joined(separator: "|")
+         "\(years.lowerBound)-\(years.upperBound)", ParentalControl.shared.limit?.title ?? ""].joined(separator: "|")
     }
 
     var isBusy: Bool { phase == .loading || phase == .spinning }
@@ -93,6 +96,7 @@ final class RouletteModel {
         let load = loadID, key = key
         phase = .loading
         error = nil
+        isEmptyForAge = false
         do {
             let items = try await loadPool()
             guard load == loadID else { return }
@@ -101,12 +105,19 @@ final class RouletteModel {
             reel = Array(pool.prefix(12))
             position = Double(min(5, reel.count - 1))
             phase = .idle
+        } catch is EmptyForAge {
+            guard load == loadID else { return }
+            reel = []
+            isEmptyForAge = true
+            phase = .idle
         } catch {
             guard load == loadID else { return }
             if !error.isCancellation { self.error = error }
             phase = .idle
         }
     }
+
+    private struct EmptyForAge: Error {}
 
     func resetFilters() {
         genres = []
@@ -189,6 +200,7 @@ final class RouletteModel {
         pick = nil
         glow = nil
         error = nil
+        isEmptyForAge = false
         phase = .idle
     }
 
@@ -218,9 +230,8 @@ final class RouletteModel {
             found += fitting.prefix(8)
         }
         guard !found.isEmpty else {
-            throw RezkaError.site(ParentalControl.shared.isOn
-                ? String(localized: "Для выбранного возраста под эти фильтры ничего не нашлось. Попробуйте раздел «Мультфильмы» или другие жанры.")
-                : String(localized: "Под эти фильтры ничего не нашлось. Попробуйте расширить годы или выбрать другие жанры."))
+            if ParentalControl.shared.isOn { throw EmptyForAge() }
+            throw RezkaError.site(String(localized: "Под эти фильтры ничего не нашлось. Попробуйте расширить годы или выбрать другие жанры."))
         }
         return found.shuffled()
     }
