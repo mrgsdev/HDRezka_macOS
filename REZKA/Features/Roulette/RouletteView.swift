@@ -4,6 +4,8 @@ import SwiftUI
 /// with what it landed on and buttons to watch it or roll again.
 struct RouletteView: View {
     @Bindable var model: RouletteModel
+    /// Picks at once instead of spinning the reel; remembered on this Mac.
+    @AppStorage("rouletteWithoutAnimation") private var withoutAnimation = false
 
     private var menu: SectionMenu? { SiteMenu.shared.menus[model.section] }
 
@@ -18,6 +20,9 @@ struct RouletteView: View {
                         if model.phase == .loading { LoadingPill() }
                     }
 
+                // Right under the reel, so rolling again is never below the fold.
+                controls
+
                 if model.phase == .done, let pick = model.pick {
                     RouletteResult(model: pick)
                         .padding(.horizontal, 28)
@@ -27,8 +32,6 @@ struct RouletteView: View {
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                 }
-
-                controls
             }
             .padding(.vertical, 24)
             .animation(.easeOut(duration: 0.3), value: model.phase == .done)
@@ -80,25 +83,24 @@ struct RouletteView: View {
     }
 
     private var controls: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 18) {
             Button {
-                Task { await model.roll(animated: true) }
+                Task { await model.roll(animated: !withoutAnimation) }
             } label: {
                 Label(model.phase == .done ? "Крутить ещё" : "Крутить", systemImage: "dice.fill")
                     .frame(minWidth: 130)
             }
             .buttonStyle(.borderedProminent)
+            .controlSize(.large)
             .keyboardShortcut(.defaultAction)
+            // Nothing to roll from until the first list has come, unless it failed and a roll should retry.
+            .disabled(model.isBusy || (model.reel.isEmpty && model.error == nil))
 
-            Button {
-                Task { await model.roll(animated: false) }
-            } label: {
-                Label("Без анимации", systemImage: "forward.end.fill")
-            }
+            Toggle("Без анимации", isOn: $withoutAnimation)
+                .toggleStyle(.switch)
+                .controlSize(.small)
+                .foregroundStyle(.secondary)
         }
-        .controlSize(.large)
-        // Nothing to roll from until the first list has come, unless it failed and a roll should retry.
-        .disabled(model.isBusy || (model.reel.isEmpty && model.error == nil))
     }
 }
 
