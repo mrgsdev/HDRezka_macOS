@@ -93,7 +93,8 @@ struct DetailsView: View {
                     MediaRow(title: "Смотрите также", items: details.related)
                 }
 
-                if details.commentsCount > 0 || !model.comments.isEmpty {
+                // Reviews may hold anything; kid mode leaves them out.
+                if details.commentsCount > 0 || !model.comments.isEmpty, !ParentalControl.shared.isOn {
                     CommentsSection(model: model, total: details.commentsCount)
                 }
             }
@@ -261,7 +262,14 @@ struct DetailsView: View {
     private func actions(_ details: MediaDetails) -> some View {
         // Wraps rather than squeezing labels down to icons when the window is narrow.
         FlowLayout(spacing: 12, lineSpacing: 10) {
-            if let restriction = details.restriction {
+            if !model.isAllowed {
+                Label("Недоступно в детском режиме", systemImage: "lock.fill")
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(Brand.panel, in: Capsule())
+            } else if let restriction = details.restriction {
                 Label("Недоступно в вашем регионе", systemImage: "globe")
                     .font(.headline)
                     .foregroundStyle(.secondary)

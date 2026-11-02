@@ -76,6 +76,8 @@ struct PlayerView: View {
         .windowToolbarFullScreenVisibility(.onHover)
         .onAppear {
             controller.onClose = { dismiss() }
+            // A window brought back with the app, for a title kid mode now hides.
+            guard ParentalControl.shared.allows(postId: controller.request.postId) else { return dismiss() }
             controller.start()
         }
         .onDisappear {

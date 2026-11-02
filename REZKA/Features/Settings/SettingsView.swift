@@ -89,6 +89,8 @@ struct SettingsView: View {
                 }
             }
 
+            ParentalSection()
+
             Section("Воспроизведение") {
                 Picker("Качество по умолчанию", selection: $quality) {
                     ForEach(QualityPreference.options, id: \.self) { Text(LocalizedStringKey($0)).tag($0) }

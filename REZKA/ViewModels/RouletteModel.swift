@@ -218,7 +218,9 @@ final class RouletteModel {
             found += fitting.prefix(8)
         }
         guard !found.isEmpty else {
-            throw RezkaError.site(String(localized: "Под эти фильтры ничего не нашлось. Попробуйте расширить годы или выбрать другие жанры."))
+            throw RezkaError.site(ParentalControl.shared.isOn
+                ? String(localized: "Для выбранного возраста под эти фильтры ничего не нашлось. Попробуйте раздел «Мультфильмы» или другие жанры.")
+                : String(localized: "Под эти фильтры ничего не нашлось. Попробуйте расширить годы или выбрать другие жанры."))
         }
         return found.shuffled()
     }
@@ -238,7 +240,7 @@ final class RouletteModel {
 
     /// Whether a title from a list fits the filters, judged by its card line: "2014, США, Фантастика".
     private func fits(_ item: MediaItem, from source: Source) -> Bool {
-        guard item.posterURL != nil else { return false }
+        guard item.posterURL != nil, ParentalControl.shared.allows(item) else { return false }
         if item.kind != .unknown, item.kind != section.kind { return false }
         let parts = item.subtitle.components(separatedBy: ", ")
         if years != Self.allYears {

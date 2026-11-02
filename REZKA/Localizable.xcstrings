@@ -133,6 +133,16 @@
         }
       }
     },
+    "4 цифры. Он понадобится, чтобы изменить или выключить детский режим.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 digits. You'll need it to change or turn off Kid Mode."
+          }
+        }
+      }
+    },
     "Email": {
       "localizations": {
         "en": {
@@ -169,6 +179,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "OK"
+          }
+        }
+      }
+    },
+    "PIN-код": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PIN"
+          }
+        }
+      }
+    },
+    "PIN-коды не совпадают.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The PINs don't match."
           }
         }
       }
@@ -443,6 +473,26 @@
         }
       }
     },
+    "Введите PIN-код": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter PIN"
+          }
+        }
+      }
+    },
+    "Введите код, который был показан при включении детского режима или последней смене PIN-кода.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter the code shown when Kid Mode was turned on or the PIN was last changed."
+          }
+        }
+      }
+    },
     "Введите название фильма, сериала или мультфильма": {
       "localizations": {
         "en": {
@@ -479,12 +529,52 @@
         }
       }
     },
+    "Включить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn On"
+          }
+        }
+      }
+    },
+    "Включить детский режим…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn On Kid Mode…"
+          }
+        }
+      }
+    },
     "Во весь экран": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Full Screen"
+          }
+        }
+      }
+    },
+    "Возраст": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Age"
+          }
+        }
+      }
+    },
+    "Возраст, до которого показывать фильмы и сериалы.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The age up to which movies and series are shown."
           }
         }
       }
@@ -619,6 +709,16 @@
         }
       }
     },
+    "Выберите, до какого возраста показывать фильмы и сериалы.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose the age up to which movies and series are shown."
+          }
+        }
+      }
+    },
     "Выбрать": {
       "localizations": {
         "en": {
@@ -675,6 +775,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Off"
+          }
+        }
+      }
+    },
+    "Выключить детский режим": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn Off Kid Mode"
           }
         }
       }
@@ -799,6 +909,46 @@
         }
       }
     },
+    "Детский режим": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kid Mode"
+          }
+        }
+      }
+    },
+    "Детский режим скрывает фильмы и сериалы старше %@. Возраст меняется в Настройках.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kid Mode hides movies and series above %@. The age is changed in Settings."
+          }
+        }
+      }
+    },
+    "Для выбранного возраста здесь ничего нет": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing here for the chosen age"
+          }
+        }
+      }
+    },
+    "Для выбранного возраста под эти фильтры ничего не нашлось. Попробуйте раздел «Мультфильмы» или другие жанры.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing fits these filters for the chosen age. Try Cartoons or other genres."
+          }
+        }
+      }
+    },
     "Для этой озвучки нет доступных видео. Попробуйте другую озвучку.": {
       "localizations": {
         "en": {
@@ -839,6 +989,16 @@
         }
       }
     },
+    "Ещё раз": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Again"
+          }
+        }
+      }
+    },
     "Жанр или студия": {
       "localizations": {
         "en": {
@@ -865,6 +1025,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "All Time"
+          }
+        }
+      }
+    },
+    "Забыли PIN-код?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Forgot PIN?"
           }
         }
       }
@@ -1019,6 +1189,16 @@
         }
       }
     },
+    "Изменить или выключить…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change or Turn Off…"
+          }
+        }
+      }
+    },
     "Используйте программу на свой страх и риск и соблюдайте законы своей страны.": {
       "localizations": {
         "en": {
@@ -1105,6 +1285,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Default Quality"
+          }
+        }
+      }
+    },
+    "Код восстановления": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recovery Code"
           }
         }
       }
@@ -1420,6 +1610,16 @@
         }
       }
     },
+    "Не удалось прочитать настройки детского режима из связки ключей, поэтому включён самый строгий уровень.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't read Kid Mode settings from the Keychain, so the strictest level is on."
+          }
+        }
+      }
+    },
     "Не удалось разобрать ответ сайта (%@). Возможно, изменилась вёрстка.": {
       "localizations": {
         "en": {
@@ -1490,12 +1690,32 @@
         }
       }
     },
+    "Неверно. Попробуйте ещё раз.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Incorrect. Try again."
+          }
+        }
+      }
+    },
     "Недоступно в вашем регионе": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Not Available in Your Region"
+          }
+        }
+      }
+    },
+    "Недоступно в детском режиме": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not Available in Kid Mode"
           }
         }
       }
@@ -2293,6 +2513,16 @@
         }
       }
     },
+    "Придумайте PIN-код": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a PIN"
+          }
+        }
+      }
+    },
     "Применить зеркало": {
       "localizations": {
         "en": {
@@ -2681,12 +2911,32 @@
         }
       }
     },
+    "Скопировать": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy"
+          }
+        }
+      }
+    },
     "Скорость": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Speed"
+          }
+        }
+      }
+    },
+    "Скрывает фильмы и сериалы старше выбранного возраста и отзывы, не даёт их смотреть. Изменить или выключить его можно только с PIN-кодом.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hides movies and series above the chosen age, and reviews, and blocks playing them. Changing or turning it off takes the PIN."
           }
         }
       }
@@ -2717,6 +2967,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Next Episode (⇧⌘N)"
+          }
+        }
+      }
+    },
+    "Слишком много неверных попыток. Попробуйте через %lld мин.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Too many wrong attempts. Try again in %lld min."
+          }
+        }
+      }
+    },
+    "Сменить PIN-код…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change PIN…"
           }
         }
       }
@@ -2854,6 +3124,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Saved: %@"
+          }
+        }
+      }
+    },
+    "Сохраните его: запишите или положите в «Пароли». Если вы забудете PIN-код, этот код поможет задать новый. Больше он показан не будет.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep it: write it down or save it in Passwords. If you forget the PIN, this code lets you set a new one. It won't be shown again."
           }
         }
       }
@@ -3168,6 +3448,16 @@
         }
       }
     },
+    "Чтобы изменить или выключить детский режим.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To change or turn off Kid Mode."
+          }
+        }
+      }
+    },
     "Эта озвучка только для HDrezka Premium — без подписки покажут короткое превью. Выберите озвучку без короны.": {
       "localizations": {
         "en": {
@@ -3208,6 +3498,26 @@
         }
       }
     },
+    "Этот тайтл недоступен в детском режиме.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This title isn't available in Kid Mode."
+          }
+        }
+      }
+    },
+    "Я сохранил код": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I've Saved the Code"
+          }
+        }
+      }
+    },
     "Язык": {
       "localizations": {
         "en": {
@@ -3244,6 +3554,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "all new"
+          }
+        }
+      }
+    },
+    "до %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "up to %@"
           }
         }
       }

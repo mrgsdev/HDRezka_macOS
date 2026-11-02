@@ -273,7 +273,9 @@ struct PosterCard: View {
 /// a screen at a time, shown while the pointer is over it; ⇧ with the wheel turns it a poster at a time,
 /// and a trackpad scrolls it sideways as usual.
 struct MediaRow<Title: View>: View {
-    let items: [MediaItem]
+    private let allItems: [MediaItem]
+    /// Without what kid mode hides.
+    private var items: [MediaItem] { allItems.filter(ParentalControl.shared.allows) }
     let actions: (MediaItem) -> [CardAction]
     let title: Title
 
@@ -291,12 +293,19 @@ struct MediaRow<Title: View>: View {
     private static var margin: CGFloat { 28 }
 
     init(items: [MediaItem], actions: @escaping (MediaItem) -> [CardAction] = { _ in [] }, @ViewBuilder title: () -> Title) {
-        self.items = items
+        self.allItems = items
         self.actions = actions
         self.title = title()
     }
 
+    /// Kid mode may hide every card: then the shelf, title and all, is left out.
     var body: some View {
+        if !items.isEmpty {
+            shelf
+        }
+    }
+
+    private var shelf: some View {
         VStack(alignment: .leading, spacing: 12) {
             title
                 .font(.title2.bold())
@@ -402,18 +411,40 @@ struct MediaGrid: View {
     var onReachEnd: () async -> Void = {}
     var actions: (MediaItem) -> [CardAction] = { _ in [] }
 
+    /// Without what kid mode hides.
+    private var visible: [MediaItem] { items.filter(ParentalControl.shared.allows) }
+
+    /// Pages loaded on its own while kid mode hid nearly everything.
+    @State private var extraPages = 0
+    private static let maxExtraPages = 6
+
     private let columns = [GridItem(.adaptive(minimum: 170, maximum: 170), spacing: 24, alignment: .top)]
 
     var body: some View {
-        LazyVGrid(columns: columns, alignment: .leading, spacing: 28) {
-            ForEach(items) { item in
-                PosterCard(item: item, actions: actions(item))
-                    .onAppear {
-                        if item.id == items.last?.id {
-                            Task { await onReachEnd() }
-                        }
+        Group {
+            if !items.isEmpty, visible.isEmpty, extraPages >= Self.maxExtraPages || ParentalControl.shared.limit == nil {
+                KidModeEmptyView()
+            } else {
+                LazyVGrid(columns: columns, alignment: .leading, spacing: 28) {
+                    ForEach(visible) { item in
+                        PosterCard(item: item, actions: actions(item))
+                            .onAppear {
+                                if item.id == visible.last?.id {
+                                    Task { await onReachEnd() }
+                                }
+                            }
                     }
+                }
             }
+        }
+        // With only a few cards let through, nothing would scroll to the end to load more: look a few
+        // pages further before saying there is nothing for this age.
+        .task(id: items.count) {
+            guard ParentalControl.shared.isOn, !items.isEmpty, visible.count < 12, extraPages < Self.maxExtraPages else { return }
+            extraPages += 1
+            await onReachEnd()
+            // The list ended: nothing more to wait for.
+            if !items.isEmpty, visible.isEmpty { extraPages = Self.maxExtraPages }
         }
     }
 }
@@ -451,6 +482,25 @@ struct EmptyStateView: View {
                 .frame(maxWidth: 520)
         }
         .padding(40)
+    }
+}
+
+/// Where kid mode has hidden every title: says so, and where the age is changed.
+struct KidModeEmptyView: View {
+    var body: some View {
+        VStack(spacing: 14) {
+            Image(systemName: "lock.shield")
+                .font(.system(size: 40))
+                .foregroundStyle(.secondary)
+            Text("Для выбранного возраста здесь ничего нет")
+                .font(.headline)
+            Text("Детский режим скрывает фильмы и сериалы старше \(ParentalControl.shared.limit?.title ?? ""). Возраст меняется в Настройках.")
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 460)
+        }
+        .padding(40)
+        .frame(maxWidth: .infinity)
     }
 }
 

@@ -59,6 +59,7 @@ final class DetailsModel {
         state = .loading
         do {
             let details = try await RezkaClient.shared.details(path: item.path)
+            AgeBook.remember(details, path: item.path)
             let last = WatchProgressStore.shared.last(postId: details.postId)
             // Without Premium, premium dubs play only a teaser, so default to a free one.
             let playable = AuthSession.shared.isPremium ? details.translators : details.translators.filter { !$0.isPremium }
@@ -312,8 +313,21 @@ final class DetailsModel {
         return (all[index], last)
     }
 
+    /// What the title is, for kid mode when the card did not say.
+    var kind: MediaKind {
+        item.kind == .unknown ? (details?.isSeries == true ? .series : .film) : item.kind
+    }
+
+    var isAllowed: Bool {
+        details.map { ParentalControl.shared.allows($0, kind: kind) } ?? true
+    }
+
     func play(episode: Episode? = nil, from position: Double? = nil) {
         guard let details, let translator else { return }
+        guard isAllowed else {
+            actionError = String(localized: "Этот тайтл недоступен в детском режиме.")
+            return
+        }
         // The site gives no video for it here; the player would only say there is none for the dub.
         guard details.restriction == nil else {
             actionError = String(localized: "Это видео недоступно в вашем регионе.")
