@@ -79,7 +79,10 @@ struct RootView: View {
         .onAppear {
             PlayerPresenter.open = { openWindow(id: "player", value: $0) }
         }
-        .task { await offerUpdate() }
+        .task {
+            AchievementTracker.shared.start()
+            await offerUpdate()
+        }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             Task { await offerUpdate() }
         }

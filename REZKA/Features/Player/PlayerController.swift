@@ -52,6 +52,8 @@ final class PlayerController {
     @ObservationIgnored private var isTornDown = false
     /// The last tick's position, to count what played since for «Итоги».
     @ObservationIgnored private var lastTickTime: Double?
+    /// The achievements have heard that this episode or film played to the end.
+    @ObservationIgnored private var finishNoted = false
 
     init(request: PlaybackRequest) {
         self.request = request
@@ -82,6 +84,7 @@ final class PlayerController {
             }
         }
         load(startAt: request.startPosition)
+        AchievementTracker.shared.noteStart()
     }
 
     // MARK: Titles
@@ -113,6 +116,7 @@ final class PlayerController {
 
     private func load(startAt: Double?) {
         loadTask?.cancel()
+        finishNoted = false
         isLoading = true
         cues = []
         subtitleText = nil
@@ -339,7 +343,9 @@ final class PlayerController {
             kind: request.kind ?? .unknown,
             genres: request.genres ?? WatchStats.shared.titles[request.postId]?.genres ?? [],
             posterURL: request.posterURL,
-            path: request.path ?? WatchStats.shared.titles[request.postId]?.path
+            path: request.path ?? WatchStats.shared.titles[request.postId]?.path,
+            countries: request.countries ?? WatchStats.shared.titles[request.postId]?.countries,
+            year: request.year ?? WatchStats.shared.titles[request.postId]?.year
         ))
     }
 
@@ -370,6 +376,12 @@ final class PlayerController {
             duration: duration,
             updatedAt: Date()
         ), persistNow: force)
+        // As far as «finished» goes for saved positions: the credits need not run out.
+        if position >= duration * 0.92, !finishNoted {
+            finishNoted = true
+            AchievementTracker.shared.noteFinished(request)
+        }
+        AchievementTracker.shared.noteWatching()
 
         if force || Date().timeIntervalSince(lastRemoteSave) > 60 {
             lastRemoteSave = Date()

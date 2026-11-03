@@ -44,6 +44,11 @@ final class WatchProgressStore {
         entries[Self.key(postId, seasonId, episodeId)]
     }
 
+    /// Every film and episode played to the end, as far back as positions are kept.
+    func finishedEntries() -> [Entry] {
+        entries.values.filter(\.isFinished)
+    }
+
     /// Titles without episodes (films, cartoons, anime films) played to the end within the interval,
     /// the latest first. A film watched again counts in the year of the last time.
     func finishedFilms(in interval: DateInterval) -> [Entry] {

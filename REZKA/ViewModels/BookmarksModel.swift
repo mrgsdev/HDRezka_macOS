@@ -22,6 +22,7 @@ final class BookmarksModel {
         foldersError = nil
         do {
             folders = try await RezkaClient.shared.bookmarkFolders()
+            AchievementTracker.shared.noteBookmarks(total: folders.compactMap(\.count).reduce(0, +))
             if selectedFolder == nil { selectedFolderId = folders.first?.id }
         } catch where !error.isCancellation {
             foldersError = error

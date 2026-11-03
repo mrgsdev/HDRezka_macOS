@@ -23,6 +23,7 @@ struct StatsView: View {
     @State private var goals = WatchGoal.all
     @State private var isEditingGoal = false
     @State private var goalDraft = 24
+    @State private var showsAchievements = false
 
     private let stats = WatchStats.shared
     private let progress = WatchProgressStore.shared
@@ -85,6 +86,13 @@ struct StatsView: View {
                 .buttonStyle(.borderless)
             }
             Spacer()
+            Button {
+                showsAchievements = true
+            } label: {
+                Label("Достижения \(AchievementTracker.shared.earned.count)/\(Achievement.all.count)", systemImage: "medal.fill")
+                    .monospacedDigit()
+            }
+            .sheet(isPresented: $showsAchievements) { AchievementsView() }
         }
     }
 
@@ -497,6 +505,7 @@ struct StatsView: View {
         WatchGoal.set(films, for: year)
         goals = WatchGoal.all
         isEditingGoal = false
+        AchievementTracker.shared.evaluate(announce: true)
     }
 
     // MARK: Formatting

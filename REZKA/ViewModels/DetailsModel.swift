@@ -74,6 +74,7 @@ final class DetailsModel {
             siteRating = details.siteRating
             myRating = Self.myRatings[details.postId]
             state = .loaded(details)
+            AchievementTracker.shared.noteDetails(details)
 
             if details.isSeries, let chosen {
                 if let active = details.activeTranslatorId, !details.seasons.isEmpty {
@@ -280,6 +281,7 @@ final class DetailsModel {
             siteRating = try await RezkaClient.shared.rate(postId: details.postId, value: value)
             myRating = value
             Self.myRatings[details.postId] = value
+            AchievementTracker.shared.noteRated()
         } catch {
             report(error)
         }
@@ -345,7 +347,9 @@ final class DetailsModel {
             startPosition: position,
             genres: details.info("Жанр")?.components(separatedBy: ", "),
             kind: item.kind == .unknown ? (details.isSeries ? .series : .film) : item.kind,
-            path: details.path
+            path: details.path,
+            countries: details.info("Страна")?.components(separatedBy: ", "),
+            year: (details.info("Год") ?? details.info("Дата выхода"))?.firstMatch(of: /\d{4}/).flatMap { Int($0.output) }
         ))
     }
 }

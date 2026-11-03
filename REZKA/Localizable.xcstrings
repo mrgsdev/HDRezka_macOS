@@ -149,6 +149,56 @@
         }
       }
     },
+    "10 корейских фильмов или сериалов.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 Korean movies or series."
+          }
+        }
+      }
+    },
+    "10 серий за один день.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 episodes in one day."
+          }
+        }
+      }
+    },
+    "10 часов просмотра.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 hours watched."
+          }
+        }
+      }
+    },
+    "100 часов просмотра.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100 hours watched."
+          }
+        }
+      }
+    },
+    "1000 часов просмотра — это почти 42 дня без перерыва.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1,000 hours watched: almost 42 days nonstop."
+          }
+        }
+      }
+    },
     "12 — фильм в месяц, 52 — фильм в неделю. Считаются фильмы, мультфильмы и аниме без серий, досмотренные в REZKA на этом Mac.": {
       "localizations": {
         "en": {
@@ -159,12 +209,62 @@
         }
       }
     },
+    "25-й кадр": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "25th Frame"
+          }
+        }
+      }
+    },
+    "250 часов просмотра.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "250 hours watched."
+          }
+        }
+      }
+    },
+    "3 серии одного сериала за день.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 episodes of one series in a day."
+          }
+        }
+      }
+    },
     "4 цифры. Он понадобится, чтобы изменить или выключить детский режим.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "4 digits. You'll need it to change or turn off Kid Mode."
+          }
+        }
+      }
+    },
+    "50 часов просмотра.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "50 hours watched."
+          }
+        }
+      }
+    },
+    "500 часов просмотра.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "500 hours watched."
           }
         }
       }
@@ -419,6 +519,16 @@
         }
       }
     },
+    "Больше 5 часов за одни выходные.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More than 5 hours in one weekend."
+          }
+        }
+      }
+    },
     "Больше всего смотрели": {
       "localizations": {
         "en": {
@@ -455,6 +565,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "The update archive contains no app."
+          }
+        }
+      }
+    },
+    "В день выхода": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Day One"
           }
         }
       }
@@ -585,6 +705,26 @@
         }
       }
     },
+    "Весь мир": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whole World"
+          }
+        }
+      }
+    },
+    "Вечер кино": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movie Night"
+          }
+        }
+      }
+    },
     "Включить": {
       "localizations": {
         "en": {
@@ -701,6 +841,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "All Franchise Parts"
+          }
+        }
+      }
+    },
+    "Всеядный": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Omnivore"
+          }
+        }
+      }
+    },
+    "Вся франшиза": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whole Franchise"
           }
         }
       }
@@ -845,6 +1005,36 @@
         }
       }
     },
+    "Выполните цель на год до 1 октября.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reach your yearly goal before October 1."
+          }
+        }
+      }
+    },
+    "Выполните цель на год.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reach your yearly goal."
+          }
+        }
+      }
+    },
+    "Выходные дома": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weekend In"
+          }
+        }
+      }
+    },
     "Вышла": {
       "localizations": {
         "en": {
@@ -901,6 +1091,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Year"
+          }
+        }
+      }
+    },
+    "Год с REZKA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Year with REZKA"
           }
         }
       }
@@ -965,6 +1165,16 @@
         }
       }
     },
+    "Десятка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfect Ten"
+          }
+        }
+      }
+    },
     "Детский режим": {
       "localizations": {
         "en": {
@@ -991,6 +1201,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Kid Mode hides movies and series above %@. The age is changed in Settings."
+          }
+        }
+      }
+    },
+    "Джекпот": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jackpot"
           }
         }
       }
@@ -1041,6 +1261,242 @@
         }
       }
     },
+    "Добавьте 10 тайтлов в закладки.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add 10 titles to bookmarks."
+          }
+        }
+      }
+    },
+    "Доверился судьбе": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trust Fate"
+          }
+        }
+      }
+    },
+    "Долгострой": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Long Haul"
+          }
+        }
+      }
+    },
+    "Досмотрите 10 фильмов СССР.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish 10 Soviet movies."
+          }
+        }
+      }
+    },
+    "Досмотрите 10 фильмов ужасов.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish 10 horror movies."
+          }
+        }
+      }
+    },
+    "Досмотрите 10 фильмов.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish 10 movies."
+          }
+        }
+      }
+    },
+    "Досмотрите 100 фильмов.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish 100 movies."
+          }
+        }
+      }
+    },
+    "Досмотрите 15 детективов или триллеров.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish 15 detective stories or thrillers."
+          }
+        }
+      }
+    },
+    "Досмотрите 20 комедий.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish 20 comedies."
+          }
+        }
+      }
+    },
+    "Досмотрите 25 мультфильмов.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish 25 cartoons."
+          }
+        }
+      }
+    },
+    "Досмотрите 25 фильмов.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish 25 movies."
+          }
+        }
+      }
+    },
+    "Досмотрите 250 фильмов.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish 250 movies."
+          }
+        }
+      }
+    },
+    "Досмотрите 50 фильмов.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish 50 movies."
+          }
+        }
+      }
+    },
+    "Досмотрите первый фильм до конца.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish your first movie."
+          }
+        }
+      }
+    },
+    "Досмотрите сериал до последней серии.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch a series to its last episode."
+          }
+        }
+      }
+    },
+    "Досмотрите сериал, в котором 10 сезонов и больше.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish a series with 10 or more seasons."
+          }
+        }
+      }
+    },
+    "Досмотрите фильм из рулетки с рейтингом IMDb 8 и выше.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish a roulette pick rated 8 or higher on IMDb."
+          }
+        }
+      }
+    },
+    "Досмотрите фильм после трёх часов ночи.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish a movie after 3 a.m."
+          }
+        }
+      }
+    },
+    "Досмотрите фильм, который выпал в рулетке.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish a movie the roulette picked."
+          }
+        }
+      }
+    },
+    "Досмотрите фильм, снятый до 1960 года.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish a movie made before 1960."
+          }
+        }
+      }
+    },
+    "Досмотрите целый сезон сериала.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finish a whole season."
+          }
+        }
+      }
+    },
+    "Достижения": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Achievements"
+          }
+        }
+      }
+    },
+    "Достижения %lld/%lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Achievements %1$lld/%2$lld"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Достижения %1$lld/%2$lld"
+          }
+        }
+      }
+    },
     "Доступна новая версия REZKA": {
       "localizations": {
         "en": {
@@ -1067,6 +1523,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Again"
+          }
+        }
+      }
+    },
+    "Жаворонок": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Early Bird"
           }
         }
       }
@@ -1211,6 +1677,16 @@
         }
       }
     },
+    "Затянуло": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hooked"
+          }
+        }
+      }
+    },
     "Здесь пока ничего нет": {
       "localizations": {
         "en": {
@@ -1301,6 +1777,16 @@
         }
       }
     },
+    "Испытай удачу": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try Your Luck"
+          }
+        }
+      }
+    },
     "Итоги": {
       "localizations": {
         "en": {
@@ -1381,12 +1867,52 @@
         }
       }
     },
+    "Киноман": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Film Buff"
+          }
+        }
+      }
+    },
     "Код восстановления": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Recovery Code"
+          }
+        }
+      }
+    },
+    "Коллекционер": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collector"
+          }
+        }
+      }
+    },
+    "Корейская волна": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Korean Wave"
+          }
+        }
+      }
+    },
+    "Кругосветка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Around the World"
           }
         }
       }
@@ -1482,6 +2008,26 @@
         }
       }
     },
+    "Марафонец": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Marathoner"
+          }
+        }
+      }
+    },
+    "Машина времени": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time Machine"
+          }
+        }
+      }
+    },
     "Месяц": {
       "localizations": {
         "en": {
@@ -1492,12 +2038,32 @@
         }
       }
     },
+    "Месяц кино": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movie Month"
+          }
+        }
+      }
+    },
     "Моё": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Library"
+          }
+        }
+      }
+    },
+    "Мультипликатор": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Animator"
           }
         }
       }
@@ -1538,6 +2104,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "The site has no movies or series with this person yet."
+          }
+        }
+      }
+    },
+    "Наберите первый час просмотра.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch your first hour."
           }
         }
       }
@@ -1598,6 +2174,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Settings"
+          }
+        }
+      }
+    },
+    "Начните смотреть до семи утра.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start watching before 7 a.m."
           }
         }
       }
@@ -1832,6 +2418,16 @@
         }
       }
     },
+    "Неделя кино": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movie Week"
+          }
+        }
+      }
+    },
     "Недоступно в вашем регионе": {
       "localizations": {
         "en": {
@@ -1969,6 +2565,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "New Arrivals"
+          }
+        }
+      }
+    },
+    "Новогодний": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Year's"
+          }
+        }
+      }
+    },
+    "Новое достижение": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Achievement"
           }
         }
       }
@@ -2159,6 +2775,16 @@
         }
       }
     },
+    "Отаку": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otaku"
+          }
+        }
+      }
+    },
     "Отзывы (%lld)": {
       "localizations": {
         "en": {
@@ -2279,6 +2905,16 @@
         }
       }
     },
+    "Оцените тайтл звёздами на сайте.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rate a title with stars on the site."
+          }
+        }
+      }
+    },
     "Оценить": {
       "localizations": {
         "en": {
@@ -2345,6 +2981,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pause and play"
+          }
+        }
+      }
+    },
+    "Первые шаги": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First Steps"
+          }
+        }
+      }
+    },
+    "Первый час": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First Hour"
           }
         }
       }
@@ -2425,6 +3081,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Period"
+          }
+        }
+      }
+    },
+    "Пилотная серия": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pilot"
           }
         }
       }
@@ -2619,6 +3285,42 @@
         }
       }
     },
+    "Полсотни": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fifty"
+          }
+        }
+      }
+    },
+    "Полтысячи": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Half a Thousand"
+          }
+        }
+      }
+    },
+    "Получено %lld из %lld — за то, что смотрите в REZKA на этом Mac.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld of %2$lld earned for watching in REZKA on this Mac."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Получено %1$lld из %2$lld — за то, что смотрите в REZKA на этом Mac."
+          }
+        }
+      }
+    },
     "Популярность озвучек": {
       "localizations": {
         "en": {
@@ -2681,12 +3383,82 @@
         }
       }
     },
+    "Посмотрите 100 серий аниме.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch 100 anime episodes."
+          }
+        }
+      }
+    },
+    "Посмотрите 100 серий.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch 100 episodes."
+          }
+        }
+      }
+    },
+    "Посмотрите 500 серий.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch 500 episodes."
+          }
+        }
+      }
+    },
+    "Посмотрите все части франшизы.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch every part of a franchise."
+          }
+        }
+      }
+    },
+    "Посмотрите новую серию в день, когда она вышла.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch a new episode on the day it comes out."
+          }
+        }
+      }
+    },
+    "Посмотрите первую серию сериала.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch the first episode of a series."
+          }
+        }
+      }
+    },
     "Поставить цель…": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Set a Goal…"
+          }
+        }
+      }
+    },
+    "Поставьте цель на год.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set a yearly goal."
           }
         }
       }
@@ -2707,6 +3479,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "HDrezka Site Rules"
+          }
+        }
+      }
+    },
+    "Премьера": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premiere"
+          }
+        }
+      }
+    },
+    "Привычки": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Habits"
           }
         }
       }
@@ -2819,6 +3611,16 @@
         }
       }
     },
+    "Прокрутите рулетку 10 раз.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spin the roulette 10 times."
+          }
+        }
+      }
+    },
     "Пропустить": {
       "localizations": {
         "en": {
@@ -2835,6 +3637,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Watched"
+          }
+        }
+      }
+    },
+    "Пятьсот серий": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "500 Episodes"
           }
         }
       }
@@ -2915,6 +3727,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Site Rating"
+          }
+        }
+      }
+    },
+    "Ретро": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retro"
+          }
+        }
+      }
+    },
+    "С опережением": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ahead of Time"
           }
         }
       }
@@ -3009,6 +3841,16 @@
         }
       }
     },
+    "Своё мнение": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Critic"
+          }
+        }
+      }
+    },
     "Сезон": {
       "localizations": {
         "en": {
@@ -3025,6 +3867,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Season %@"
+          }
+        }
+      }
+    },
+    "Сезон закрыт": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Season Done"
           }
         }
       }
@@ -3115,6 +3967,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Episode %@ loaded"
+          }
+        }
+      }
+    },
+    "Синефил": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cinephile"
           }
         }
       }
@@ -3275,6 +4137,46 @@
         }
       }
     },
+    "Смотрите 30 дней подряд.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch 30 days in a row."
+          }
+        }
+      }
+    },
+    "Смотрите 7 дней подряд.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch 7 days in a row."
+          }
+        }
+      }
+    },
+    "Смотрите в REZKA целый год: от первого просмотра прошло 365 дней.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A full year of REZKA: 365 days since your first watch."
+          }
+        }
+      }
+    },
+    "Смотрите в ночь с 31 декабря на 1 января.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch on New Year's Eve night."
+          }
+        }
+      }
+    },
     "Смотрите также": {
       "extractionState": "manual",
       "localizations": {
@@ -3302,6 +4204,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mark as Unwatched"
+          }
+        }
+      }
+    },
+    "Сова": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Night Owl"
+          }
+        }
+      }
+    },
+    "Советская классика": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Soviet Classics"
           }
         }
       }
@@ -3356,6 +4278,26 @@
         }
       }
     },
+    "Сотня": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hundred"
+          }
+        }
+      }
+    },
+    "Сотня часов": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hundred Hours"
+          }
+        }
+      }
+    },
     "Сохранено: %@": {
       "localizations": {
         "en": {
@@ -3396,12 +4338,32 @@
         }
       }
     },
+    "Сто серий": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100 Episodes"
+          }
+        }
+      }
+    },
     "Страны": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Countries"
+          }
+        }
+      }
+    },
+    "Страны и эпохи": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Countries and Eras"
           }
         }
       }
@@ -3422,6 +4384,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Subtitles"
+          }
+        }
+      }
+    },
+    "Сыщик": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleuth"
           }
         }
       }
@@ -3482,6 +4454,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Only titles with this IMDb rating or higher"
+          }
+        }
+      }
+    },
+    "Тысяча часов": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thousand Hours"
           }
         }
       }
@@ -3646,6 +4628,46 @@
         }
       }
     },
+    "Фильмы 10 разных жанров.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movies in 10 different genres."
+          }
+        }
+      }
+    },
+    "Фильмы из 10 стран.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movies from 10 countries."
+          }
+        }
+      }
+    },
+    "Фильмы из 25 стран.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movies from 25 countries."
+          }
+        }
+      }
+    },
+    "Фильмы шести разных десятилетий.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movies from six different decades."
+          }
+        }
+      }
+    },
     "Фильмы, сериалы, мультфильмы": {
       "localizations": {
         "en": {
@@ -3666,12 +4688,62 @@
         }
       }
     },
+    "Финал": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finale"
+          }
+        }
+      }
+    },
+    "Хохотун": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Giggler"
+          }
+        }
+      }
+    },
+    "Храбрец": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brave Heart"
+          }
+        }
+      }
+    },
     "Хранилище": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Storage"
+          }
+        }
+      }
+    },
+    "Целеустремлённый": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Goal Setter"
+          }
+        }
+      }
+    },
+    "Цели и франшизы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Goals and Franchises"
           }
         }
       }
@@ -3692,6 +4764,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Goal reached"
+          }
+        }
+      }
+    },
+    "Цель достигнута": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Goal Met"
           }
         }
       }
@@ -3722,6 +4804,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hours"
+          }
+        }
+      }
+    },
+    "Часы у экрана": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hours Watched"
+          }
+        }
+      }
+    },
+    "Четверть тысячи": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quarter Thousand"
           }
         }
       }

@@ -17,4 +17,7 @@ struct PlaybackRequest: Codable, Hashable {
     var genres: [String]?
     var kind: MediaKind?
     var path: String?
+    /// For the achievements: where the title is from and when it came out.
+    var countries: [String]?
+    var year: Int?
 }

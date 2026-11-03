@@ -162,6 +162,7 @@ final class RouletteModel {
         let choice = (unseen.isEmpty ? pool : unseen).randomElement() ?? fresh[distance - 1]
         fresh[distance - 1] = choice
         picked.insert(choice.id)
+        AchievementTracker.shared.noteSpin(postId: RezkaParser.idFromPath(choice.path))
 
         reel = kept + fresh
         position = Double(start)

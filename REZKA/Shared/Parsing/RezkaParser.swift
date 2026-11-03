@@ -544,7 +544,11 @@ enum RezkaParser {
 
     /// "IMDb: 7.8 (1 917)" in a title's hover card → 7.8.
     static func imdbRating(inQuickContent html: String) throws -> Double? {
-        let text = try SwiftSoup.parseBodyFragment(html).text()
+        imdbRating(in: try SwiftSoup.parseBodyFragment(html).text())
+    }
+
+    /// "IMDb: 7.8 (1 917) Кинопоиск: 8.1 (…)", as a title page's ratings read → 7.8.
+    static func imdbRating(in text: String) -> Double? {
         guard let match = text.firstMatch(of: /IMDb:?\s*(\d+(?:[.,]\d+)?)/) else { return nil }
         return Double(match.1.replacingOccurrences(of: ",", with: "."))
     }

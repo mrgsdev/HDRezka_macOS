@@ -14,6 +14,9 @@ final class WatchStats {
         var posterURL: URL?
         /// The title page on the site, so «Итоги» can open it.
         var path: String?
+        /// For the achievements; missing for titles watched before they counted them.
+        var countries: [String]?
+        var year: Int?
     }
 
     static let shared = WatchStats()
