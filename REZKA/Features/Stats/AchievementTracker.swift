@@ -244,6 +244,14 @@ final class AchievementTracker {
         set("decades", Set(years.map { $0 / 10 }).count, 6)
         if years.contains(where: { $0 < 1960 }) { set("retro", 1, 1) }
 
+        // Dubs, as the player counts them since it learnt them.
+        var byDub: [String: Double] = [:]
+        for dubs in stats.dubs.values {
+            for (dub, seconds) in dubs { byDub[dub, default: 0] += seconds }
+        }
+        set("dub-loyal", Int((byDub.values.max() ?? 0) / 3600), 100)
+        set("dub-polyglot", byDub.values.filter { $0 >= 600 }.count, 10)
+
         // Habits: days with at least five minutes of watching.
         let days = Set(secondsByDay.filter { $0.value >= 300 }.keys)
         var best = 0

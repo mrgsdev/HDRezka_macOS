@@ -3,7 +3,7 @@ import SwiftUI
 /// An award in «Итоги» for watching in REZKA; `AchievementTracker` gives them out.
 struct Achievement: Identifiable {
     enum Category: CaseIterable {
-        case start, time, films, series, habits, genres, world, roulette, goal
+        case start, time, films, series, habits, genres, dubs, world, roulette, goal
 
         var title: String {
             switch self {
@@ -13,6 +13,7 @@ struct Achievement: Identifiable {
             case .series: String(localized: "Сериалы")
             case .habits: String(localized: "Привычки")
             case .genres: String(localized: "Жанры")
+            case .dubs: String(localized: "Озвучки")
             case .world: String(localized: "Страны и эпохи")
             case .roulette: String(localized: "Что посмотреть?")
             case .goal: String(localized: "Цели и франшизы")
@@ -111,6 +112,12 @@ struct Achievement: Identifiable {
                     medal: Medal(.diamond, .rose, .pink, "paintpalette.fill")),
         Achievement(id: "otaku", category: .genres, title: String(localized: "Отаку"), detail: String(localized: "Посмотрите 100 серий аниме."),
                     medal: Medal(.diamond, .gold, .purple, "wand.and.stars")),
+
+        // Озвучки
+        Achievement(id: "dub-loyal", category: .dubs, title: String(localized: "Верность студии"), detail: String(localized: "100 часов в одной озвучке."),
+                    medal: Medal(.shield, .silver, .purple, "waveform")),
+        Achievement(id: "dub-polyglot", category: .dubs, title: String(localized: "Полиглот озвучек"), detail: String(localized: "10 разных озвучек, в каждой от 10 минут."),
+                    medal: Medal(.rosette, .copper, .sky, "bubble.left.and.bubble.right.fill")),
 
         // Страны и эпохи
         Achievement(id: "countries-10", category: .world, title: String(localized: "Кругосветка"), detail: String(localized: "10 стран в кинопаспорте."),

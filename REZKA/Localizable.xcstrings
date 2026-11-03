@@ -233,6 +233,16 @@
         }
       }
     },
+    "10 разных озвучек, в каждой от 10 минут.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 different voice-overs, at least 10 minutes each."
+          }
+        }
+      }
+    },
     "10 серий за один день.": {
       "localizations": {
         "en": {
@@ -269,6 +279,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "100 countries in the film passport."
+          }
+        }
+      }
+    },
+    "100 часов в одной озвучке.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100 hours in one voice-over."
           }
         }
       }
@@ -849,6 +869,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Enter the title of a movie, series or cartoon"
+          }
+        }
+      }
+    },
+    "Верность студии": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Studio Loyalty"
           }
         }
       }
@@ -3069,6 +3099,16 @@
         }
       }
     },
+    "Озвучки": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice-overs"
+          }
+        }
+      }
+    },
     "Озвучки считаются с этого обновления: посмотрите что-нибудь, и они появятся здесь.": {
       "localizations": {
         "en": {
@@ -3707,6 +3747,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Show Spoiler"
+          }
+        }
+      }
+    },
+    "Полиглот озвучек": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice-over Polyglot"
           }
         }
       }
