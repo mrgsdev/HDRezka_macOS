@@ -1881,6 +1881,16 @@
         }
       }
     },
+    "Загружаем…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading…"
+          }
+        }
+      }
+    },
     "Загружается, подождите…": {
       "localizations": {
         "en": {
@@ -2614,6 +2624,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Couldn't add the bookmark."
+          }
+        }
+      }
+    },
+    "Не удалось загрузить информацию.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't load the details."
           }
         }
       }

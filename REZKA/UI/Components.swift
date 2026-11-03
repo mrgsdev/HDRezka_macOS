@@ -227,6 +227,7 @@ struct PosterCard: View {
             VStack(alignment: .leading, spacing: 8) {
                 PosterImage(url: item.posterURL)
                     .frame(width: width, height: width * 1.5)
+                    .overlay(alignment: .topTrailing) { KindBadge(item: item) }
                     .overlay(alignment: .bottomLeading) {
                         if let badge = item.badge {
                             Text(badge)

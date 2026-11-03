@@ -542,9 +542,37 @@ enum RezkaParser {
         return URL(string: string, relativeTo: base)?.absoluteURL
     }
 
-    /// "IMDb: 7.8 (1 917)" in a title's hover card → 7.8.
-    static func imdbRating(inQuickContent html: String) throws -> Double? {
-        imdbRating(in: try SwiftSoup.parseBodyFragment(html).text())
+    /// A title's hover card, `engine/ajax/quick_content.php`: title, the site's rating, the start of the
+    /// description, genres, director and cast, IMDb and Kinopoisk.
+    static func quickInfo(in html: String) throws -> QuickInfo {
+        let doc = try SwiftSoup.parseBodyFragment(html)
+        func score(_ element: Element?) throws -> QuickInfo.Score? {
+            guard let element, let value = try element.select("b").first()?.text().nonEmpty else { return nil }
+            let votes = try element.select("i").first()?.text() ?? element.ownText()
+            return QuickInfo.Score(value: value, votes: votes.trimmingCharacters(in: CharacterSet(charactersIn: "() ")))
+        }
+        func label(_ element: Element) throws -> String {
+            try element.select(".label").first()?.text().trimmingCharacters(in: CharacterSet(charactersIn: ": ")) ?? ""
+        }
+        let rating = try doc.select(".b-content__bubble_rating").first()
+        let texts = try doc.select(".b-content__bubble_text").array()
+        let labelled = try texts.filter { try !$0.select(".label").isEmpty() } + doc.select(".b-content__bubble_str").array()
+        let rows = try labelled.compactMap { element -> QuickInfo.Row? in
+            // People's names sit in itemprop spans; genres are plain links.
+            let names = try element.select("[itemprop=name]").array().map { try $0.text() }
+            let values = names.isEmpty ? try element.select("a").array().map { try $0.text() } : names
+            let title = try label(element)
+            return values.isEmpty || title.isEmpty ? nil : QuickInfo.Row(label: title, values: values)
+        }
+        return QuickInfo(
+            title: try doc.select(".b-content__bubble_title").first()?.text() ?? "",
+            ratingLabel: try rating.map(label)?.nonEmpty,
+            rating: try score(rating),
+            description: try texts.first { try $0.select(".label").isEmpty() }?.text() ?? "",
+            rows: rows,
+            imdb: try score(doc.select(".b-content__bubble_rates .imdb").first()),
+            kinopoisk: try score(doc.select(".b-content__bubble_rates .kp").first())
+        )
     }
 
     /// "IMDb: 7.8 (1 917) Кинопоиск: 8.1 (…)", as a title page's ratings read → 7.8.

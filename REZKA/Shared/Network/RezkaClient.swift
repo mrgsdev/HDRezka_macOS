@@ -263,11 +263,15 @@ final class RezkaClient {
         return try RezkaParser.seasons(in: fragment)
     }
 
-    /// The IMDb rating from the card the site shows on hovering a poster; lists don't have it.
-    /// nil when the title has none.
-    func imdbRating(postId: String) async throws -> Double? {
+    /// The card the site shows on hovering a poster: what lists don't carry.
+    func quickInfo(postId: String) async throws -> QuickInfo {
         let data = try await post("engine/ajax/quick_content.php", form: ["id": postId, "is_touch": "1"], timestamped: false)
-        return try RezkaParser.imdbRating(inQuickContent: String(decoding: data, as: UTF8.self))
+        return try RezkaParser.quickInfo(in: String(decoding: data, as: UTF8.self))
+    }
+
+    /// The IMDb rating from the hover card; nil when the title has none.
+    func imdbRating(postId: String) async throws -> Double? {
+        try await quickInfo(postId: postId).imdb.flatMap { Double($0.value.replacingOccurrences(of: ",", with: ".")) }
     }
 
     func stream(postId: String, translator: Translator, seasonId: String?, episodeId: String?, favs: String) async throws -> StreamInfo {

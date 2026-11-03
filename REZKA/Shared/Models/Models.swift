@@ -211,6 +211,31 @@ struct MediaDetails {
     }
 }
 
+/// What the site's hover card on a poster tells about a title: more than a list's card line, less than
+/// its page.
+struct QuickInfo {
+    struct Score {
+        let value: String
+        /// As the site writes it, e.g. "1 923".
+        let votes: String
+    }
+
+    /// A labelled line as the site has it: «Жанр», «Режиссер», «В ролях».
+    struct Row: Hashable {
+        let label: String
+        let values: [String]
+    }
+
+    let title: String
+    /// E.g. «Рейтинг фильма».
+    let ratingLabel: String?
+    let rating: Score?
+    let description: String
+    let rows: [Row]
+    let imdb: Score?
+    let kinopoisk: Score?
+}
+
 /// Someone in a title's cast or crew; `path` leads to their page, e.g. `person/3775-gari-oldman/`.
 struct PersonLink: Identifiable, Hashable {
     let id: String
