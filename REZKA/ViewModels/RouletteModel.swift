@@ -288,7 +288,7 @@ final class RouletteModel {
 
     private func source(for attempt: Int) -> Source {
         if let country = countries.randomElement(), attempt.isMultiple(of: 2) {
-            return Source(path: "country/\(country)/", filter: Bool.random() ? .popular : nil, page: Int.random(in: 1...3), isCountry: true)
+            return Source(path: Listing.country(country).path, filter: Bool.random() ? .popular : nil, page: Int.random(in: 1...3), isCountry: true)
         }
         let genre = genres.randomElement()
         if attempt % 3 == 2 {

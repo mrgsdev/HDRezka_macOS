@@ -49,6 +49,11 @@ struct Listing: Identifiable, Hashable {
     var id: String { path }
 
     static let announcements = Listing(title: String(localized: "Анонсы"), path: "announce/", isSortable: false)
+
+    /// A country's titles. The site takes a space in the name only as "+": with "%20" it answers 403.
+    static func country(_ name: String) -> Listing {
+        Listing(title: name, path: "country/\(name.replacingOccurrences(of: " ", with: "+"))/")
+    }
 }
 
 /// What the site's top menu offers inside a section.
