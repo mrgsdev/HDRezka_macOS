@@ -2,8 +2,10 @@ import Foundation
 import OSLog
 import SwiftSoup
 
+/// The site's sections. «Передачи и шоу» is last although the site lists it before anime: its menu
+/// entry is commented out there, and ⌘2–⌘5 keep their sections.
 enum CatalogSection: String, CaseIterable, Identifiable, Hashable {
-    case films, series, cartoons, animation
+    case films, series, cartoons, animation, show
 
     var id: String { rawValue }
 
@@ -13,6 +15,7 @@ enum CatalogSection: String, CaseIterable, Identifiable, Hashable {
         case .series: String(localized: "Сериалы")
         case .cartoons: String(localized: "Мультфильмы")
         case .animation: String(localized: "Аниме")
+        case .show: String(localized: "Передачи и шоу")
         }
     }
 
@@ -22,6 +25,7 @@ enum CatalogSection: String, CaseIterable, Identifiable, Hashable {
         case .series: "tv"
         case .cartoons: "sparkles.tv"
         case .animation: "wand.and.stars"
+        case .show: "theatermasks"
         }
     }
 }

@@ -3451,6 +3451,26 @@
         }
       }
     },
+    "Передача": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show"
+          }
+        }
+      }
+    },
+    "Передачи и шоу": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shows"
+          }
+        }
+      }
+    },
     "Перезапустить": {
       "localizations": {
         "en": {

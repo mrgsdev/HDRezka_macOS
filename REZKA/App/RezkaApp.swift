@@ -147,8 +147,13 @@ struct AppCommands: Commands {
                 .keyboardShortcut("f")
             Divider()
             ForEach(Array(CatalogSection.allCases.enumerated()), id: \.element) { index, section in
-                Button(section.title) { Router.shared.selection = .section(section) }
-                    .keyboardShortcut(KeyEquivalent(Character(String(index + 2))))
+                let button = Button(section.title) { Router.shared.selection = .section(section) }
+                // ⌘6–⌘9 are taken by the sections below, so the fifth goes without.
+                if index < 4 {
+                    button.keyboardShortcut(KeyEquivalent(Character(String(index + 2))))
+                } else {
+                    button
+                }
             }
             Divider()
             Button("Подборки") { Router.shared.selection = .collections }

@@ -1,13 +1,14 @@
 import Foundation
 
 enum MediaKind: String, Codable, Hashable {
-    case film, series, cartoon, anime, unknown
+    case film, series, cartoon, anime, show, unknown
 
     init(cssClasses: [String]) {
         if cssClasses.contains("films") { self = .film }
         else if cssClasses.contains("series") { self = .series }
         else if cssClasses.contains("cartoons") { self = .cartoon }
         else if cssClasses.contains("animation") { self = .anime }
+        else if cssClasses.contains("show") { self = .show }
         else { self = .unknown }
     }
 
@@ -17,6 +18,7 @@ enum MediaKind: String, Codable, Hashable {
         case .series: String(localized: "Сериал")
         case .cartoon: String(localized: "Мультфильм")
         case .anime: String(localized: "Аниме")
+        case .show: String(localized: "Передача")
         case .unknown: nil
         }
     }

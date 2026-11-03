@@ -326,6 +326,7 @@ extension CatalogSection {
         case .series: .series
         case .cartoons: .cartoon
         case .animation: .anime
+        case .show: .show
         }
     }
 }

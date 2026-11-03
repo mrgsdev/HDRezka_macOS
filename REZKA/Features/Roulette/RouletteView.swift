@@ -74,7 +74,8 @@ struct RouletteView: View {
     private var filters: some View {
         FlowLayout(spacing: 12, lineSpacing: 12) {
             Picker("Раздел", selection: $model.section) {
-                ForEach(CatalogSection.allCases) { Text($0.title).tag($0) }
+                // Not shows: they are mostly concerts, which the roulette leaves out.
+                ForEach(CatalogSection.allCases.filter { $0 != .show }) { Text($0.title).tag($0) }
             }
             .pickerStyle(.segmented)
             .labelsHidden()
