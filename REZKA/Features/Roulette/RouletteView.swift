@@ -1,11 +1,18 @@
 import SwiftUI
 
-/// "Что посмотреть?": a reel of posters that spins to a random title, or shows one at once,
-/// with what it landed on and buttons to watch it or roll again.
+/// "Что посмотреть?": a reel of posters that spins to a random title, or shows one at once, or a
+/// scratch card hiding it; with what it landed on and buttons to watch it or roll again.
 struct RouletteView: View {
+    enum Mode: String {
+        case reel, scratch
+    }
+
     @Bindable var model: RouletteModel
     /// Picks at once instead of spinning the reel; remembered on this Mac.
     @AppStorage("rouletteWithoutAnimation") private var withoutAnimation = false
+    @AppStorage("rouletteMode") private var mode = Mode.reel
+    /// The pick the scratch card has shown, so its details wait until then.
+    @State private var scratchedPick: String?
 
     private var menu: SectionMenu? { SiteMenu.shared.menus[model.section] }
 
@@ -18,17 +25,27 @@ struct RouletteView: View {
                     emptyForAge(limit)
                         .frame(height: 420)
                 } else {
-                    RouletteReel(model: model)
-                        .frame(height: 420)
-                        .overlay {
-                            if model.phase == .loading { LoadingPill() }
+                    Group {
+                        if mode == .scratch {
+                            let item = model.phase == .done ? model.pick?.item : nil
+                            ScratchCard(item: item) { scratchedPick = item?.id }
+                                // A new card, a new foil.
+                                .id(item?.id ?? "")
+                                .frame(maxWidth: .infinity)
+                        } else {
+                            RouletteReel(model: model)
                         }
+                    }
+                    .frame(height: 420)
+                    .overlay {
+                        if model.phase == .loading { LoadingPill() }
+                    }
 
                     // Right under the reel, so rolling again is never below the fold.
                     controls
                 }
 
-                if model.phase == .done, let pick = model.pick {
+                if model.phase == .done, let pick = model.pick, mode == .reel || scratchedPick == pick.item.id {
                     RouletteResult(model: pick)
                         .padding(.horizontal, 28)
                         .transition(.opacity.combined(with: .offset(y: 12)))
@@ -128,11 +145,24 @@ struct RouletteView: View {
 
     private var controls: some View {
         HStack(spacing: 18) {
+            Picker("Режим", selection: $mode) {
+                Text("Барабан").tag(Mode.reel)
+                Text("Скретч-карта").tag(Mode.scratch)
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+            .fixedSize()
+
             Button {
-                Task { await model.roll(animated: !withoutAnimation) }
+                Task { await model.roll(animated: mode == .reel && !withoutAnimation) }
             } label: {
-                Label(model.phase == .done ? "Крутить ещё" : "Крутить", systemImage: "dice.fill")
-                    .frame(minWidth: 130)
+                if mode == .scratch {
+                    Label(model.phase == .done ? "Новая карта" : "Взять карту", systemImage: "rectangle.portrait.on.rectangle.portrait.angled.fill")
+                        .frame(minWidth: 130)
+                } else {
+                    Label(model.phase == .done ? "Крутить ещё" : "Крутить", systemImage: "dice.fill")
+                        .frame(minWidth: 130)
+                }
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
@@ -140,10 +170,12 @@ struct RouletteView: View {
             // Nothing to roll from until the first list has come, unless it failed and a roll should retry.
             .disabled(model.isBusy || (model.reel.isEmpty && model.error == nil))
 
-            Toggle("Без анимации", isOn: $withoutAnimation)
-                .toggleStyle(.switch)
-                .controlSize(.small)
-                .foregroundStyle(.secondary)
+            if mode == .reel {
+                Toggle("Без анимации", isOn: $withoutAnimation)
+                    .toggleStyle(.switch)
+                    .controlSize(.small)
+                    .foregroundStyle(.secondary)
+            }
         }
     }
 }

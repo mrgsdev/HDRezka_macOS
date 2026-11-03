@@ -595,6 +595,16 @@
         }
       }
     },
+    "Барабан": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reel"
+          }
+        }
+      }
+    },
     "Без анимации": {
       "localizations": {
         "en": {
@@ -851,6 +861,16 @@
         }
       }
     },
+    "Взять карту": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take a Card"
+          }
+        }
+      }
+    },
     "Включить": {
       "localizations": {
         "en": {
@@ -897,6 +917,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "The age up to which movies and series are shown."
+          }
+        }
+      }
+    },
+    "Возьмите карту": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Take a Card"
           }
         }
       }
@@ -2744,6 +2774,16 @@
         }
       }
     },
+    "Новая карта": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Card"
+          }
+        }
+      }
+    },
     "Новая папка": {
       "localizations": {
         "en": {
@@ -3067,6 +3107,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Open-Source Libraries"
+          }
+        }
+      }
+    },
+    "Открыть": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open"
           }
         }
       }
@@ -3423,6 +3473,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Try Again"
+          }
+        }
+      }
+    },
+    "Под фольгой будет фильм на вечер": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonight's movie will be under the foil"
+          }
+        }
+      }
+    },
+    "Под фольгой — фильм на вечер": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonight's movie is under the foil"
           }
         }
       }
@@ -3983,6 +4053,16 @@
         }
       }
     },
+    "Режим": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mode"
+          }
+        }
+      }
+    },
     "Режиссёр": {
       "localizations": {
         "en": {
@@ -4339,6 +4419,16 @@
         }
       }
     },
+    "Скретч-карта": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scratch Card"
+          }
+        }
+      }
+    },
     "Скрывает фильмы и сериалы старше выбранного возраста и отзывы, не даёт их смотреть. Изменить или выключить его можно только с PIN-кодом.": {
       "localizations": {
         "en": {
@@ -4612,6 +4702,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hundred Hours"
+          }
+        }
+      }
+    },
+    "Сотрите": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scratch"
           }
         }
       }
