@@ -6176,12 +6176,12 @@
         }
       }
     },
-    "Цель 12 значит фильм в месяц, 52 значит фильм в неделю. Считаются фильмы, мультфильмы и аниме без серий, досмотренные в REZKA на этом Mac.": {
+    "Цель 12 значит фильм в месяц, 52 значит фильм в неделю. Считаются фильмы, мультфильмы и аниме без серий, досмотренные в REZKA.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "A goal of 12 is a movie a month, 52 a movie a week. Movies, cartoons and anime without episodes count once watched to the end in REZKA on this Mac."
+            "value": "A goal of 12 means a movie a month, 52 means a movie a week. Movies, cartoons and anime without episodes watched to the end in REZKA count."
           }
         }
       }

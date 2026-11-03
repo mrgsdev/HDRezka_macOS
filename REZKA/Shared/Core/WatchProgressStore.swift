@@ -49,14 +49,6 @@ final class WatchProgressStore {
         entries.values.filter(\.isFinished)
     }
 
-    /// Titles without episodes (films, cartoons, anime films) played to the end within the interval,
-    /// the latest first. A film watched again counts in the year of the last time.
-    func finishedFilms(in interval: DateInterval) -> [Entry] {
-        entries.values
-            .filter { $0.seasonId == nil && $0.episodeId == nil && $0.isFinished && interval.contains($0.updatedAt) }
-            .sorted { $0.updatedAt > $1.updatedAt }
-    }
-
     func update(_ entry: Entry, persistNow: Bool = false) {
         entries[Self.key(entry.postId, entry.seasonId, entry.episodeId)] = entry
         if persistNow || Date().timeIntervalSince(lastPersist) > 10 {

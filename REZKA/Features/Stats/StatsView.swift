@@ -30,7 +30,6 @@ struct StatsView: View {
     @State private var notice: Notice?
 
     private let stats = WatchStats.shared
-    private let progress = WatchProgressStore.shared
     private let calendar = Calendar.current
 
     /// Origin tags the site files among genres.
@@ -474,7 +473,7 @@ struct StatsView: View {
         let year = calendar.component(.year, from: anchor)
         if let interval = calendar.dateInterval(of: .year, for: anchor) {
             if let target = goals[String(year)] {
-                goalProgress(target, films: progress.finishedFilms(in: interval), year: year, interval: interval)
+                goalProgress(target, films: AchievementTracker.shared.finishedFilms(in: interval), year: year, interval: interval)
             } else if year == calendar.component(.year, from: Date()) {
                 HStack(spacing: 12) {
                     Label("Цель на \(String(year))", systemImage: "target")
@@ -491,7 +490,7 @@ struct StatsView: View {
         }
     }
 
-    private func goalProgress(_ target: Int, films: [WatchProgressStore.Entry], year: Int, interval: DateInterval) -> some View {
+    private func goalProgress(_ target: Int, films: [AchievementTracker.FinishedFilm], year: Int, interval: DateInterval) -> some View {
         let now = Date()
         let isThisYear = interval.contains(now)
         // Where an even pace would be by today; the whole year for a year that is over.
@@ -585,7 +584,7 @@ struct StatsView: View {
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 70)
             }
-            Text("Цель 12 значит фильм в месяц, 52 значит фильм в неделю. Считаются фильмы, мультфильмы и аниме без серий, досмотренные в REZKA на этом Mac.")
+            Text("Цель 12 значит фильм в месяц, 52 значит фильм в неделю. Считаются фильмы, мультфильмы и аниме без серий, досмотренные в REZKA.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)

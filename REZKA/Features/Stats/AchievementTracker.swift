@@ -47,6 +47,15 @@ final class AchievementTracker {
         var franchises: [[String]] = []
         /// Titles in all bookmark folders, as last seen.
         var bookmarks = 0
+        /// Titles without episodes by post id: when last watched to the end, for the yearly goal, where a
+        /// film watched again counts in the year of the last time. Missing from ledgers kept before it.
+        var filmsLast: [String: Date]?
+    }
+
+    /// A film the yearly goal counts.
+    struct FinishedFilm: Hashable {
+        let postId: String
+        let date: Date
     }
 
     private init() {
@@ -72,7 +81,27 @@ final class AchievementTracker {
             }
             save()
         }
+        if ledger.filmsLast == nil {
+            // What the goal counted before it had its own record: saved positions, and the ledger for
+            // films whose positions are gone.
+            var last = ledger.films
+            for entry in WatchProgressStore.shared.finishedEntries() where entry.seasonId == nil && entry.episodeId == nil {
+                last[entry.postId] = max(last[entry.postId] ?? entry.updatedAt, entry.updatedAt)
+            }
+            ledger.filmsLast = last
+            save()
+        }
         evaluate(announce: !isFirstRun)
+    }
+
+    /// Films, cartoons and anime films watched to the end within the interval, the latest first: what
+    /// the yearly goal counts. Kept here rather than read off saved positions, so a file of «Итоги»
+    /// carries it to another Mac.
+    func finishedFilms(in interval: DateInterval) -> [FinishedFilm] {
+        (ledger.filmsLast ?? ledger.films)
+            .filter { interval.contains($0.value) }
+            .map { FinishedFilm(postId: $0.key, date: $0.value) }
+            .sorted { $0.date > $1.date }
     }
 
     // MARK: Events
@@ -86,6 +115,7 @@ final class AchievementTracker {
             noteEpisode(of: request, seasonId: seasonId, episodeId: episodeId, at: date)
         } else {
             if ledger.films[request.postId] == nil { ledger.films[request.postId] = date }
+            ledger.filmsLast?[request.postId] = date
             if let rating = ledger.picks[request.postId] {
                 award("fate")
                 if rating >= 8 { award("jackpot") }
@@ -291,7 +321,7 @@ final class AchievementTracker {
             guard let year = Int(year), target > 0,
                   let interval = calendar.dateInterval(of: .year, for: calendar.date(from: DateComponents(year: year)) ?? Date())
             else { continue }
-            let finished = WatchProgressStore.shared.finishedFilms(in: interval).map(\.updatedAt).sorted()
+            let finished = finishedFilms(in: interval).map(\.date).sorted()
             guard finished.count >= target else { continue }
             set("goal-done", 1, 1)
             if let october = calendar.date(from: DateComponents(year: year, month: 10, day: 1)), finished[target - 1] < october {
@@ -325,6 +355,7 @@ final class AchievementTracker {
         if let data = try? JSONEncoder().encode(earned) { UserDefaults.standard.set(data, forKey: Self.earnedKey) }
         let other = archive.ledger
         ledger.films.merge(other.films, uniquingKeysWith: min)
+        ledger.filmsLast = (ledger.filmsLast ?? ledger.films).merging(other.filmsLast ?? other.films, uniquingKeysWith: max)
         ledger.episodes.merge(other.episodes, uniquingKeysWith: min)
         ledger.spins = max(ledger.spins, other.spins)
         ledger.picks.merge(other.picks, uniquingKeysWith: max)
