@@ -223,6 +223,16 @@
         }
       }
     },
+    "0+, 6+, 12+ или 16+. Всё, что старше, скрыто и не запускается.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "0+, 6+, 12+ or 16+. Anything older is hidden and won't play."
+          }
+        }
+      }
+    },
     "10 корейских фильмов или сериалов.": {
       "localizations": {
         "en": {
@@ -443,6 +453,26 @@
         }
       }
     },
+    "IMDb от 7": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMDb 7+"
+          }
+        }
+      }
+    },
+    "IMDb, Кинопоиск, ваша оценка звёздами и лайки отзывам.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IMDb, Kinopoisk, your star rating and review likes."
+          }
+        }
+      }
+    },
     "JSON %@": {
       "localizations": {
         "en": {
@@ -499,6 +529,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "REZKA is not affiliated with HDrezka and is not its official client."
+          }
+        }
+      }
+    },
+    "REZKA ничего не размещает и не хранит. Фильмы, сериалы, постеры и описания принадлежат правообладателям.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REZKA hosts and stores nothing. Movies, series, posters and descriptions belong to their rights holders."
           }
         }
       }
@@ -663,6 +703,16 @@
         }
       }
     },
+    "Барабан из постеров крутится и останавливается на фильме.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A reel of posters spins and stops on a movie."
+          }
+        }
+      }
+    },
     "Без анимации": {
       "localizations": {
         "en": {
@@ -679,6 +729,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Untitled"
+          }
+        }
+      }
+    },
+    "Бесплатно": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Free"
           }
         }
       }
@@ -733,6 +793,16 @@
         }
       }
     },
+    "Больше, чем на сайте": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More Than the Site"
+          }
+        }
+      }
+    },
     "В архиве версия %@, она не новее установленной.": {
       "localizations": {
         "en": {
@@ -769,6 +839,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Day One"
+          }
+        }
+      }
+    },
+    "В заголовке окна видно, насколько фильм или серия загрузились для быстрой перемотки.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The window title shows how much of the movie or episode has loaded for quick seeking."
           }
         }
       }
@@ -839,6 +919,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Your rating: %lld"
+          }
+        }
+      }
+    },
+    "Ваши данные у вас": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your Data Stays Yours"
           }
         }
       }
@@ -939,6 +1029,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Visa"
+          }
+        }
+      }
+    },
+    "Включается сама после конца серии или по ⇧⌘N.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starts by itself when an episode ends, or with ⇧⌘N."
           }
         }
       }
@@ -1103,12 +1203,42 @@
         }
       }
     },
+    "Всё в панели плеера. Качество по умолчанию выбирается в Настройках.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All in the player's toolbar. The default quality is set in Settings."
+          }
+        }
+      }
+    },
     "Всё время": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "All Time"
+          }
+        }
+      }
+    },
+    "Всё о фильме или сериале на одной странице.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything about a movie or series on one page."
+          }
+        }
+      }
+    },
+    "Всё, что есть на сайте, в удобных разделах слева.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything the site has, in handy sections on the left."
           }
         }
       }
@@ -1169,6 +1299,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Choose the age up to which movies and series are shown."
+          }
+        }
+      }
+    },
+    "Выбор озвучки, её популярность и какие сезоны в ней есть.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pick a voice-over and see how popular it is and which seasons it has."
           }
         }
       }
@@ -1399,6 +1539,26 @@
         }
       }
     },
+    "График по месяцам и календарь просмотров, как вклады на GitHub.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A chart by month and a watching calendar like GitHub's contributions."
+          }
+        }
+      }
+    },
+    "Далее": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next"
+          }
+        }
+      }
+    },
     "Дальше": {
       "localizations": {
         "en": {
@@ -1495,6 +1655,16 @@
         }
       }
     },
+    "Для себя": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Made for Myself"
+          }
+        }
+      }
+    },
     "Для этой озвучки нет доступных видео. Попробуйте другую озвучку.": {
       "localizations": {
         "en": {
@@ -1541,6 +1711,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Add 10 titles to bookmarks."
+          }
+        }
+      }
+    },
+    "Добро пожаловать в REZKA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to REZKA"
           }
         }
       }
@@ -1791,6 +1971,26 @@
         }
       }
     },
+    "Если PIN забыт, поможет код, который показывается один раз.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If the PIN is forgotten, the code shown once will help."
+          }
+        }
+      }
+    },
+    "Если сайт не открывается, найдите зеркало в Настройках. Обновления приложение проверяет само.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If the site won't open, find a mirror in Settings. The app checks for updates itself."
+          }
+        }
+      }
+    },
     "Есть сезон %@": {
       "localizations": {
         "en": {
@@ -1911,6 +2111,16 @@
         }
       }
     },
+    "Загрузка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading"
+          }
+        }
+      }
+    },
     "Закладки": {
       "localizations": {
         "en": {
@@ -2011,12 +2221,32 @@
         }
       }
     },
+    "Зеркала и обновления": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mirrors and Updates"
+          }
+        }
+      }
+    },
     "Зеркало сайта": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Site Mirror"
+          }
+        }
+      }
+    },
+    "Знакомство с REZKA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REZKA Tour"
           }
         }
       }
@@ -2063,6 +2293,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "In Collections"
+          }
+        }
+      }
+    },
+    "Изменить или выключить режим можно только с PIN-кодом.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only the PIN can change or turn off Kid Mode."
           }
         }
       }
@@ -2137,6 +2377,16 @@
         }
       }
     },
+    "Ищите по названию. ⌘F открывает поиск из любого места.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search by title. ⌘F opens search from anywhere."
+          }
+        }
+      }
+    },
     "К релизу не приложен архив с приложением.": {
       "localizations": {
         "en": {
@@ -2167,12 +2417,32 @@
         }
       }
     },
+    "Карточка тайтла": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Title Page"
+          }
+        }
+      }
+    },
     "Каталог": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Catalog"
+          }
+        }
+      }
+    },
+    "Каталог и поиск": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Catalog and Search"
           }
         }
       }
@@ -2213,6 +2483,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Film Passport"
+          }
+        }
+      }
+    },
+    "Когда не можете выбрать, пусть выберет случай.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When you can't choose, let chance decide."
           }
         }
       }
@@ -2388,6 +2668,26 @@
         }
       }
     },
+    "Медали": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medals"
+          }
+        }
+      }
+    },
+    "Медали в стиле Apple Watch за фильмы, сериалы, привычки и страны.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Watch style medals for movies, series, habits and countries."
+          }
+        }
+      }
+    },
     "Меньше": {
       "localizations": {
         "en": {
@@ -2498,6 +2798,16 @@
         }
       }
     },
+    "Наведите на метку «Фильм» или «Сериал», чтобы увидеть рейтинг и описание.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Point at the Movie or Series label to see the rating and description."
+          }
+        }
+      }
+    },
     "Назад": {
       "localizations": {
         "en": {
@@ -2544,6 +2854,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Settings"
+          }
+        }
+      }
+    },
+    "Нативный плеер macOS со всем, что нужно для сериалов.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The native macOS player with everything series need."
+          }
+        }
+      }
+    },
+    "Нативный плеер, продолжение с того же места и горячие клавиши.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A native player, resuming where you stopped, and keyboard shortcuts."
+          }
+        }
+      }
+    },
+    "Начать": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Get Started"
           }
         }
       }
@@ -2858,12 +3198,32 @@
         }
       }
     },
+    "Неофициальный клиент HDrezka для Mac. Быстрый, нативный и с вещами, которых нет на сайте.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An unofficial HDrezka client for the Mac. Fast, native, and with things the site doesn't have."
+          }
+        }
+      }
+    },
     "Неофициальный клиент HDrezka для Mac. Проект не связан с HDrezka.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Unofficial HDrezka client for Mac. The project is not affiliated with HDrezka."
+          }
+        }
+      }
+    },
+    "Несколько вещей, которые пригодятся каждый день.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A few things you'll use every day."
           }
         }
       }
@@ -3255,12 +3615,32 @@
         }
       }
     },
+    "Открывается снова в меню Справка.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open it again from the Help menu."
+          }
+        }
+      }
+    },
     "Открытые библиотеки": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Open-Source Libraries"
+          }
+        }
+      }
+    },
+    "Открытый код": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Source"
           }
         }
       }
@@ -3385,6 +3765,16 @@
         }
       }
     },
+    "Оценки и отзывы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ratings and Reviews"
+          }
+        }
+      }
+    },
     "Очистить кэш": {
       "localizations": {
         "en": {
@@ -3405,12 +3795,32 @@
         }
       }
     },
+    "Пара слов от разработчика": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Word From the Developer"
+          }
+        }
+      }
+    },
     "Пароль": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Password"
+          }
+        }
+      }
+    },
+    "Паспорт": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passport"
           }
         }
       }
@@ -3711,6 +4121,26 @@
         }
       }
     },
+    "Подборки и закладки": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collections and Bookmarks"
+          }
+        }
+      }
+    },
+    "Подборки сайта и ваши папки закладок.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The site's collections and your bookmark folders."
+          }
+        }
+      }
+    },
     "Поддерживаю!": {
       "localizations": {
         "en": {
@@ -3751,12 +4181,32 @@
         }
       }
     },
+    "Подсказка на постере": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poster Hover Card"
+          }
+        }
+      }
+    },
     "Позже": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Later"
+          }
+        }
+      }
+    },
+    "Позиция сохраняется и уходит на сайт, так что смотреть можно и на других устройствах.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your position is saved and sent to the site, so you can carry on on other devices too."
           }
         }
       }
@@ -3797,6 +4247,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Show Spoiler"
+          }
+        }
+      }
+    },
+    "Полезные мелочи": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Handy Things"
           }
         }
       }
@@ -4100,6 +4560,16 @@
         }
       }
     },
+    "Продолжение": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resume"
+          }
+        }
+      }
+    },
     "Продолжить": {
       "localizations": {
         "en": {
@@ -4217,12 +4687,42 @@
         }
       }
     },
+    "Раздел, жанры, страны, годы и рейтинг IMDb.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Section, genres, countries, years and IMDb rating."
+          }
+        }
+      }
+    },
     "Разделы": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Sections"
+          }
+        }
+      }
+    },
+    "Разделы и жанры": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sections and Genres"
+          }
+        }
+      }
+    },
+    "Разделы открываются по ⌘1…⌘9, все сочетания показывает ⌘/.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sections open with ⌘1…⌘9, and ⌘/ shows every shortcut."
           }
         }
       }
@@ -4283,6 +4783,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Retro"
+          }
+        }
+      }
+    },
+    "Рулетка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Roulette"
+          }
+        }
+      }
+    },
+    "Рулетка, итоги, достижения, кинопаспорт и детский режим.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Roulette, Recap, achievements, the film passport and Kid Mode."
           }
         }
       }
@@ -4403,6 +4923,16 @@
         }
       }
     },
+    "Светлая, тёмная или как в системе. Русский или английский интерфейс.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Light, dark or as in the system. Russian or English interface."
+          }
+        }
+      }
+    },
     "Своё мнение": {
       "localizations": {
         "en": {
@@ -4449,6 +4979,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Season Done"
+          }
+        }
+      }
+    },
+    "Сезоны и график": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seasons and Schedule"
           }
         }
       }
@@ -4523,6 +5063,16 @@
         }
       }
     },
+    "Серии с прогрессом, даты выхода и отметки «просмотрено».": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Episodes with progress, air dates and watched marks."
+          }
+        }
+      }
+    },
     "Серия %@": {
       "localizations": {
         "en": {
@@ -4589,6 +5139,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "How many movies do you want to watch this year?"
+          }
+        }
+      }
+    },
+    "Сколько фильмов хотите посмотреть и как идёте по плану.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How many movies you want to watch and how you're doing."
+          }
+        }
+      }
+    },
+    "Сколько, когда и что вы смотрели в REZKA.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How much, when and what you watched in REZKA."
           }
         }
       }
@@ -4745,6 +5315,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Watch 7 days in a row."
+          }
+        }
+      }
+    },
+    "Смотрите без браузера": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch Without a Browser"
           }
         }
       }
@@ -4910,6 +5490,16 @@
         }
       }
     },
+    "Сотрите фольгу и узнайте фильм на вечер.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scratch off the foil to find tonight's movie."
+          }
+        }
+      }
+    },
     "Сохранено: %@": {
       "localizations": {
         "en": {
@@ -4936,6 +5526,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Save"
+          }
+        }
+      }
+    },
+    "Спокойствие, если за Mac садятся дети. Включается в Настройках.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peace of mind when kids use the Mac. Turn it on in Settings."
+          }
+        }
+      }
+    },
+    "Статистика и достижения хранятся только на этом Mac.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stats and achievements stay on this Mac only."
           }
         }
       }
@@ -5020,6 +5630,16 @@
         }
       }
     },
+    "Субтитры, скорость, качество": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subtitles, Speed, Quality"
+          }
+        }
+      }
+    },
     "Сыщик": {
       "localizations": {
         "en": {
@@ -5070,6 +5690,16 @@
         }
       }
     },
+    "Тема и язык": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Theme and Language"
+          }
+        }
+      }
+    },
     "Только %@": {
       "localizations": {
         "en": {
@@ -5096,6 +5726,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Trailer"
+          }
+        }
+      }
+    },
+    "Трейлер и франшиза": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trailer and Franchise"
+          }
+        }
+      }
+    },
+    "Трейлер на YouTube и все части франшизы по порядку.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The trailer on YouTube and every part of a franchise in order."
           }
         }
       }
@@ -5330,6 +5980,16 @@
         }
       }
     },
+    "Фильмы, сериалы, мультфильмы, аниме, передачи и шоу. Жанры, страны и лучшие по годам.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movies, series, cartoons, anime and shows. Genres, countries and the best by year."
+          }
+        }
+      }
+    },
     "Фильмы, сериалы, постеры, описания и отзывы принадлежат их правообладателям и авторам.": {
       "localizations": {
         "en": {
@@ -5340,12 +6000,32 @@
         }
       }
     },
+    "Фильтры": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filters"
+          }
+        }
+      }
+    },
     "Финал": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Finale"
+          }
+        }
+      }
+    },
+    "Франшиза": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Franchise"
           }
         }
       }
@@ -5450,6 +6130,16 @@
         }
       }
     },
+    "Цель на год": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yearly Goal"
+          }
+        }
+      }
+    },
     "Часть %@": {
       "localizations": {
         "en": {
@@ -5466,6 +6156,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Hours"
+          }
+        }
+      }
+    },
+    "Часы и календарь": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hours and Calendar"
           }
         }
       }
@@ -5600,6 +6300,16 @@
         }
       }
     },
+    "Штампы стран, золотые визы и вид на жительство.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Country stamps, gold visas and residence permits."
+          }
+        }
+      }
+    },
     "Эта озвучка только для HDrezka Premium. Без подписки покажут короткое превью, выберите озвучку без короны.": {
       "localizations": {
         "en": {
@@ -5630,6 +6340,16 @@
         }
       }
     },
+    "Это знакомство": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This Tour"
+          }
+        }
+      }
+    },
     "Этой озвучки нет среди доступных для просмотра": {
       "localizations": {
         "en": {
@@ -5656,6 +6376,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "South America"
+          }
+        }
+      }
+    },
+    "Я сделал REZKA для себя, потому что сам смотрю через неё фильмы и сериалы каждый день. Буду рад, если приложение пригодится и вам. Только, пожалуйста, помните о правилах сайта.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I made REZKA for myself, because I watch movies and series with it every day. I'd be glad if it comes in handy for you too. Just please keep the site's rules in mind."
           }
         }
       }

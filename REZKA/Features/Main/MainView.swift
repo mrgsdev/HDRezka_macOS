@@ -9,6 +9,7 @@ struct MainView: View {
     @State private var bookmarks = BookmarksModel()
     @State private var roulette = RouletteModel()
     @State private var paths: [SidebarItem: NavigationPath] = [:]
+    @AppStorage("onboardingSeen") private var onboardingSeen = false
 
     var body: some View {
         @Bindable var router = router
@@ -58,6 +59,10 @@ struct MainView: View {
             }
             .id(item)
             .background(Brand.background)
+        }
+        .sheet(isPresented: $router.showsOnboarding) { OnboardingView() }
+        .onAppear {
+            if !onboardingSeen { router.showsOnboarding = true }
         }
     }
 

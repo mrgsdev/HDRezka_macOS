@@ -135,6 +135,10 @@ struct AppCommands: Commands {
         }
         // Instead of the system "REZKA Help", which only says there is none.
         CommandGroup(replacing: .help) {
+            Button("Знакомство с REZKA") {
+                showMainWindow()
+                Router.shared.showsOnboarding = true
+            }
             Button("Горячие клавиши") { openWindow(id: "shortcuts") }
                 .keyboardShortcut("/")
             Divider()

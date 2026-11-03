@@ -13,6 +13,8 @@ final class Router {
     static let shared = Router()
 
     var selection: SidebarItem? = .home
+    /// The tour of the app: once after signing in, then from Help.
+    var showsOnboarding = false
     /// Bumped by ⌘F so the search field takes focus even when search is already open.
     private(set) var searchRequests = 0
 
