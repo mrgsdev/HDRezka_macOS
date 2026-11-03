@@ -51,6 +51,19 @@ final class WatchStats {
         if Date().timeIntervalSince(lastPersist) > 30 { persist() }
     }
 
+    /// Countries and year for titles watched before «Итоги» kept them, from their pages, a few dozen at a
+    /// time; a title whose page names no country gets none, so it is not asked again.
+    func fillMissingFacts() async {
+        let missing = titles.filter { $0.value.countries == nil && $0.value.path != nil }.prefix(30)
+        guard !missing.isEmpty else { return }
+        for (postId, title) in missing {
+            guard let path = title.path, let details = try? await RezkaClient.shared.details(path: path) else { continue }
+            titles[postId]?.countries = details.countries ?? []
+            titles[postId]?.year = details.year
+        }
+        persist()
+    }
+
     func persist() {
         lastPersist = Date()
         if let data = try? JSONEncoder().encode(days) { UserDefaults.standard.set(data, forKey: Self.daysKey) }

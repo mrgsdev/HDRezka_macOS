@@ -348,8 +348,8 @@ final class DetailsModel {
             genres: details.info("Жанр")?.components(separatedBy: ", "),
             kind: item.kind == .unknown ? (details.isSeries ? .series : .film) : item.kind,
             path: details.path,
-            countries: details.info("Страна")?.components(separatedBy: ", "),
-            year: (details.info("Год") ?? details.info("Дата выхода"))?.firstMatch(of: /\d{4}/).flatMap { Int($0.output) }
+            countries: details.countries,
+            year: details.year
         ))
     }
 }

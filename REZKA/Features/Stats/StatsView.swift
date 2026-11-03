@@ -93,6 +93,9 @@ struct StatsView: View {
                 .buttonStyle(.borderless)
             }
             Spacer()
+            NavigationLink(value: FilmPassportLink()) {
+                Label("Кинопаспорт", systemImage: "globe.europe.africa.fill")
+            }
             Button {
                 showsAchievements = true
             } label: {

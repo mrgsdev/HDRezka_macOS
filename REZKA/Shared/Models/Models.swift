@@ -197,6 +197,16 @@ struct MediaDetails {
     func info(_ title: String) -> String? {
         info.first { $0.title.hasPrefix(title) }?.value
     }
+
+    /// "США, Великобритания" → both, as the site names them.
+    var countries: [String]? {
+        info("Страна")?.components(separatedBy: ", ")
+    }
+
+    /// From "Год" or "Дата выхода": "12 ноября 2014 года" → 2014.
+    var year: Int? {
+        (info("Год") ?? info("Дата выхода"))?.firstMatch(of: /\d{4}/).flatMap { Int($0.output) }
+    }
 }
 
 /// Someone in a title's cast or crew; `path` leads to their page, e.g. `person/3775-gari-oldman/`.

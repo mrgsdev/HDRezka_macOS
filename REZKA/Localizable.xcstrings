@@ -27,6 +27,22 @@
         }
       }
     },
+    "%@ · %lld из %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$lld of %3$lld"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · %2$lld из %3$lld"
+          }
+        }
+      }
+    },
     "%@ Сессия перенесётся на новое зеркало.": {
       "localizations": {
         "en": {
@@ -179,12 +195,32 @@
         }
       }
     },
+    "10 стран в кинопаспорте.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 countries in the film passport."
+          }
+        }
+      }
+    },
     "10 часов просмотра.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "10 hours watched."
+          }
+        }
+      }
+    },
+    "100 стран в кинопаспорте.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100 countries in the film passport."
           }
         }
       }
@@ -215,6 +251,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "12 is a movie a month, 52 a movie a week. Movies, cartoons and anime without episodes count once watched to the end in REZKA on this Mac."
+          }
+        }
+      }
+    },
+    "25 стран в кинопаспорте.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "25 countries in the film passport."
           }
         }
       }
@@ -255,6 +301,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "4 digits. You'll need it to change or turn off Kid Mode."
+          }
+        }
+      }
+    },
+    "50 стран в кинопаспорте.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "50 countries in the film passport."
           }
         }
       }
@@ -459,6 +515,26 @@
         }
       }
     },
+    "Азиатский тур": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asian Tour"
+          }
+        }
+      }
+    },
+    "Азия": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Asia"
+          }
+        }
+      }
+    },
     "Аккаунт": {
       "localizations": {
         "en": {
@@ -499,6 +575,26 @@
         }
       }
     },
+    "Африка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Africa"
+          }
+        }
+      }
+    },
+    "Африканское сафари": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "African Safari"
+          }
+        }
+      }
+    },
     "Без анимации": {
       "localizations": {
         "en": {
@@ -525,6 +621,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Acknowledgements"
+          }
+        }
+      }
+    },
+    "Большая пятёрка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Big Five"
           }
         }
       }
@@ -831,6 +937,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "All Genres"
+          }
+        }
+      }
+    },
+    "Все континенты": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every Continent"
           }
         }
       }
@@ -1547,6 +1663,16 @@
         }
       }
     },
+    "Европа": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Europe"
+          }
+        }
+      }
+    },
     "Есть сезон %@": {
       "localizations": {
         "en": {
@@ -1927,6 +2053,16 @@
         }
       }
     },
+    "Кинопаспорт": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Film Passport"
+          }
+        }
+      }
+    },
     "Код восстановления": {
       "localizations": {
         "en": {
@@ -2003,6 +2139,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Disk Cache"
+          }
+        }
+      }
+    },
+    "Латинская Америка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Latin America"
           }
         }
       }
@@ -2809,6 +2955,16 @@
         }
       }
     },
+    "Океания": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oceania"
+          }
+        }
+      }
+    },
     "Окна": {
       "localizations": {
         "en": {
@@ -3055,12 +3211,38 @@
         }
       }
     },
+    "Паспорт пока пуст: посмотрите что-нибудь от десяти минут — и первая страна поставит свой штамп.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The passport is empty for now: watch something for ten minutes or more and its country will stamp it."
+          }
+        }
+      }
+    },
     "Пауза и воспроизведение": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Pause and play"
+          }
+        }
+      }
+    },
+    "Первая страна — %@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First country: %1$@, %2$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Первая страна — %1$@, %2$@"
           }
         }
       }
@@ -3371,6 +3553,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fifty"
+          }
+        }
+      }
+    },
+    "Полсотни стран": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fifty Countries"
           }
         }
       }
@@ -3947,6 +4139,16 @@
         }
       }
     },
+    "Северная Америка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "North America"
+          }
+        }
+      }
+    },
     "Сезон": {
       "localizations": {
         "en": {
@@ -4083,6 +4285,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "System"
+          }
+        }
+      }
+    },
+    "Скандинавия": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scandinavia"
           }
         }
       }
@@ -4384,6 +4596,16 @@
         }
       }
     },
+    "Сотня стран": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hundred Countries"
+          }
+        }
+      }
+    },
     "Сотня часов": {
       "localizations": {
         "en": {
@@ -4444,6 +4666,16 @@
         }
       }
     },
+    "Стран в паспорте": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Countries Stamped"
+          }
+        }
+      }
+    },
     "Страны": {
       "localizations": {
         "en": {
@@ -4460,6 +4692,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Countries and Eras"
+          }
+        }
+      }
+    },
+    "Страны, где вы побывали, глядя в экран REZKA на этом Mac.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Countries you've visited through REZKA's screen on this Mac."
           }
         }
       }
@@ -4674,6 +4916,16 @@
         }
       }
     },
+    "Уточняем страны старых просмотров…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Looking up countries of earlier watching…"
+          }
+        }
+      }
+    },
     "Фильм": {
       "localizations": {
         "en": {
@@ -4734,22 +4986,12 @@
         }
       }
     },
-    "Фильмы из 10 стран.": {
+    "Фильмы и сериалы: %@": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Movies from 10 countries."
-          }
-        }
-      }
-    },
-    "Фильмы из 25 стран.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Movies from 25 countries."
+            "value": "Movies and series: %@"
           }
         }
       }
@@ -4954,6 +5196,76 @@
         }
       }
     },
+    "Штампы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stamps"
+          }
+        }
+      }
+    },
+    "Штампы Великобритании, Франции, Германии, Италии и Испании.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stamps of the UK, France, Germany, Italy and Spain."
+          }
+        }
+      }
+    },
+    "Штампы Мексики, Бразилии, Аргентины, Чили, Колумбии и Кубы.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stamps of Mexico, Brazil, Argentina, Chile, Colombia and Cuba."
+          }
+        }
+      }
+    },
+    "Штампы Швеции, Норвегии, Дании, Финляндии и Исландии.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stamps of Sweden, Norway, Denmark, Finland and Iceland."
+          }
+        }
+      }
+    },
+    "Штампы ЮАР, Египта, Нигерии, Марокко и Кении.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stamps of South Africa, Egypt, Nigeria, Morocco and Kenya."
+          }
+        }
+      }
+    },
+    "Штампы Японии, Китая, Южной Кореи, Индии, Гонконга и Таиланда.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stamps of Japan, China, South Korea, India, Hong Kong and Thailand."
+          }
+        }
+      }
+    },
+    "Штампы со всех континентов: Европа, Азия, Африка, обе Америки и Океания.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stamps from every continent: Europe, Asia, Africa, both Americas and Oceania."
+          }
+        }
+      }
+    },
     "Эта озвучка только для HDrezka Premium — без подписки покажут короткое превью. Выберите озвучку без короны.": {
       "localizations": {
         "en": {
@@ -5000,6 +5312,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "This title isn't available in Kid Mode."
+          }
+        }
+      }
+    },
+    "Южная Америка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "South America"
           }
         }
       }
