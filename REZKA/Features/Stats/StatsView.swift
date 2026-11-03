@@ -522,7 +522,7 @@ struct StatsView: View {
         let weeksLeft = max(interval.end.timeIntervalSinceNow / (7 * 86_400), 1)
         let perWeek = (Double(target - done) / weeksLeft)
             .formatted(.number.precision(.fractionLength(0...1)).locale(AppLanguage.locale))
-        return pace + " " + String(localized: "Осталось \(target - done) — примерно \(perWeek) в неделю.")
+        return pace + " " + String(localized: "Осталось \(target - done), примерно \(perWeek) в неделю.")
     }
 
     @ViewBuilder
@@ -562,7 +562,7 @@ struct StatsView: View {
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 70)
             }
-            Text("12 — фильм в месяц, 52 — фильм в неделю. Считаются фильмы, мультфильмы и аниме без серий, досмотренные в REZKA на этом Mac.")
+            Text("Цель 12 значит фильм в месяц, 52 значит фильм в неделю. Считаются фильмы, мультфильмы и аниме без серий, досмотренные в REZKA на этом Mac.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)

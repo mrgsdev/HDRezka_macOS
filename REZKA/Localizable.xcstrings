@@ -283,22 +283,12 @@
         }
       }
     },
-    "1000 часов просмотра — это почти 42 дня без перерыва.": {
+    "1000 часов просмотра. Это почти 42 дня без перерыва.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "1,000 hours watched: almost 42 days nonstop."
-          }
-        }
-      }
-    },
-    "12 — фильм в месяц, 52 — фильм в неделю. Считаются фильмы, мультфильмы и аниме без серий, досмотренные в REZKA на этом Mac.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "12 is a movie a month, 52 a movie a week. Movies, cartoons and anime without episodes count once watched to the end in REZKA on this Mac."
+            "value": "1,000 hours watched. That's almost 42 days nonstop."
           }
         }
       }
@@ -479,16 +469,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "REZKA"
-          }
-        }
-      }
-    },
-    "REZKA %@ — самая новая версия.": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "REZKA %@ is the latest version."
           }
         }
       }
@@ -733,7 +713,7 @@
         }
       }
     },
-    "В архиве версия %@ — она не новее установленной.": {
+    "В архиве версия %@, она не новее установленной.": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -879,22 +859,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Version"
-          }
-        }
-      }
-    },
-    "Версия %@ — у вас %@. Хотите обновить приложение?": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Version %1$@ is out — you have %2$@. Would you like to update?"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "new",
-            "value": "Версия %1$@ — у вас %2$@. Хотите обновить приложение?"
           }
         }
       }
@@ -1285,6 +1249,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Released"
+          }
+        }
+      }
+    },
+    "Вышла версия %@, у вас %@. Хотите обновить приложение?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %1$@ is out, you have %2$@. Would you like to update?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Вышла версия %1$@, у вас %2$@. Хотите обновить приложение?"
           }
         }
       }
@@ -1971,12 +1951,12 @@
         }
       }
     },
-    "Здесь пока ничего нет — попробуйте другую сортировку": {
+    "Здесь пока ничего нет. Попробуйте другую сортировку": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nothing here yet — try another sort order"
+            "value": "Nothing here yet. Try another sort order"
           }
         }
       }
@@ -3139,7 +3119,7 @@
         }
       }
     },
-    "Осталось %lld — примерно %@ в неделю.": {
+    "Осталось %lld, примерно %@ в неделю.": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3150,7 +3130,7 @@
         "ru": {
           "stringUnit": {
             "state": "new",
-            "value": "Осталось %1$lld — примерно %2$@ в неделю."
+            "value": "Осталось %1$lld, примерно %2$@ в неделю."
           }
         }
       }
@@ -3365,12 +3345,12 @@
         }
       }
     },
-    "Паспорт пока пуст: посмотрите что-нибудь от десяти минут — и первая страна поставит свой штамп.": {
+    "Паспорт пока пуст. Посмотрите что-нибудь от десяти минут, и первая страна поставит свой штамп.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The passport is empty for now: watch something for ten minutes or more and its country will stamp it."
+            "value": "The passport is empty for now. Watch something for ten minutes or more and its country will stamp it."
           }
         }
       }
@@ -3395,7 +3375,7 @@
         }
       }
     },
-    "Первая страна — %@, %@": {
+    "Первая страна: %@, %@": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3406,7 +3386,7 @@
         "ru": {
           "stringUnit": {
             "state": "new",
-            "value": "Первая страна — %1$@, %2$@"
+            "value": "Первая страна: %1$@, %2$@"
           }
         }
       }
@@ -3601,7 +3581,7 @@
         }
       }
     },
-    "Под фольгой — фильм на вечер": {
+    "Под фольгой фильм на вечер": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3761,7 +3741,7 @@
         }
       }
     },
-    "Получено %lld из %lld — за то, что смотрите в REZKA на этом Mac.": {
+    "Получено %lld из %lld за то, что смотрите в REZKA на этом Mac.": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -3772,7 +3752,7 @@
         "ru": {
           "stringUnit": {
             "state": "new",
-            "value": "Получено %1$lld из %2$lld — за то, что смотрите в REZKA на этом Mac."
+            "value": "Получено %1$lld из %2$lld за то, что смотрите в REZKA на этом Mac."
           }
         }
       }
@@ -4247,12 +4227,12 @@
         }
       }
     },
-    "Сайт принимает одну оценку от аккаунта — изменить её потом не получится.": {
+    "Сайт принимает одну оценку от аккаунта, изменить её потом не получится.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The site takes one rating per account — you won't be able to change it later."
+            "value": "The site takes one rating per account, and it can't be changed later."
           }
         }
       }
@@ -4960,12 +4940,12 @@
         }
       }
     },
-    "Текущее зеркало не отвечает — выберите одно из найденных.": {
+    "Текущее зеркало не отвечает. Выберите одно из найденных.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The current mirror isn't responding — choose one of those found."
+            "value": "The current mirror isn't responding. Choose one of those found."
           }
         }
       }
@@ -5036,6 +5016,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "You're up to date"
+          }
+        }
+      }
+    },
+    "У вас самая новая версия: REZKA %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You have the latest version: REZKA %@."
           }
         }
       }
@@ -5300,6 +5290,16 @@
         }
       }
     },
+    "Цель 12 значит фильм в месяц, 52 значит фильм в неделю. Считаются фильмы, мультфильмы и аниме без серий, досмотренные в REZKA на этом Mac.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A goal of 12 is a movie a month, 52 a movie a week. Movies, cartoons and anime without episodes count once watched to the end in REZKA on this Mac."
+          }
+        }
+      }
+    },
     "Цель выполнена": {
       "localizations": {
         "en": {
@@ -5400,7 +5400,7 @@
         }
       }
     },
-    "Штамп ставится с первого тайтла страны, золотая виза — с пятого, вид на жительство — с двадцатого.": {
+    "Штамп ставится с первого тайтла страны, золотая виза с пятого, вид на жительство с двадцатого.": {
       "localizations": {
         "en": {
           "stringUnit": {
@@ -5480,12 +5480,12 @@
         }
       }
     },
-    "Эта озвучка только для HDrezka Premium — без подписки покажут короткое превью. Выберите озвучку без короны.": {
+    "Эта озвучка только для HDrezka Premium. Без подписки покажут короткое превью, выберите озвучку без короны.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "This dub is HDrezka Premium only — without a subscription you get a short preview. Choose a dub without a crown."
+            "value": "This dub is HDrezka Premium only. Without a subscription you get a short preview, so choose a dub without a crown."
           }
         }
       }

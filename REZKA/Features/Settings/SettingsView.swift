@@ -166,7 +166,7 @@ struct SettingsView: View {
         } else if foundMirrors.contains(Mirror.current) {
             mirrorStatus = String(localized: "Текущее зеркало работает. Можно выбрать и другое из найденных.")
         } else {
-            mirrorStatus = String(localized: "Текущее зеркало не отвечает — выберите одно из найденных.")
+            mirrorStatus = String(localized: "Текущее зеркало не отвечает. Выберите одно из найденных.")
         }
     }
 }

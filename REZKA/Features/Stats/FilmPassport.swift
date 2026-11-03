@@ -14,12 +14,12 @@ struct FilmPassportView: View {
             VStack(alignment: .leading, spacing: 24) {
                 cover(stamps)
                 if stamps.isEmpty {
-                    EmptyStateView(text: "Паспорт пока пуст: посмотрите что-нибудь от десяти минут — и первая страна поставит свой штамп.")
+                    EmptyStateView(text: "Паспорт пока пуст. Посмотрите что-нибудь от десяти минут, и первая страна поставит свой штамп.")
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 20)
                 } else {
                     panel("Штампы") {
-                        Text("Штамп ставится с первого тайтла страны, золотая виза — с пятого, вид на жительство — с двадцатого.")
+                        Text("Штамп ставится с первого тайтла страны, золотая виза с пятого, вид на жительство с двадцатого.")
                             .font(.callout)
                             .foregroundStyle(.secondary)
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 18)], spacing: 22) {
@@ -72,7 +72,7 @@ struct FilmPassportView: View {
                 Text("Страны, где вы побывали, глядя в экран REZKA на этом Mac.")
                     .foregroundStyle(.secondary)
                 if let first = stamps.last {
-                    Text("Первая страна — \(first.country), \(first.firstDay.formatted(.dateTime.day().month(.wide).year().locale(AppLanguage.locale)))")
+                    Text("Первая страна: \(first.country), \(first.firstDay.formatted(.dateTime.day().month(.wide).year().locale(AppLanguage.locale)))")
                         .font(.callout)
                         .foregroundStyle(.secondary)
                 }

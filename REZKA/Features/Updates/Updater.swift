@@ -269,7 +269,7 @@ enum UpdateError: LocalizedError {
         case .unpack: String(localized: "Не удалось распаковать архив обновления.")
         case .noApp: String(localized: "В архиве обновления нет приложения.")
         case .wrongApp: String(localized: "В архиве обновления другое приложение.")
-        case let .notNewer(version): String(localized: "В архиве версия \(version) — она не новее установленной.")
+        case let .notNewer(version): String(localized: "В архиве версия \(version), она не новее установленной.")
         case .badSignature: String(localized: "Подпись обновления не совпадает с подписью REZKA. Обновление не установлено.")
         }
     }

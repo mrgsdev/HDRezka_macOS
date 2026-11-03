@@ -44,7 +44,7 @@ struct CatalogView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 MediaGrid(items: loader.items) { await loader.loadMore() }
-                PagedFooter(loader: loader, emptyText: "Здесь пока ничего нет — попробуйте другую сортировку")
+                PagedFooter(loader: loader, emptyText: "Здесь пока ничего нет. Попробуйте другую сортировку")
             }
             .padding(28)
         }
@@ -171,7 +171,7 @@ struct ListingView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 MediaGrid(items: loader.items) { await loader.loadMore() }
-                PagedFooter(loader: loader, emptyText: listing.isSortable ? "Здесь пока ничего нет — попробуйте другую сортировку" : "Здесь пока ничего нет")
+                PagedFooter(loader: loader, emptyText: listing.isSortable ? "Здесь пока ничего нет. Попробуйте другую сортировку" : "Здесь пока ничего нет")
             }
             .padding(28)
         }

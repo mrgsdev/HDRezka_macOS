@@ -46,7 +46,7 @@ struct UpdateView: View {
 
         case .upToDate:
             Text("У вас последняя версия").font(.headline)
-            Text("REZKA \(Updater.currentVersion) — самая новая версия.")
+            Text("У вас самая новая версия: REZKA \(Updater.currentVersion).")
                 .foregroundStyle(.secondary)
             buttons {
                 Button("Готово") { dismiss() }
@@ -55,7 +55,7 @@ struct UpdateView: View {
 
         case let .available(release):
             Text("Доступна новая версия REZKA").font(.headline)
-            Text("Версия \(release.version) — у вас \(Updater.currentVersion). Хотите обновить приложение?")
+            Text("Вышла версия \(release.version), у вас \(Updater.currentVersion). Хотите обновить приложение?")
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             Button {

@@ -54,7 +54,7 @@ struct DetailsView: View {
             Button("Оценить") { Task { await model.rate(score) } }
             Button("Отмена", role: .cancel) {}
         } message: { _ in
-            Text("Сайт принимает одну оценку от аккаунта — изменить её потом не получится.")
+            Text("Сайт принимает одну оценку от аккаунта, изменить её потом не получится.")
         }
     }
 
@@ -134,7 +134,7 @@ struct DetailsView: View {
                 actions(details)
                     .padding(.vertical, 6)
                 if model.translator?.isPremium == true, !auth.isPremium {
-                    Label("Эта озвучка только для HDrezka Premium — без подписки покажут короткое превью. Выберите озвучку без короны.",
+                    Label("Эта озвучка только для HDrezka Premium. Без подписки покажут короткое превью, выберите озвучку без короны.",
                           systemImage: "crown.fill")
                         .font(.callout)
                         .foregroundStyle(.orange)

@@ -108,7 +108,7 @@ struct ScratchCard: View {
                     .font(.title2.weight(.heavy))
                     .textCase(.uppercase)
                     .tracking(2)
-                Text(item == nil ? "Под фольгой будет фильм на вечер" : "Под фольгой — фильм на вечер")
+                Text(item == nil ? "Под фольгой будет фильм на вечер" : "Под фольгой фильм на вечер")
                     .font(.callout)
                     .multilineTextAlignment(.center)
             }

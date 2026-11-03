@@ -53,7 +53,7 @@ struct Achievement: Identifiable {
                     medal: Medal(.hexagon, .rose, .purple, "clock.fill", number: "250")),
         Achievement(id: "hours-500", category: .time, title: String(localized: "Полтысячи"), detail: String(localized: "500 часов просмотра."),
                     medal: Medal(.hexagon, .platinum, .wine, "clock.fill", number: "500")),
-        Achievement(id: "hours-1000", category: .time, title: String(localized: "Тысяча часов"), detail: String(localized: "1000 часов просмотра — это почти 42 дня без перерыва."),
+        Achievement(id: "hours-1000", category: .time, title: String(localized: "Тысяча часов"), detail: String(localized: "1000 часов просмотра. Это почти 42 дня без перерыва."),
                     medal: Medal(.hexagon, .gold, .graphite, "clock.fill", number: "1000")),
 
         // Фильмы
@@ -415,7 +415,7 @@ struct AchievementsView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Достижения")
                         .font(.largeTitle.bold())
-                    Text("Получено \(tracker.earned.count) из \(Achievement.all.count) — за то, что смотрите в REZKA на этом Mac.")
+                    Text("Получено \(tracker.earned.count) из \(Achievement.all.count) за то, что смотрите в REZKA на этом Mac.")
                         .foregroundStyle(.secondary)
                 }
                 Spacer()
