@@ -49,6 +49,12 @@ struct StatsView: View {
                 } else {
                     tiles(summary)
                     chart(summary)
+                    if let interval = calendarInterval {
+                        WatchCalendar(interval: interval, seconds: secondsByDay) { day in
+                            span = .month
+                            anchor = day
+                        }
+                    }
                     HStack(alignment: .top, spacing: 20) {
                         genres(summary)
                         topTitles(summary)
@@ -270,6 +276,29 @@ struct StatsView: View {
         }
         guard let interval = calendar.dateInterval(of: component, for: anchor) else { return anchor...anchor }
         return interval.start...interval.end
+    }
+
+    // MARK: Calendar
+
+    /// The year on screen, or the last 52 weeks for all time; a month has its chart by days.
+    private var calendarInterval: DateInterval? {
+        switch span {
+        case .month:
+            return nil
+        case .year:
+            return calendar.dateInterval(of: .year, for: anchor)
+        case .all:
+            let today = calendar.startOfDay(for: Date())
+            guard let start = calendar.date(byAdding: .day, value: -363, to: today),
+                  let end = calendar.date(byAdding: .day, value: 1, to: today) else { return nil }
+            return DateInterval(start: start, end: end)
+        }
+    }
+
+    private var secondsByDay: [Date: Double] {
+        Dictionary(stats.days.compactMap { key, titles in
+            WatchStats.date(ofDay: key).map { (calendar.startOfDay(for: $0), titles.values.reduce(0, +)) }
+        }, uniquingKeysWith: +)
     }
 
     // MARK: Genres

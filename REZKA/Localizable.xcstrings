@@ -83,6 +83,16 @@
         }
       }
     },
+    "%@: не смотрели": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: nothing watched"
+          }
+        }
+      }
+    },
     "%lld": {
       "localizations": {
         "en": {
@@ -515,6 +525,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Acknowledgements"
+          }
+        }
+      }
+    },
+    "Больше": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More"
           }
         }
       }
@@ -1251,12 +1271,32 @@
         }
       }
     },
+    "Дней подряд, самое большее: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Longest run of days: %lld"
+          }
+        }
+      }
+    },
     "Дней с просмотром": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Days Watched"
+          }
+        }
+      }
+    },
+    "Дней с просмотром: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Days with watching: %lld"
           }
         }
       }
@@ -1837,6 +1877,16 @@
         }
       }
     },
+    "Календарь просмотров": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watching Calendar"
+          }
+        }
+      }
+    },
     "Каталог": {
       "localizations": {
         "en": {
@@ -2024,6 +2074,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Time Machine"
+          }
+        }
+      }
+    },
+    "Меньше": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Less"
           }
         }
       }
@@ -3787,6 +3847,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "The site takes one rating per account — you won't be able to change it later."
+          }
+        }
+      }
+    },
+    "Самый долгий день: %@, %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Longest day: %1$@, %2$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Самый долгий день: %1$@, %2$@"
           }
         }
       }
