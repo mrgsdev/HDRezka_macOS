@@ -2048,6 +2048,16 @@
         }
       }
     },
+    "Любимые озвучки": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Favorite Voice-overs"
+          }
+        }
+      }
+    },
     "Любой рейтинг IMDb": {
       "localizations": {
         "en": {
@@ -2785,6 +2795,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dub"
+          }
+        }
+      }
+    },
+    "Озвучки считаются с этого обновления: посмотрите что-нибудь, и они появятся здесь.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voice-overs are counted from this update on: watch something and they'll show up here."
           }
         }
       }

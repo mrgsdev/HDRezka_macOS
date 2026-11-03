@@ -346,7 +346,7 @@ final class PlayerController {
             path: request.path ?? WatchStats.shared.titles[request.postId]?.path,
             countries: request.countries ?? WatchStats.shared.titles[request.postId]?.countries,
             year: request.year ?? WatchStats.shared.titles[request.postId]?.year
-        ))
+        ), dub: request.translator.name)
     }
 
     private func savedPosition() -> Double {

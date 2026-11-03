@@ -57,6 +57,7 @@ struct StatsView: View {
                     }
                     HStack(alignment: .top, spacing: 20) {
                         genres(summary)
+                        dubs(summary)
                         topTitles(summary)
                     }
                 }
@@ -148,6 +149,8 @@ struct StatsView: View {
         var total: Double = 0
         /// Seconds by title id.
         var byTitle: [String: Double] = [:]
+        /// Seconds by dub.
+        var byDub: [String: Double] = [:]
         /// Seconds by bar: a day of the month, a month of the year, or a month of all time.
         var bars: [Bar] = []
         var activeDays = 0
@@ -173,6 +176,10 @@ struct StatsView: View {
                 ? calendar.startOfDay(for: day)
                 : calendar.date(from: calendar.dateComponents([.year, .month], from: day)) ?? day
             bars[bucket, default: 0] += seconds
+        }
+        for (key, dubs) in stats.dubs {
+            guard let day = WatchStats.date(ofDay: key), contains(day) else { continue }
+            for (dub, value) in dubs { summary.byDub[dub, default: 0] += value }
         }
         summary.bars = bars.map { Bar(date: $0.key, seconds: $0.value) }.sorted { $0.date < $1.date }
         return summary
@@ -327,6 +334,47 @@ struct StatsView: View {
                         Text((value / total).formatted(.percent.precision(.fractionLength(0)).locale(AppLanguage.locale)))
                             .foregroundStyle(.secondary)
                             .monospacedDigit()
+                    }
+                    GeometryReader { proxy in
+                        Capsule()
+                            .fill(Color.accentColor.gradient)
+                            .frame(width: max(6, proxy.size.width * value / (top.first?.value ?? value)))
+                    }
+                    .frame(height: 6)
+                }
+            }
+        }
+        .padding(18)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Brand.panel, in: RoundedRectangle(cornerRadius: 14))
+    }
+
+    // MARK: Dubs
+
+    /// The studios heard most, by time: the player counts them as it plays.
+    private func dubs(_ summary: Summary) -> some View {
+        let total = summary.byDub.values.reduce(0, +)
+        let top = summary.byDub.sorted { $0.value > $1.value }.prefix(6)
+        return VStack(alignment: .leading, spacing: 14) {
+            Text("Любимые озвучки")
+                .font(.headline)
+            if top.isEmpty {
+                Text("Озвучки считаются с этого обновления: посмотрите что-нибудь, и они появятся здесь.")
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            ForEach(Array(top), id: \.key) { dub, value in
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack(alignment: .firstTextBaseline) {
+                        Text(verbatim: dub)
+                            .lineLimit(1)
+                        Spacer()
+                        Text(Self.hours(value))
+                            .foregroundStyle(.secondary)
+                            .monospacedDigit()
+                        Text((value / total).formatted(.percent.precision(.fractionLength(0)).locale(AppLanguage.locale)))
+                            .monospacedDigit()
+                            .frame(minWidth: 38, alignment: .trailing)
                     }
                     GeometryReader { proxy in
                         Capsule()
