@@ -24,6 +24,10 @@ struct StatsView: View {
     @State private var isEditingGoal = false
     @State private var goalDraft = 24
     @State private var showsAchievements = false
+    @State private var exportFile: RecapFile?
+    @State private var isExporting = false
+    @State private var isImporting = false
+    @State private var notice: Notice?
 
     private let stats = WatchStats.shared
     private let progress = WatchProgressStore.shared
@@ -37,7 +41,6 @@ struct StatsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 header
-                betaNotice
                 if span != .all {
                     goal
                 }
@@ -66,6 +69,19 @@ struct StatsView: View {
         }
         .navigationTitle("Итоги")
         .navigationSubtitle(periodTitle)
+        .fileImporter(isPresented: $isImporting, allowedContentTypes: [.json]) { result in
+            switch result {
+            case let .success(url): importRecap(from: url)
+            case let .failure(error): notice = Notice(title: String(localized: "Не удалось импортировать итоги"), text: error.localizedDescription)
+            }
+        }
+        // Where an export is saved unless chosen otherwise, so the file is right there.
+        .fileDialogDefaultDirectory(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        .alert(notice?.title ?? "", isPresented: Binding(get: { notice != nil }, set: { if !$0 { notice = nil } }), presenting: notice) { _ in
+            Button("OK") {}
+        } message: { notice in
+            Text(notice.text)
+        }
     }
 
     // MARK: Header
@@ -83,6 +99,7 @@ struct StatsView: View {
                 HStack(spacing: 4) {
                     Button { shift(-1) } label: { Image(systemName: "chevron.left") }
                         .help("Раньше")
+                        .disabled(isFirstPeriod)
                     Text(periodTitle)
                         .font(.title3.weight(.semibold))
                         .frame(minWidth: 150)
@@ -103,25 +120,20 @@ struct StatsView: View {
                     .monospacedDigit()
             }
             .sheet(isPresented: $showsAchievements) { AchievementsView() }
+            Menu {
+                Button("Экспортировать итоги…", systemImage: "square.and.arrow.up") { exportRecap() }
+                Button("Импортировать итоги…", systemImage: "square.and.arrow.down") { isImporting = true }
+            } label: {
+                Label("Экспорт и импорт", systemImage: "arrow.up.arrow.down.circle")
+            }
+            .fixedSize()
+            .fileExporter(isPresented: $isExporting, document: exportFile, contentType: .json,
+                          defaultFilename: RecapArchive.fileName) { result in
+                if case let .failure(error) = result {
+                    notice = Notice(title: String(localized: "Не удалось сохранить итоги"), text: error.localizedDescription)
+                }
+            }
         }
-    }
-
-    private var betaNotice: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
-            Text(verbatim: "BETA")
-                .font(.caption.weight(.bold))
-                .padding(.horizontal, 7)
-                .padding(.vertical, 2)
-                .foregroundStyle(.orange)
-                .background(.orange.opacity(0.18), in: Capsule())
-            Text("Итоги в бета-версии: возможны ошибки и неточные данные. Всё хранится только на этом Mac, и при удалении приложения данные пропадут. В будущем появятся экспорт и импорт.")
-                .font(.callout)
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .padding(14)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Brand.panel, in: RoundedRectangle(cornerRadius: 12))
     }
 
     private var periodTitle: String {
@@ -139,6 +151,12 @@ struct StatsView: View {
     private var isCurrentPeriod: Bool {
         let component: Calendar.Component = span == .month ? .month : .year
         return calendar.isDate(anchor, equalTo: Date(), toGranularity: component)
+    }
+
+    /// November 2026, when «Итоги» began, or its year.
+    private var isFirstPeriod: Bool {
+        let component: Calendar.Component = span == .month ? .month : .year
+        return calendar.isDate(anchor, equalTo: WatchStats.firstDay, toGranularity: component)
     }
 
     private func shift(_ step: Int) {
@@ -189,7 +207,8 @@ struct StatsView: View {
     }
 
     private func contains(_ day: Date) -> Bool {
-        switch span {
+        guard day >= WatchStats.firstDay else { return false }
+        return switch span {
         case .month: calendar.isDate(day, equalTo: anchor, toGranularity: .month)
         case .year: calendar.isDate(day, equalTo: anchor, toGranularity: .year)
         case .all: true
@@ -279,35 +298,39 @@ struct StatsView: View {
         case .month: component = .month
         case .year: component = .year
         case .all:
-            // Through the end of the last month, so its bar stays inside.
-            let first = summary.bars.first?.date ?? Date()
-            let last = summary.bars.last?.date ?? first
-            return first...(calendar.date(byAdding: .month, value: 1, to: last) ?? last)
+            // Through the end of this month, so its bar stays inside.
+            let end = calendar.dateInterval(of: .month, for: Date())?.end ?? Date()
+            return WatchStats.firstDay...max(end, WatchStats.firstDay)
         }
         guard let interval = calendar.dateInterval(of: component, for: anchor) else { return anchor...anchor }
-        return interval.start...interval.end
+        return max(interval.start, WatchStats.firstDay)...interval.end
     }
 
     // MARK: Calendar
 
-    /// The year on screen, or the last 52 weeks for all time; a month has its chart by days.
+    /// The year on screen, or up to the last 52 weeks through this month for all time; a month has its
+    /// chart by days. Neither starts before «Итоги» did.
     private var calendarInterval: DateInterval? {
         switch span {
         case .month:
             return nil
         case .year:
-            return calendar.dateInterval(of: .year, for: anchor)
+            guard let year = calendar.dateInterval(of: .year, for: anchor) else { return nil }
+            return DateInterval(start: max(year.start, WatchStats.firstDay), end: max(year.end, WatchStats.firstDay))
         case .all:
             let today = calendar.startOfDay(for: Date())
-            guard let start = calendar.date(byAdding: .day, value: -363, to: today),
-                  let end = calendar.date(byAdding: .day, value: 1, to: today) else { return nil }
-            return DateInterval(start: start, end: end)
+            guard let yearAgo = calendar.date(byAdding: .day, value: -363, to: today),
+                  let end = calendar.dateInterval(of: .month, for: today)?.end else { return nil }
+            let start = max(yearAgo, WatchStats.firstDay)
+            return DateInterval(start: start, end: max(end, start))
         }
     }
 
     private var secondsByDay: [Date: Double] {
         Dictionary(stats.days.compactMap { key, titles in
-            WatchStats.date(ofDay: key).map { (calendar.startOfDay(for: $0), titles.values.reduce(0, +)) }
+            WatchStats.date(ofDay: key).flatMap { day in
+                day >= WatchStats.firstDay ? (calendar.startOfDay(for: day), titles.values.reduce(0, +)) : nil
+            }
         }, uniquingKeysWith: +)
     }
 
@@ -586,6 +609,37 @@ struct StatsView: View {
         goals = WatchGoal.all
         isEditingGoal = false
         AchievementTracker.shared.evaluate(announce: true)
+    }
+
+    // MARK: Export and import
+
+    private struct Notice {
+        let title: String
+        let text: String
+    }
+
+    private func exportRecap() {
+        do {
+            exportFile = RecapFile(data: try RecapArchive.current().encoded())
+            isExporting = true
+        } catch {
+            notice = Notice(title: String(localized: "Не удалось сохранить итоги"), text: error.localizedDescription)
+        }
+    }
+
+    private func importRecap(from url: URL) {
+        let isScoped = url.startAccessingSecurityScopedResource()
+        defer { if isScoped { url.stopAccessingSecurityScopedResource() } }
+        do {
+            let outcome = try RecapArchive.decode(Data(contentsOf: url)).apply()
+            goals = WatchGoal.all
+            let text = outcome.days == 0 && outcome.titles == 0 && outcome.achievements == 0
+                ? String(localized: "Всё из этого файла уже было здесь.")
+                : String(localized: "Новых дней с просмотром: \(outcome.days). Новых тайтлов: \(outcome.titles). Новых достижений: \(outcome.achievements).")
+            notice = Notice(title: String(localized: "Итоги импортированы"), text: text)
+        } catch {
+            notice = Notice(title: String(localized: "Не удалось импортировать итоги"), text: error.localizedDescription)
+        }
     }
 
     // MARK: Formatting

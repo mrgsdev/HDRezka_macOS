@@ -35,7 +35,7 @@ final class AchievementTracker {
     /// Origin tags the site files among genres.
     private static let notGenres: Set<String> = ["Зарубежные", "Русские", "Украинские"]
 
-    private struct Ledger: Codable {
+    struct Ledger: Codable {
         /// Titles without episodes by post id: when first watched to the end.
         var films: [String: Date] = [:]
         /// Episodes by `key(_:_:_:)`: when first watched to the end.
@@ -304,6 +304,36 @@ final class AchievementTracker {
             set("franchise", 1, 1)
         }
         return result
+    }
+
+    // MARK: Export and import
+
+    /// What a file of «Итоги» carries of the achievements.
+    struct Archive: Codable {
+        var earned: [String: Date]
+        var ledger: Ledger
+    }
+
+    var archive: Archive { Archive(earned: earned, ledger: ledger) }
+
+    /// Takes in achievements from a file: each with the earlier date, the ledger's counts at the larger.
+    /// Whatever the two records together earn is awarded quietly, with no banner for each.
+    func merge(_ archive: Archive) {
+        start()
+        let known = Set(Achievement.all.map(\.id))
+        earned.merge(archive.earned.filter { known.contains($0.key) }, uniquingKeysWith: min)
+        if let data = try? JSONEncoder().encode(earned) { UserDefaults.standard.set(data, forKey: Self.earnedKey) }
+        let other = archive.ledger
+        ledger.films.merge(other.films, uniquingKeysWith: min)
+        ledger.episodes.merge(other.episodes, uniquingKeysWith: min)
+        ledger.spins = max(ledger.spins, other.spins)
+        ledger.picks.merge(other.picks, uniquingKeysWith: max)
+        for franchise in other.franchises where !ledger.franchises.contains(where: { Set($0) == Set(franchise) }) {
+            ledger.franchises.append(franchise)
+        }
+        ledger.bookmarks = max(ledger.bookmarks, other.bookmarks)
+        save()
+        evaluate(announce: false)
     }
 
     private func award(_ id: String, announce: Bool = true) {

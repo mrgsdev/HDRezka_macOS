@@ -64,6 +64,15 @@ final class WatchStats {
         persist()
     }
 
+    /// Takes in «Итоги» from a file: for each day, title and dub the longer of the two times, so nothing
+    /// here shrinks and reading the same file twice changes nothing.
+    func merge(days newDays: [String: [String: Double]], titles newTitles: [String: Title], dubs newDubs: [String: [String: Double]]) {
+        for (day, values) in newDays { days[day, default: [:]].merge(values, uniquingKeysWith: max) }
+        for (day, values) in newDubs { dubs[day, default: [:]].merge(values, uniquingKeysWith: max) }
+        titles.merge(newTitles) { current, new in current.countries == nil ? new : current }
+        persist()
+    }
+
     func persist() {
         lastPersist = Date()
         if let data = try? JSONEncoder().encode(days) { UserDefaults.standard.set(data, forKey: Self.daysKey) }
@@ -83,6 +92,9 @@ final class WatchStats {
 
     static func dayKey(_ date: Date) -> String { dayFormat.string(from: date) }
     static func date(ofDay key: String) -> Date? { dayFormat.date(from: key) }
+
+    /// «Итоги» came to the app in November 2026: they show nothing older, and no month or year before it.
+    static let firstDay = date(ofDay: "2026-11-01") ?? .distantPast
 }
 
 /// How many films to watch in a year, set in «Итоги»; kept with them, on this Mac only.
@@ -98,5 +110,10 @@ enum WatchGoal {
         var goals = all
         goals[String(year)] = films
         UserDefaults.standard.set(goals, forKey: key)
+    }
+
+    /// Goals from a file, for the years that have none here.
+    static func merge(_ goals: [String: Int]) {
+        UserDefaults.standard.set(all.merging(goals) { current, _ in current }, forKey: key)
     }
 }

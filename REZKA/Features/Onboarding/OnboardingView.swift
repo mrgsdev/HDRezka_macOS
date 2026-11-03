@@ -122,6 +122,8 @@ struct OnboardingView: View {
                         text: String(localized: "Штампы стран, золотые визы и вид на жительство.")),
                 Feature(symbol: "medal.fill", title: String(localized: "Достижения"),
                         text: String(localized: "Медали в стиле Apple Watch за фильмы, сериалы, привычки и страны.")),
+                Feature(symbol: "arrow.up.arrow.down.circle", title: String(localized: "Экспорт и импорт"),
+                        text: String(localized: "Всё из Итогов, вместе с медалями и целями, можно сохранить в файл и перенести на другой Mac.")),
              ],
              chips: [String(localized: "Цель"), String(localized: "Паспорт"), String(localized: "Медали"), String(localized: "Озвучки")]),
         Page(id: 6, art: .symbol("lock.shield.fill"),

@@ -1223,6 +1223,26 @@
         }
       }
     },
+    "Всё из Итогов, вместе с медалями и целями, можно сохранить в файл и перенести на другой Mac.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save everything in Recap, medals and goals included, to a file and carry it to another Mac."
+          }
+        }
+      }
+    },
+    "Всё из этого файла уже было здесь.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Everything in this file was already here."
+          }
+        }
+      }
+    },
     "Всё о фильме или сериале на одной странице.": {
       "localizations": {
         "en": {
@@ -2327,6 +2347,16 @@
         }
       }
     },
+    "Импортировать итоги…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import Recap…"
+          }
+        }
+      }
+    },
     "Используйте программу на свой страх и риск и соблюдайте законы своей страны.": {
       "localizations": {
         "en": {
@@ -2357,12 +2387,22 @@
         }
       }
     },
-    "Итоги в бета-версии: возможны ошибки и неточные данные. Всё хранится только на этом Mac, и при удалении приложения данные пропадут. В будущем появятся экспорт и импорт.": {
+    "Итоги REZKA %@": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Recap is in beta: expect bugs and inaccurate figures. Everything is kept only on this Mac, and deleting the app deletes the data. Export and import are planned."
+            "value": "REZKA Recap %@"
+          }
+        }
+      }
+    },
+    "Итоги импортированы": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recap Imported"
           }
         }
       }
@@ -2998,6 +3038,16 @@
         }
       }
     },
+    "Не удалось импортировать итоги": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't Import Recap"
+          }
+        }
+      }
+    },
     "Не удалось переименовать папку.": {
       "localizations": {
         "en": {
@@ -3074,6 +3124,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Couldn't create the folder."
+          }
+        }
+      }
+    },
+    "Не удалось сохранить итоги": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't Save Recap"
           }
         }
       }
@@ -3345,6 +3405,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "New "
+          }
+        }
+      }
+    },
+    "Новых дней с просмотром: %lld. Новых тайтлов: %lld. Новых достижений: %lld.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New days of watching: %1$lld. New titles: %2$lld. New achievements: %3$lld."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Новых дней с просмотром: %1$lld. Новых тайтлов: %2$lld. Новых достижений: %3$lld."
           }
         }
       }
@@ -5900,6 +5976,16 @@
         }
       }
     },
+    "Файл сохранён более новой версией REZKA. Обновите приложение и попробуйте снова.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The file was saved by a newer version of REZKA. Update the app and try again."
+          }
+        }
+      }
+    },
     "Фильм": {
       "localizations": {
         "en": {
@@ -6310,6 +6396,26 @@
         }
       }
     },
+    "Экспорт и импорт": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export and Import"
+          }
+        }
+      }
+    },
+    "Экспортировать итоги…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export Recap…"
+          }
+        }
+      }
+    },
     "Эта озвучка только для HDrezka Premium. Без подписки покажут короткое превью, выберите озвучку без короны.": {
       "localizations": {
         "en": {
@@ -6346,6 +6452,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "This Tour"
+          }
+        }
+      }
+    },
+    "Это не файл итогов REZKA.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This isn't a REZKA Recap file."
           }
         }
       }
