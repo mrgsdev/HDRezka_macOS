@@ -346,6 +346,16 @@ struct DetailsView: View {
                     .foregroundStyle(.secondary)
             }
 
+            if details.hasTrailer, model.isAllowed {
+                Button {
+                    Task { await model.openTrailer() }
+                } label: {
+                    Label("Трейлер", systemImage: "play.rectangle")
+                }
+                .disabled(model.isOpeningTrailer)
+                .help("Откроется на YouTube в браузере")
+            }
+
             if let folders = model.bookmarkFolders {
                 bookmarkMenu(folders)
             }

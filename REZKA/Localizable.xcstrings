@@ -3245,6 +3245,16 @@
         }
       }
     },
+    "Откроется на YouTube в браузере": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens on YouTube in your browser"
+          }
+        }
+      }
+    },
     "Открытые библиотеки": {
       "localizations": {
         "en": {
@@ -5080,6 +5090,16 @@
         }
       }
     },
+    "Трейлер": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trailer"
+          }
+        }
+      }
+    },
     "Тысяча часов": {
       "localizations": {
         "en": {
@@ -5126,6 +5146,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "No genres found for these titles."
+          }
+        }
+      }
+    },
+    "У этого тайтла не нашлось трейлера.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This title has no trailer."
           }
         }
       }

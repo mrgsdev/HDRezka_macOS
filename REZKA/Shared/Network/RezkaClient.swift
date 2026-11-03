@@ -263,6 +263,13 @@ final class RezkaClient {
         return try RezkaParser.seasons(in: fragment)
     }
 
+    /// The trailer's player from «Смотреть трейлер»; nil when the site has none for the title.
+    func trailerURL(postId: String) async throws -> URL? {
+        let json = try await postJSON("engine/ajax/gettrailervideo.php", form: ["id": postId], timestamped: false)
+        guard json["success"] as? Bool == true, let code = json["code"] as? String else { return nil }
+        return RezkaParser.trailerURL(inCode: code)
+    }
+
     /// The card the site shows on hovering a poster: what lists don't carry.
     func quickInfo(postId: String) async throws -> QuickInfo {
         let data = try await post("engine/ajax/quick_content.php", form: ["id": postId, "is_touch": "1"], timestamped: false)

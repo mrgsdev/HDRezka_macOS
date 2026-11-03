@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import Observation
 
@@ -38,6 +39,7 @@ final class DetailsModel {
     /// The vote sent from this Mac, if any: after voting the site no longer says which one it was.
     private(set) var myRating: Int?
     private(set) var isRating = false
+    private(set) var isOpeningTrailer = false
 
     init(item: MediaItem) {
         self.item = item
@@ -265,6 +267,25 @@ final class DetailsModel {
             NotificationCenter.default.post(name: .bookmarksChanged, object: nil)
             try await RezkaClient.shared.addBookmark(postId: details.postId, folder: folder.id)
             bookmarkedIn.insert(folder.id)
+        } catch {
+            report(error)
+        }
+    }
+
+    // MARK: Trailer
+
+    /// Opens the trailer in the browser. YouTube's embed, which the site uses, asks an app's own web
+    /// view to sign in to prove it isn't a bot; the browser is where that sign-in already is.
+    func openTrailer() async {
+        guard let details, !isOpeningTrailer else { return }
+        isOpeningTrailer = true
+        defer { isOpeningTrailer = false }
+        do {
+            guard let player = try await RezkaClient.shared.trailerURL(postId: details.postId) else {
+                actionError = String(localized: "У этого тайтла не нашлось трейлера.")
+                return
+            }
+            NSWorkspace.shared.open(RezkaParser.watchPage(forPlayer: player))
         } catch {
             report(error)
         }

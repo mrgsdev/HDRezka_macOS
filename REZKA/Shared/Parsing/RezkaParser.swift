@@ -309,7 +309,8 @@ enum RezkaParser {
             restriction: try doc.select(".b-player__restricted__block_message").first()?.ownText()
                 .trimmingCharacters(in: .whitespacesAndNewlines).nonEmpty,
             siteRating: try siteRating(in: doc),
-            dubPopularity: try dubPopularity(in: doc)
+            dubPopularity: try dubPopularity(in: doc),
+            hasTrailer: try !doc.select(".b-sidelinks__link.show-trailer").isEmpty()
         )
     }
 
@@ -540,6 +541,20 @@ enum RezkaParser {
         guard let string = string?.nonEmpty else { return nil }
         if string.hasPrefix("//") { return URL(string: "https:" + string) }
         return URL(string: string, relativeTo: base)?.absoluteURL
+    }
+
+    /// The player in the trailer's iframe, YouTube's embed as a rule.
+    static func trailerURL(inCode code: String) -> URL? {
+        guard let src = code.firstMatch(of: /src="([^"]+)"/)?.1 else { return nil }
+        let address = String(src).replacingOccurrences(of: "&amp;", with: "&")
+        return URL(string: address.hasPrefix("//") ? "https:" + address : address)
+    }
+
+    /// `youtube.com/embed/ID?…` → `youtube.com/watch?v=ID`; any other player as it is.
+    static func watchPage(forPlayer player: URL) -> URL {
+        guard player.host()?.contains("youtube") == true, player.path().hasPrefix("/embed/"),
+              let page = URL(string: "https://www.youtube.com/watch?v=\(player.lastPathComponent)") else { return player }
+        return page
     }
 
     /// A title's hover card, `engine/ajax/quick_content.php`: title, the site's rating, the start of the

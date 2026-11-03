@@ -195,6 +195,8 @@ struct MediaDetails {
     let siteRating: SiteRating?
     /// "Не можешь выбрать озвучку?": which dubs viewers pick; nil when the page has no such hint.
     let dubPopularity: DubPopularity?
+    /// The page offers «Смотреть трейлер».
+    let hasTrailer: Bool
 
     func info(_ title: String) -> String? {
         info.first { $0.title.hasPrefix(title) }?.value
