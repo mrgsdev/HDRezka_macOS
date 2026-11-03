@@ -228,7 +228,11 @@ final class AchievementTracker {
         set("detective", titles.filter { $0.genres.contains("Детективы") || $0.genres.contains("Триллеры") }.count, 15)
         set("cartoons", titles.filter { $0.kind == .cartoon }.count, 25)
         // Countries as the film passport stamps them, so the two never disagree.
-        let stamped = Set(FilmPassport.stamps(from: stats).map(\.country))
+        let stamps = FilmPassport.stamps(from: stats)
+        let stamped = Set(stamps.map(\.country))
+        let mostTitles = stamps.map(\.titles).max() ?? 0
+        set("visa", mostTitles, PassportStamp.visaAt)
+        set("residence", mostTitles, PassportStamp.residenceAt)
         for target in [10, 25, 50, 100] { set("countries-\(target)", stamped.count, target) }
         set("continents", Set(stamped.compactMap(World.continent(of:))).count, World.continents.count)
         let regions = [("scandinavia", World.scandinavia), ("big-five", World.bigFive), ("asia-tour", World.asiaTour),

@@ -19,13 +19,16 @@ struct FilmPassportView: View {
                         .padding(.vertical, 20)
                 } else {
                     panel("Штампы") {
+                        Text("Штамп ставится с первого тайтла страны, золотая виза — с пятого, вид на жительство — с двадцатого.")
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 150), spacing: 18)], spacing: 22) {
                             ForEach(stamps) { stamp in
                                 NavigationLink(value: Self.listing(stamp.country)) {
                                     StampView(stamp: stamp)
                                 }
                                 .buttonStyle(.plain)
-                                .help(String(localized: "Фильмы и сериалы: \(stamp.country)"))
+                                .help(stamp.hint)
                             }
                         }
                     }
@@ -70,6 +73,13 @@ struct FilmPassportView: View {
                     .foregroundStyle(.secondary)
                 if let first = stamps.last {
                     Text("Первая страна — \(first.country), \(first.firstDay.formatted(.dateTime.day().month(.wide).year().locale(AppLanguage.locale)))")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                }
+                let visas = stamps.filter { $0.level == .visa }.count
+                let residences = stamps.filter { $0.level == .residence }.count
+                if visas + residences > 0 {
+                    Text("Золотых виз: \(visas) · Видов на жительство: \(residences)")
                         .font(.callout)
                         .foregroundStyle(.secondary)
                 }
@@ -166,15 +176,37 @@ enum FilmPassport {
 struct FilmPassportLink: Hashable {}
 
 struct PassportStamp: Identifiable {
+    enum Level {
+        case stamp, visa, residence
+    }
+
+    /// Titles from a country for a gold visa and for a residence permit.
+    static let visaAt = 5
+    static let residenceAt = 20
+
     let country: String
     let firstDay: Date
     let titles: Int
 
     var id: String { country }
+
+    var level: Level {
+        titles >= Self.residenceAt ? .residence : titles >= Self.visaAt ? .visa : .stamp
+    }
+
+    /// The country, its titles and what the next level takes.
+    var hint: String {
+        switch level {
+        case .stamp: String(localized: "\(country) · тайтлов: \(titles) · до визы ещё \(Self.visaAt - titles)")
+        case .visa: String(localized: "\(country) · тайтлов: \(titles) · до вида на жительство ещё \(Self.residenceAt - titles)")
+        case .residence: String(localized: "\(country) · тайтлов: \(titles) · вид на жительство")
+        }
+    }
 }
 
 /// An ink stamp: the flag, the country, the day of the first visit and how many titles since, in its
-/// own ink, shape and tilt, the same every time.
+/// own ink, shape and tilt, the same every time. A visa is struck in gold; a residence permit is gold
+/// and filled, with laurels round the flag.
 private struct StampView: View {
     let stamp: PassportStamp
 
@@ -189,12 +221,35 @@ private struct StampView: View {
         stamp.country.unicodeScalars.reduce(7) { ($0 &* 31 &+ Int($1.value)) & 0xFFFF }
     }
 
+    /// Deeper on the light panels, where pale gold would fade into them.
+    private static let gold = LinearGradient(
+        colors: [
+            Brand.adaptive(light: NSColor(red: 0.9, green: 0.65, blue: 0.15, alpha: 1), dark: NSColor(red: 1, green: 0.86, blue: 0.45, alpha: 1)),
+            Brand.adaptive(light: NSColor(red: 0.7, green: 0.45, blue: 0.08, alpha: 1), dark: NSColor(red: 0.86, green: 0.6, blue: 0.16, alpha: 1)),
+        ],
+        startPoint: .top, endPoint: .bottom
+    )
+    private static let goldGlow = Color(red: 1, green: 0.78, blue: 0.3)
+
     var body: some View {
-        let ink = Self.inks[seed % Self.inks.count]
+        let level = stamp.level
+        let ink = level == .stamp ? AnyShapeStyle(Self.inks[seed % Self.inks.count]) : AnyShapeStyle(Self.gold)
         let shape = seed % 3
+        let border: CGFloat = level == .residence ? 3.5 : 2.5
         VStack(spacing: 3) {
-            Text(verbatim: World.flag(for: stamp.country))
-                .font(.system(size: 30))
+            if level != .stamp {
+                Text(level == .visa ? "Виза" : "Вид на жительство")
+                    .font(.system(size: 8, weight: .heavy, design: .rounded))
+                    .textCase(.uppercase)
+                    .tracking(1.2)
+                    .lineLimit(1)
+            }
+            HStack(spacing: 2) {
+                if level == .residence { Image(systemName: "laurel.leading").font(.system(size: 18)) }
+                Text(verbatim: World.flag(for: stamp.country))
+                    .font(.system(size: 30))
+                if level == .residence { Image(systemName: "laurel.trailing").font(.system(size: 18)) }
+            }
             Text(verbatim: stamp.country.uppercased())
                 .font(.system(size: 12, weight: .heavy, design: .rounded))
                 .tracking(1)
@@ -209,22 +264,27 @@ private struct StampView: View {
         .foregroundStyle(ink)
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
-        .frame(width: shape == 0 ? 132 : 150, height: shape == 0 ? 132 : 112)
+        .frame(width: shape == 0 ? 136 : 154, height: shape == 0 ? 136 : (level == .stamp ? 112 : 124))
         .background {
+            let fill = level == .residence ? AnyShapeStyle(Self.goldGlow.opacity(0.12)) : AnyShapeStyle(Color.clear)
             switch shape {
             case 0:
-                Circle().strokeBorder(ink, lineWidth: 2.5)
+                Circle().fill(fill)
+                    .overlay(Circle().strokeBorder(ink, lineWidth: border))
                     .overlay(Circle().strokeBorder(ink, lineWidth: 1).padding(5))
             case 1:
-                Ellipse().strokeBorder(ink, lineWidth: 2.5)
+                Ellipse().fill(fill)
+                    .overlay(Ellipse().strokeBorder(ink, lineWidth: border))
                     .overlay(Ellipse().strokeBorder(ink, style: StrokeStyle(lineWidth: 1, dash: [3, 2])).padding(5))
             default:
-                RoundedRectangle(cornerRadius: 10).strokeBorder(ink, lineWidth: 2.5)
+                RoundedRectangle(cornerRadius: 10).fill(fill)
+                    .overlay(RoundedRectangle(cornerRadius: 10).strokeBorder(ink, lineWidth: border))
                     .overlay(RoundedRectangle(cornerRadius: 6).strokeBorder(ink, lineWidth: 1).padding(5))
             }
         }
-        // Ink never takes evenly.
-        .opacity(0.82)
+        // Gold catches the light; ink never takes evenly.
+        .shadow(color: level == .stamp ? .clear : Self.goldGlow.opacity(level == .residence ? 0.5 : 0.3), radius: level == .residence ? 10 : 6)
+        .opacity(level == .stamp ? 0.82 : 1)
         .rotationEffect(.degrees(Double(seed % 17) - 8))
         .frame(maxWidth: .infinity, minHeight: 140)
         .contentShape(Rectangle())

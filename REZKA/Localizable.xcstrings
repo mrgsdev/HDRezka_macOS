@@ -43,6 +43,54 @@
         }
       }
     },
+    "%@ · тайтлов: %lld · вид на жительство": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · titles: %2$lld · residence permit"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · тайтлов: %2$lld · вид на жительство"
+          }
+        }
+      }
+    },
+    "%@ · тайтлов: %lld · до вида на жительство ещё %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · titles: %2$lld · %3$lld more for a residence permit"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · тайтлов: %2$lld · до вида на жительство ещё %3$lld"
+          }
+        }
+      }
+    },
+    "%@ · тайтлов: %lld · до визы ещё %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · titles: %2$lld · %3$lld more for a visa"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "%1$@ · тайтлов: %2$lld · до визы ещё %3$lld"
+          }
+        }
+      }
+    },
     "%@ Сессия перенесётся на новое зеркало.": {
       "localizations": {
         "en": {
@@ -251,6 +299,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "12 is a movie a month, 52 a movie a week. Movies, cartoons and anime without episodes count once watched to the end in REZKA on this Mac."
+          }
+        }
+      }
+    },
+    "20 тайтлов из одной страны в кинопаспорте.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "20 titles from one country in the film passport."
           }
         }
       }
@@ -867,6 +925,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Take a Card"
+          }
+        }
+      }
+    },
+    "Вид на жительство": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Residence Permit"
+          }
+        }
+      }
+    },
+    "Виза": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visa"
           }
         }
       }
@@ -1919,6 +1997,32 @@
           "stringUnit": {
             "state": "translated",
             "value": "Site Mirror"
+          }
+        }
+      }
+    },
+    "Золотая виза в кинопаспорте: 5 тайтлов из одной страны.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A gold visa in the film passport: 5 titles from one country."
+          }
+        }
+      }
+    },
+    "Золотых виз: %lld · Видов на жительство: %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gold visas: %1$lld · Residence permits: %2$lld"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Золотых виз: %1$lld · Видов на жительство: %2$lld"
           }
         }
       }
@@ -3277,6 +3381,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Pause and play"
+          }
+        }
+      }
+    },
+    "Первая виза": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First Visa"
           }
         }
       }
@@ -5086,16 +5200,6 @@
         }
       }
     },
-    "Фильмы и сериалы: %@": {
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Movies and series: %@"
-          }
-        }
-      }
-    },
     "Фильмы шести разных десятилетий.": {
       "localizations": {
         "en": {
@@ -5292,6 +5396,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "To change or turn off Kid Mode."
+          }
+        }
+      }
+    },
+    "Штамп ставится с первого тайтла страны, золотая виза — с пятого, вид на жительство — с двадцатого.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A stamp comes with a country's first title, a gold visa with the fifth, a residence permit with the twentieth."
           }
         }
       }
