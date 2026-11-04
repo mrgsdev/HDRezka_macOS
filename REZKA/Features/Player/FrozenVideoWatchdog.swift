@@ -2,12 +2,12 @@ import AVFoundation
 import CoreImage
 import QuartzCore
 
-/// «Восстанавливать застывшее видео» in Settings, on unless turned off.
+/// «Восстанавливать застывшее видео» in Settings, off until turned on.
 enum FrozenVideoRecovery {
     static let key = "recoverFrozenVideo"
 
     static var isEnabled: Bool {
-        UserDefaults.standard.object(forKey: key) as? Bool ?? true
+        UserDefaults.standard.bool(forKey: key)
     }
 }
 

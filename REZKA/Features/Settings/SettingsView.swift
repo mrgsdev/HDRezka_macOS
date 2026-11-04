@@ -14,7 +14,7 @@ struct SettingsView: View {
     @State private var language = AppLanguage.current
     @State private var confirmLogout = false
     @State private var cacheSize = URLCache.shared.currentDiskUsage
-    @AppStorage(FrozenVideoRecovery.key) private var recoversFrozenVideo = true
+    @AppStorage(FrozenVideoRecovery.key) private var recoversFrozenVideo = false
 
     static let mirrorHint = String(localized: "Напишите на mirror@hdrezka.org, чтобы узнать актуальное зеркало, и введите его сюда.")
 
