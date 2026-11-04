@@ -4,8 +4,8 @@ import Observation
 import os
 import Security
 
-/// A release on GitHub, as `releases/latest` returns it.
-struct AppRelease: Decodable, Equatable {
+/// A release on GitHub, as `releases/latest` and `releases` return it.
+struct AppRelease: Decodable, Equatable, Identifiable {
     struct Asset: Decodable, Equatable {
         let name: String
         let browserDownloadURL: URL
@@ -21,11 +21,34 @@ struct AppRelease: Decodable, Equatable {
     let body: String?
     let htmlURL: URL
     let assets: [Asset]
+    /// "2026-11-03T18:20:00Z"; nil for a draft.
+    let publishedAt: String?
+    var draft = false
+    var prerelease = false
 
     enum CodingKeys: String, CodingKey {
         case tagName = "tag_name"
-        case name, body, assets
+        case name, body, assets, draft, prerelease
         case htmlURL = "html_url"
+        case publishedAt = "published_at"
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        tagName = try container.decode(String.self, forKey: .tagName)
+        name = try container.decodeIfPresent(String.self, forKey: .name)
+        body = try container.decodeIfPresent(String.self, forKey: .body)
+        htmlURL = try container.decode(URL.self, forKey: .htmlURL)
+        assets = try container.decode([Asset].self, forKey: .assets)
+        publishedAt = try container.decodeIfPresent(String.self, forKey: .publishedAt)
+        draft = try container.decodeIfPresent(Bool.self, forKey: .draft) ?? false
+        prerelease = try container.decodeIfPresent(Bool.self, forKey: .prerelease) ?? false
+    }
+
+    var id: String { tagName }
+
+    var publishedDate: Date? {
+        publishedAt.flatMap { try? Date($0, strategy: .iso8601) }
     }
 
     /// "v2.0" → "2.0".
@@ -61,6 +84,17 @@ final class Updater {
     static let currentVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0"
     static let releasesPage = URL(string: "https://github.com/mrgsdev/HDRezka_macOS/releases")!
     private static let latestRelease = URL(string: "https://api.github.com/repos/mrgsdev/HDRezka_macOS/releases/latest")!
+    private static let allReleases = URL(string: "https://api.github.com/repos/mrgsdev/HDRezka_macOS/releases?per_page=100")!
+    /// The last release made before «Пропустить эту версию»: it and older ones offer every update anyway.
+    static let lastVersionWithoutSkip = "1.5"
+    private static let skippedKey = "skippedUpdateVersion"
+
+    /// The version the viewer chose to skip: not offered by itself, only from «Проверить обновления…».
+    /// A newer one is offered as usual. Kept between launches, and read by any version that knows it.
+    var skippedVersion: String? {
+        get { UserDefaults.standard.string(forKey: Self.skippedKey) }
+        set { UserDefaults.standard.set(newValue, forKey: Self.skippedKey) }
+    }
     private static let log = Logger(subsystem: "com.mrgsdev.hdrezkamac", category: "update")
 
     @ObservationIgnored private var lastCheck = Date.distantPast
@@ -78,7 +112,7 @@ final class Updater {
     func checkInBackground() async -> Bool {
         guard Date().timeIntervalSince(lastCheck) > 12 * 3600, !isBusy else { return false }
         await check()
-        if case let .available(release) = state, release.version != postponed { return true }
+        if case let .available(release) = state, release.version != postponed, release.version != skippedVersion { return true }
         if case .available = state {} else { state = .idle }
         return false
     }
@@ -118,6 +152,23 @@ final class Updater {
         }
     }
 
+    /// Every published release with the app attached, newest first, for «Другие версии…».
+    func releases() async throws -> [AppRelease] {
+        var request = URLRequest(url: Self.allReleases)
+        request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
+        let (data, response) = try await session.data(for: request)
+        let status = (response as? HTTPURLResponse)?.statusCode ?? 200
+        guard (200..<300).contains(status) else { throw UpdateError.server(status) }
+        return try JSONDecoder().decode([AppRelease].self, from: data)
+            .filter { !$0.draft && !$0.prerelease && $0.archive != nil }
+            .sorted { Self.isVersion($0.version, newerThan: $1.version) }
+    }
+
+    /// Whether `version` knows «Пропустить эту версию», and so the skipped version it is told about.
+    static func knowsSkipping(_ version: String) -> Bool {
+        isVersion(version, newerThan: lastVersionWithoutSkip)
+    }
+
     /// GitHub's API, or a local feed for testing (Debug builds only).
     private static var feedURL: URL {
         #if DEBUG
@@ -141,6 +192,19 @@ final class Updater {
 
     // MARK: Choices
 
+    /// «Пропустить эту версию»: this version is not offered again by itself. The window closes next,
+    /// and `windowClosed` puts the state back.
+    func skip(_ release: AppRelease) {
+        skippedVersion = release.version
+    }
+
+    /// «Отмена» while a version from «Другие версии…» downloads, or that window closing.
+    func cancelInstall() {
+        installTask?.cancel()
+        installTask = nil
+        state = .idle
+    }
+
     /// The update window closed: an offered version counts as «Позже», a download stops.
     func windowClosed() {
         switch state {
@@ -157,12 +221,14 @@ final class Updater {
 
     // MARK: Installing
 
-    func install(_ release: AppRelease) {
+    /// Installs `release`. An older one only when asked for from «Другие версии…»: then `newest`, left
+    /// behind on purpose, counts as skipped, so a version that knows about skipping doesn't offer it back.
+    func install(_ release: AppRelease, allowingOlder: Bool = false, newest: AppRelease? = nil) {
         guard installTask == nil else { return }
         state = .downloading(release)
         installTask = Task {
             do {
-                try await download(release)
+                try await download(release, allowingOlder: allowingOlder, newest: newest)
             } catch is CancellationError {
             } catch {
                 Self.log.error("update failed: \(error.localizedDescription, privacy: .public)")
@@ -172,7 +238,7 @@ final class Updater {
         }
     }
 
-    private func download(_ release: AppRelease) async throws {
+    private func download(_ release: AppRelease, allowingOlder: Bool, newest: AppRelease?) async throws {
         let current = Bundle.main.bundleURL
         // Run straight from Downloads, macOS starts a quarantined app from a read-only copy.
         guard !current.path.contains("/AppTranslocation/") else { throw UpdateError.translocated }
@@ -196,10 +262,19 @@ final class Updater {
         guard let newApp = apps.first, let bundle = Bundle(url: newApp) else { throw UpdateError.noApp }
         guard bundle.bundleIdentifier == Bundle.main.bundleIdentifier else { throw UpdateError.wrongApp }
         let newVersion = bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0"
-        guard Self.isVersion(newVersion, newerThan: Self.currentVersion) else { throw UpdateError.notNewer(newVersion) }
+        if allowingOlder {
+            guard newVersion != Self.currentVersion else { throw UpdateError.sameVersion(newVersion) }
+        } else {
+            guard Self.isVersion(newVersion, newerThan: Self.currentVersion) else { throw UpdateError.notNewer(newVersion) }
+        }
         try Self.checkSignature(of: newApp)
 
         _ = try FileManager.default.replaceItemAt(current, withItemAt: newApp)
+        // Before the relaunch, which ends this process: the older version reads it at its first check.
+        let leaving = newest?.version ?? Self.currentVersion
+        if allowingOlder, Self.isVersion(leaving, newerThan: newVersion) {
+            skippedVersion = leaving
+        }
         relaunch(current)
     }
 
@@ -258,6 +333,7 @@ enum UpdateError: LocalizedError {
     case noApp
     case wrongApp
     case notNewer(String)
+    case sameVersion(String)
     case badSignature
 
     var errorDescription: String? {
@@ -270,6 +346,7 @@ enum UpdateError: LocalizedError {
         case .noApp: String(localized: "В архиве обновления нет приложения.")
         case .wrongApp: String(localized: "В архиве обновления другое приложение.")
         case let .notNewer(version): String(localized: "В архиве версия \(version), она не новее установленной.")
+        case let .sameVersion(version): String(localized: "Версия \(version) уже установлена.")
         case .badSignature: String(localized: "Подпись обновления не совпадает с подписью REZKA. Обновление не установлено.")
         }
     }

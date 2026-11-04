@@ -115,6 +115,8 @@ struct SettingsView: View {
                     openWindow(id: "update")
                     Task { await Updater.shared.checkNow() }
                 }
+                Button("Другие версии…") { openWindow(id: "versions") }
+                    .help("Вернуться к прошлой версии или поставить другую")
                 LabeledContent("Разработчик") {
                     Link("github.com/mrgsdev", destination: URL(string: "https://github.com/mrgsdev")!)
                 }

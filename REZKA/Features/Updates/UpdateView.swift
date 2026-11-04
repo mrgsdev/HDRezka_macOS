@@ -6,6 +6,7 @@ import SwiftUI
 struct UpdateView: View {
     @State private var updater = Updater.shared
     @State private var showsNotes = false
+    @State private var showsGoodToKnow = false
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -58,6 +59,13 @@ struct UpdateView: View {
             Text("Вышла версия \(release.version), у вас \(Updater.currentVersion). Хотите обновить приложение?")
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
+            if release.version == updater.skippedVersion {
+                Label("Вы пропустили эту версию: сама она больше не предлагается. Установить её можно сейчас.",
+                      systemImage: "forward")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             Button {
                 withAnimation(.easeOut(duration: 0.15)) { showsNotes.toggle() }
             } label: {
@@ -73,12 +81,32 @@ struct UpdateView: View {
                 .frame(maxHeight: 260)
                 .background(Brand.panel, in: RoundedRectangle(cornerRadius: 10))
             }
-            buttons {
+            Button {
+                withAnimation(.easeOut(duration: 0.15)) { showsGoodToKnow.toggle() }
+            } label: {
+                Label("Что важно знать заранее", systemImage: showsGoodToKnow ? "chevron.down" : "chevron.right")
+            }
+            .buttonStyle(.link)
+            if showsGoodToKnow {
+                UpdateNotesBox(notes: UpdateNote.forUpdate)
+            }
+            HStack {
+                // Left of the others, as in the system's update dialogs.
+                if release.version != updater.skippedVersion {
+                    Button("Пропустить эту версию") {
+                        updater.skip(release)
+                        dismiss()
+                    }
+                    .help("Не предлагать версию \(release.version). О следующей версии REZKA сообщит как обычно.")
+                }
+                Spacer()
                 Button("Позже", role: .cancel) { dismiss() }
                 Button("Обновить") { updater.install(release) }
                     .keyboardShortcut(.defaultAction)
                     .buttonStyle(.borderedProminent)
             }
+            .controlSize(.large)
+            .padding(.top, 4)
 
         case let .downloading(release):
             Text("Обновление до версии \(release.version)").font(.headline)
@@ -116,7 +144,7 @@ struct UpdateView: View {
 }
 
 /// The release description from GitHub: headings, bullet lists and paragraphs with inline Markdown.
-private struct ReleaseNotes: View {
+struct ReleaseNotes: View {
     let text: String
 
     private var lines: [String] {

@@ -39,6 +39,15 @@ struct RezkaApp: App {
         // Keeps it out of the Window menu; it opens by itself or from "Проверить обновления…".
         .commandsRemoved()
 
+        Window("Версии REZKA", id: "versions") {
+            VersionsView()
+        }
+        .windowResizability(.contentSize)
+        .defaultPosition(.center)
+        .restorationBehavior(.disabled)
+        // It opens from Settings.
+        .commandsRemoved()
+
         Window("Горячие клавиши", id: "shortcuts") {
             ShortcutsView()
         }

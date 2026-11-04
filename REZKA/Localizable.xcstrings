@@ -6847,6 +6847,326 @@
           }
         }
       }
+    },
+    "Версия %@ уже установлена.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %@ is already installed."
+          }
+        }
+      }
+    },
+    "Вы пропустили эту версию: сама она больше не предлагается. Установить её можно сейчас.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You skipped this version, so it isn’t offered on its own anymore. You can install it now."
+          }
+        }
+      }
+    },
+    "Пропустить эту версию": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skip This Version"
+          }
+        }
+      }
+    },
+    "Не предлагать версию %@. О следующей версии REZKA сообщит как обычно.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Don’t offer version %@. REZKA will tell you about the next version as usual."
+          }
+        }
+      }
+    },
+    "Версии REZKA": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REZKA Versions"
+          }
+        }
+      }
+    },
+    "Установлена версия %@. Здесь можно вернуться к прошлой версии или поставить другую.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %@ is installed. Here you can go back to an earlier version or install another one."
+          }
+        }
+      }
+    },
+    "Устанавливаем версию %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installing version %@"
+          }
+        }
+      }
+    },
+    "К списку версий": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to Versions"
+          }
+        }
+      }
+    },
+    "Загружаем список версий с GitHub…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loading versions from GitHub…"
+          }
+        }
+      }
+    },
+    "Открыть страницу релизов": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Releases Page"
+          }
+        }
+      }
+    },
+    "REZKA %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REZKA %@"
+          }
+        }
+      }
+    },
+    "Установлена": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installed"
+          }
+        }
+      }
+    },
+    "Последняя": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Latest"
+          }
+        }
+      }
+    },
+    "Пропущена": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skipped"
+          }
+        }
+      }
+    },
+    "Вернуться": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go Back"
+          }
+        }
+      }
+    },
+    "Установить": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Install"
+          }
+        }
+      }
+    },
+    "Вернуться к версии %@?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go back to version %@?"
+          }
+        }
+      }
+    },
+    "Установить версию %@?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Install version %@?"
+          }
+        }
+      }
+    },
+    "Что важно знать заранее": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Good to know first"
+          }
+        }
+      }
+    },
+    "Вернуться к %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go Back to %@"
+          }
+        }
+      }
+    },
+    "Установить %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Install %@"
+          }
+        }
+      }
+    },
+    "Вход, настройки, история просмотров и Итоги сохранятся: приложение то же и с той же подписью.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your sign-in, settings, watch history and Recap stay: it’s the same app with the same signature."
+          }
+        }
+      }
+    },
+    "Это не последняя версия. О версии %@ REZKA сообщит как обычно.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This isn’t the latest version. REZKA will tell you about version %@ as usual."
+          }
+        }
+      }
+    },
+    "После установки REZKA перезапустится сама.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "REZKA will restart on its own after installing."
+          }
+        }
+      }
+    },
+    "Версия %@ не знает о том, что появилось позже. Новые настройки и часть Итогов в ней могут не отображаться, но не пропадут: после обновления всё вернётся.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %@ doesn’t know about what came later. New settings and parts of Recap may not show in it, but they aren’t lost: everything comes back after you update."
+          }
+        }
+      }
+    },
+    "Версия %@ будет пропущена: сама она предлагаться не будет. О более новой версии REZKA сообщит как обычно.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %@ will be skipped, so it won’t be offered on its own. REZKA will tell you about a newer version as usual."
+          }
+        }
+      }
+    },
+    "В версии %@ ещё нет кнопки «Пропустить эту версию», поэтому при запуске она будет предлагать обновиться. Нажимайте «Позже».": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %@ doesn’t have “Skip This Version” yet, so it will offer to update when it starts. Choose “Later”."
+          }
+        }
+      }
+    },
+    "Вернуться на новую версию можно в любой момент через «Проверить обновления…» в меню REZKA или в Настройках.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can return to the new version at any time with “Check for Updates…” in the REZKA menu or in Settings."
+          }
+        }
+      }
+    },
+    "Не удалось загрузить список версий: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn’t load the list of versions: %@"
+          }
+        }
+      }
+    },
+    "Другие версии…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other Versions…"
+          }
+        }
+      }
+    },
+    "Вернуться к прошлой версии или поставить другую": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go back to an earlier version or install another one"
+          }
+        }
+      }
+    },
+    "Если новая версия не понравится, вернуться к прошлой можно в Настройках: «Другие версии…».": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If you don’t like the new version, you can go back to an earlier one in Settings: “Other Versions…”."
+          }
+        }
+      }
     }
   },
   "version": "1.0"
