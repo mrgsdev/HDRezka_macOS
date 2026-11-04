@@ -40,8 +40,22 @@ struct PlayerView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             // Under the title bar too: the toolbar floats over the picture with no background of its own.
-            PlayerSurface(player: controller.player) { controller.seek(by: $0) }
+            PlayerSurface(player: controller.player,
+                          onSeek: { controller.seek(by: $0) },
+                          onVisibilityChange: { controller.setVideoVisible($0) })
                 .ignoresSafeArea()
+
+            // While a frozen picture loads again: the still the viewer saw, over the reload's jumps.
+            if let still = controller.recoveryStill {
+                Image(decorative: still, scale: 1)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(.black)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+                    .transition(.opacity)
+            }
 
             if let text = controller.subtitleText {
                 Text(text)
@@ -56,10 +70,18 @@ struct PlayerView: View {
                     .allowsHitTesting(false)
             }
 
-            if controller.isLoading || controller.isBuffering {
-                LoadingBadge(isStarting: controller.isLoading)
+            if controller.isLoading || controller.isBuffering || controller.isRecovering {
+                LoadingBadge(kind: controller.isLoading ? .starting : controller.isRecovering ? .recovering : .buffering)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .allowsHitTesting(false)
+                    .transition(.opacity)
+            }
+
+            if controller.showsRecoveryNote {
+                RecoveryNote { controller.dismissRecoveryNote() }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                    // Below the toolbar floating over the picture.
+                    .padding(.top, 64)
                     .transition(.opacity)
             }
 
@@ -76,7 +98,8 @@ struct PlayerView: View {
             }
         }
         .animation(.easeOut(duration: 0.2), value: controller.seekHint == nil)
-        .animation(.easeOut(duration: 0.2), value: controller.isLoading || controller.isBuffering)
+        .animation(.easeOut(duration: 0.2), value: controller.isLoading || controller.isBuffering || controller.isRecovering)
+        .animation(.easeOut(duration: 0.2), value: controller.showsRecoveryNote)
         .background(.black)
         .frame(minWidth: 640, minHeight: 360)
         .navigationTitle(controller.request.title)
@@ -303,24 +326,63 @@ struct PlayerView: View {
     }
 }
 
-/// Shown while the video waits for data: before it starts, and after a jump to a part not loaded yet.
+/// Shown while the video waits for data: before it starts, after a jump to a part not loaded yet,
+/// and while a frozen picture loads again.
 private struct LoadingBadge: View {
-    let isStarting: Bool
+    enum Kind {
+        case starting, buffering, recovering
+    }
+
+    let kind: Kind
 
     var body: some View {
         VStack(spacing: 12) {
             SpinningRing()
                 .padding(.bottom, 4)
-            Text(isStarting ? "Загружаем видео…" : "Загружается…")
-                .font(.title3.weight(.semibold))
-            Text("Подождите, видео скоро загрузится")
+            switch kind {
+            case .starting: Text("Загружаем видео…").font(.title3.weight(.semibold))
+            case .buffering: Text("Загружается…").font(.title3.weight(.semibold))
+            case .recovering: Text("Восстанавливаем видео…").font(.title3.weight(.semibold))
+            }
+            Text(kind == .recovering ? "Картинка застыла, загружаем это место заново" : "Подождите, видео скоро загрузится")
                 .font(.callout)
                 .foregroundStyle(.white.opacity(0.7))
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 300)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .foregroundStyle(.white)
         .padding(.horizontal, 28)
         .padding(.vertical, 20)
         .background(.black.opacity(0.6), in: RoundedRectangle(cornerRadius: 16))
+        .environment(\.colorScheme, .dark)
+    }
+}
+
+/// Over the video once reloads stopped helping: why, and what to try. Stays until closed.
+private struct RecoveryNote: View {
+    let onClose: () -> Void
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 12) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(.orange)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Видео несколько раз застывало")
+                    .font(.headline)
+                Text("Сервер отвечает медленно. Выберите качество пониже или откройте видео заново.")
+                    .font(.callout)
+                    .foregroundStyle(.white.opacity(0.75))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Button("Понятно", action: onClose)
+                .controlSize(.small)
+        }
+        .foregroundStyle(.white)
+        .padding(.horizontal, 18)
+        .padding(.vertical, 14)
+        .frame(maxWidth: 520)
+        .background(.black.opacity(0.7), in: RoundedRectangle(cornerRadius: 14))
         .environment(\.colorScheme, .dark)
     }
 }
@@ -352,6 +414,8 @@ private struct SpinningRing: View {
 private struct PlayerSurface: NSViewRepresentable {
     let player: AVPlayer
     let onSeek: (Double) -> Void
+    /// Whether any of the window is on screen: hidden or minimized, nobody sees a frozen picture.
+    let onVisibilityChange: (Bool) -> Void
 
     func makeNSView(context: Context) -> TitleBarHidingPlayerView {
         let view = TitleBarHidingPlayerView()
@@ -361,6 +425,7 @@ private struct PlayerSurface: NSViewRepresentable {
         view.speeds = PlayerController.speedOptions.map { AVPlaybackSpeed(rate: $0, localizedName: PlayerController.speedLabel($0)) }
         view.allowsPictureInPicturePlayback = true
         view.onSeek = onSeek
+        view.onVisibilityChange = onVisibilityChange
         // Space, arrows and J/K/L reach the player without clicking it first.
         DispatchQueue.main.async { view.window?.makeFirstResponder(view) }
         return view
@@ -369,6 +434,7 @@ private struct PlayerSurface: NSViewRepresentable {
     func updateNSView(_ view: TitleBarHidingPlayerView, context: Context) {
         if view.player !== player { view.player = player }
         view.onSeek = onSeek
+        view.onVisibilityChange = onVisibilityChange
     }
 }
 
@@ -379,6 +445,8 @@ private struct PlayerSurface: NSViewRepresentable {
 private final class TitleBarHidingPlayerView: AVPlayerView {
     /// Called with ±10 for the arrow keys.
     var onSeek: ((Double) -> Void)?
+    /// Called when the window comes on screen or leaves it: minimized, hidden or covered whole.
+    var onVisibilityChange: ((Bool) -> Void)?
 
     /// The jump for ← or →. Taken in the window's event monitor: the keys go to the player's inner
     /// controls, not to this view. With a modifier, or for any other key, the system player keeps them.
@@ -433,7 +501,14 @@ private final class TitleBarHidingPlayerView: AVPlayerView {
             center.addObserver(forName: NSWindow.willCloseNotification, object: window, queue: .main) { [weak self] _ in
                 MainActor.assumeIsolated { self?.stopWatching() }
             },
+            center.addObserver(forName: NSWindow.didChangeOcclusionStateNotification, object: window, queue: .main) { [weak self] _ in
+                MainActor.assumeIsolated {
+                    guard let self, let window = self.window else { return }
+                    self.onVisibilityChange?(window.occlusionState.contains(.visible))
+                }
+            },
         ]
+        onVisibilityChange?(window.occlusionState.contains(.visible))
         userDidSomething()
     }
 

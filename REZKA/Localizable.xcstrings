@@ -7167,6 +7167,76 @@
           }
         }
       }
+    },
+    "Восстанавливать застывшее видео": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recover Frozen Video"
+          }
+        }
+      }
+    },
+    "Бывает, сервер не отдаёт часть видео: картинка застывает, а звук идёт дальше. Тогда плеер сам загрузит это место заново, в том же окне, со скоростью, озвучкой и субтитрами.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sometimes the server doesn’t send part of the video: the picture freezes while the sound goes on. The player then loads that part again by itself, in the same window, keeping the speed, voice-over and subtitles."
+          }
+        }
+      }
+    },
+    "Восстанавливаем видео…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recovering video…"
+          }
+        }
+      }
+    },
+    "Картинка застыла, загружаем это место заново": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The picture froze, loading this part again"
+          }
+        }
+      }
+    },
+    "Видео несколько раз застывало": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The video froze several times"
+          }
+        }
+      }
+    },
+    "Сервер отвечает медленно. Выберите качество пониже или откройте видео заново.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The server is responding slowly. Choose a lower quality or open the video again."
+          }
+        }
+      }
+    },
+    "Понятно": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Got It"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

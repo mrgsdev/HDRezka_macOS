@@ -14,6 +14,7 @@ struct SettingsView: View {
     @State private var language = AppLanguage.current
     @State private var confirmLogout = false
     @State private var cacheSize = URLCache.shared.currentDiskUsage
+    @AppStorage(FrozenVideoRecovery.key) private var recoversFrozenVideo = true
 
     static let mirrorHint = String(localized: "Напишите на mirror@hdrezka.org, чтобы узнать актуальное зеркало, и введите его сюда.")
 
@@ -91,11 +92,17 @@ struct SettingsView: View {
 
             ParentalSection()
 
-            Section("Воспроизведение") {
+            Section {
                 Picker("Качество по умолчанию", selection: $quality) {
                     ForEach(QualityPreference.options, id: \.self) { Text(LocalizedStringKey($0)).tag($0) }
                 }
                 .onChange(of: quality) { _, value in QualityPreference.current = value }
+                Toggle("Восстанавливать застывшее видео", isOn: $recoversFrozenVideo)
+            } header: {
+                Text("Воспроизведение")
+            } footer: {
+                Text("Бывает, сервер не отдаёт часть видео: картинка застывает, а звук идёт дальше. Тогда плеер сам загрузит это место заново, в том же окне, со скоростью, озвучкой и субтитрами.")
+                    .foregroundStyle(.secondary)
             }
 
             Section {

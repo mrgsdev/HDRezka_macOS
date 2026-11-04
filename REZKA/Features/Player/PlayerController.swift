@@ -1,6 +1,7 @@
 import AVFoundation
 import Foundation
 import Observation
+import os
 
 /// Plays one title in the player window: picks the stream and quality, shows WebVTT subtitles,
 /// resumes where the viewer stopped, moves on to the next episode and syncs the position with the site.
@@ -30,6 +31,14 @@ final class PlayerController {
     /// What is left of the episode or film at the current speed, and the clock time it ends; nil until
     /// the video is ready, and for a teaser clip.
     private(set) var timeLeft: TimeLeft?
+    /// The picture froze while the sound went on, and the video is loading again from where it stopped.
+    private(set) var isRecovering = false
+    /// The frozen picture, kept over the video while it loads again: the reload shows the film's first
+    /// frame for a moment before it jumps back to where the picture stopped. Nil otherwise.
+    private(set) var recoveryStill: CGImage?
+    /// A few reloads in a row didn't bring the picture back: the note over the video says so until
+    /// closed, another quality or the next episode.
+    private(set) var showsRecoveryNote = false
 
     struct TimeLeft: Equatable {
         /// Real minutes left, rounded up: the last seconds still show one minute.
@@ -73,6 +82,22 @@ final class PlayerController {
     @ObservationIgnored private var seekTarget: Double?
     @ObservationIgnored private var seekHintTask: Task<Void, Never>?
     @ObservationIgnored private var isTornDown = false
+    @ObservationIgnored private let watchdog = FrozenVideoWatchdog()
+    /// When the picture was last brought back, to stop after a few tries in a row.
+    @ObservationIgnored private var recoveries: [Date] = []
+    /// Checks that found a new frame since the latest reload. A few in a row mean the picture runs again;
+    /// one alone may be the last frame before the place the reload went to, shown after the jump.
+    @ObservationIgnored private var framesSinceReload = 0
+    /// No more reloads until another quality or episode: the server is too slow for now.
+    @ObservationIgnored private var recoveryGaveUp = false
+    /// Whether the window is on screen. Hidden or minimized, the frames aren't checked: nobody sees a
+    /// frozen picture, and the system may not draw any while the sound plays on.
+    @ObservationIgnored private var isVideoVisible = true
+
+    private static let log = Logger(subsystem: "com.mrgsdev.hdrezkamac", category: "player")
+    /// Tries within this many seconds count as in a row.
+    private static let recoveryWindow: TimeInterval = 120
+    private static let maxRecoveries = 3
     /// The last tick's position, to count what played since for «Итоги».
     @ObservationIgnored private var lastTickTime: Double?
     /// The achievements have heard that this episode or film played to the end.
@@ -156,6 +181,7 @@ final class PlayerController {
         finishNoted = false
         isLoading = true
         timeLeft = nil
+        resetRecovery()
         cues = []
         subtitleText = nil
 
@@ -192,6 +218,7 @@ final class PlayerController {
 
         let item = AVPlayerItem(url: fallback ? (quality.fallbackURL ?? quality.url) : quality.url)
         loadedPercent = nil
+        watchdog.attach(to: item)
         observe(item)
         player.replaceCurrentItem(with: item)
         player.defaultRate = speed
@@ -226,6 +253,7 @@ final class PlayerController {
             }
             updateTimeLeft()
         case .failed:
+            endRecovery()
             if !usingFallback, let quality, quality.fallbackURL != nil {
                 play(quality, at: pendingSeek ?? currentPosition, fallback: true)
             } else {
@@ -268,6 +296,7 @@ final class PlayerController {
     /// ← and → in the player: moves by `seconds` within the episode and adds the run up on screen.
     func seek(by seconds: Double) {
         guard player.currentItem?.status == .readyToPlay, pendingSeek == nil else { return }
+        watchdog.reset()
         let end = currentDuration > 0 ? currentDuration - 1 : .greatestFiniteMagnitude
         let target = min(max((seekTarget ?? currentPosition) + seconds, 0), end)
         seekTarget = target
@@ -292,6 +321,8 @@ final class PlayerController {
     /// not loaded yet the video otherwise just looks frozen. Shorter waits show nothing.
     private func timeControlChanged() {
         guard !isTornDown else { return }
+        // Paused, waiting or started again, possibly after a jump on the timeline: the frames start over.
+        watchdog.reset()
         guard player.timeControlStatus == .waitingToPlayAtSpecifiedRate, player.currentItem != nil else {
             bufferingTask?.cancel()
             bufferingTask = nil
@@ -314,6 +345,7 @@ final class PlayerController {
 
     func switchQuality(_ option: StreamQuality) {
         guard option != quality else { return }
+        resetRecovery()
         QualityPreference.current = option.label
         play(option, at: currentPosition)
     }
@@ -371,11 +403,94 @@ final class PlayerController {
         if Date().timeIntervalSince(lastLocalSave) > 5 { recordProgress() }
         countWatched(upTo: time)
         updateTimeLeft()
+        watchFrames()
+    }
+
+    // MARK: Frozen picture
+
+    /// Checks the frames while the video plays; see `FrozenVideoWatchdog`. Paused, waiting for data,
+    /// mid-jump or loading, there is nothing to check and the count starts over.
+    private func watchFrames() {
+        guard FrozenVideoRecovery.isEnabled, isVideoVisible, !recoveryGaveUp, !isTornDown, !isLoading, !isPreviewClip,
+              pendingSeek == nil, seekTarget == nil,
+              player.timeControlStatus == .playing, player.currentItem?.status == .readyToPlay
+        else {
+            watchdog.reset()
+            return
+        }
+        switch watchdog.check() {
+        case .frame:
+            // Back once frames keep coming, wherever the reload landed: the jump may have gone to the
+            // keyframe a few seconds before the place asked for.
+            if isRecovering {
+                framesSinceReload += 1
+                if framesSinceReload >= 3 { endRecovery() }
+            }
+        case .waiting:
+            break
+        case let .frozen(stoppedAt):
+            recover(stoppedAt: stoppedAt)
+        }
+    }
+
+    /// The picture froze while the sound went on: loads the video again, in this window, from where the
+    /// picture stopped, so the seconds heard over the still are seen too. Speed, dub and subtitles stay.
+    /// The second try in a row goes to the other server when the site gave two; after three within two
+    /// minutes it stops and says so, rather than reloading over and over.
+    private func recover(stoppedAt: Double?) {
+        guard let quality else { return }
+        let position = stoppedAt ?? max(currentPosition - FrozenVideoWatchdog.threshold * Double(speed), 0)
+        // Some files end their picture a moment before the sound: nothing to bring back there.
+        guard currentDuration - position > FrozenVideoWatchdog.threshold * Double(speed) + 2 else { return }
+        let now = Date()
+        recoveries = recoveries.filter { now.timeIntervalSince($0) < Self.recoveryWindow } + [now]
+        guard recoveries.count <= Self.maxRecoveries else {
+            Self.log.error("Picture frozen at \(position, privacy: .public) s again after \(Self.maxRecoveries) reloads; giving up")
+            endRecovery()
+            recoveryGaveUp = true
+            showsRecoveryNote = true
+            return
+        }
+        let fallback = recoveries.count >= 2 && quality.fallbackURL != nil ? !usingFallback : usingFallback
+        Self.log.notice("Picture frozen at \(position, privacy: .public) s; reloading, try \(self.recoveries.count), \(fallback ? "fallback" : "main", privacy: .public) server")
+        // The same still for every try in a row: it is what the viewer last saw.
+        if recoveryStill == nil { recoveryStill = watchdog.stillImage() }
+        isRecovering = true
+        framesSinceReload = 0
+        play(quality, at: position, fallback: fallback)
+    }
+
+    /// From the player view, as the window comes on screen or leaves it. Back on screen, the count starts
+    /// over: the frames may take a moment.
+    func setVideoVisible(_ visible: Bool) {
+        guard visible != isVideoVisible else { return }
+        isVideoVisible = visible
+        watchdog.reset()
+    }
+
+    /// The note over the video after reloads didn't help, closed by its button. No reloads start again
+    /// until another quality or episode.
+    func dismissRecoveryNote() {
+        showsRecoveryNote = false
+    }
+
+    private func endRecovery() {
+        isRecovering = false
+        recoveryStill = nil
+    }
+
+    private func resetRecovery() {
+        endRecovery()
+        showsRecoveryNote = false
+        recoveryGaveUp = false
+        recoveries = []
     }
 
     /// The rest of the video divided by the speed: at 2× an hour left takes half an hour. Paused, it is
     /// what is left once playback resumes, so the end moves on with the clock.
     private func updateTimeLeft() {
+        // Kept as it was while the video reloads: the new item has no length yet.
+        guard !isRecovering else { return }
         let duration = currentDuration
         // Mid-jump, from where the arrows are taking it rather than where the picture still is.
         let position = seekTarget ?? pendingSeek ?? currentPosition
