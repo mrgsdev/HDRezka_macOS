@@ -153,14 +153,28 @@ final class RouletteModel {
         var fresh: [MediaItem] = []
         while fresh.count < distance + 8 {
             var batch = pool.shuffled()
-            // No poster twice in a row where two shuffles meet.
-            if batch.count > 1, batch.first?.id == fresh.last?.id { batch.swapAt(0, batch.count - 1) }
+            // No poster twice in a row where two shuffles meet, or where the new cards meet the kept ones.
+            if batch.count > 1, batch.first?.id == (fresh.last ?? kept.last)?.id { batch.swapAt(0, batch.count - 1) }
             fresh += batch
         }
         let target = kept.count + distance - 1
         let unseen = pool.filter { !picked.contains($0.id) }
-        let choice = (unseen.isEmpty ? pool : unseen).randomElement() ?? fresh[distance - 1]
+        // Straight away, the pick lands right after the kept cards: not the same title as the last of them.
+        let beside = distance == 1 ? kept.last?.id : nil
+        let candidates = (unseen.isEmpty ? pool : unseen).filter { $0.id != beside }
+        let choice = candidates.randomElement() ?? pool.filter { $0.id != beside }.randomElement() ?? pool.randomElement() ?? fresh[distance - 1]
         fresh[distance - 1] = choice
+        // The shuffle already holds the pick somewhere; when that copy lands right beside it, the reel stops
+        // on two equal posters. Such a neighbour gives way to a title unlike the cards on both its sides.
+        for index in [distance - 2, distance] where fresh.indices.contains(index) && fresh[index].id == choice.id {
+            let before = index > 0 ? fresh[index - 1].id : kept.last?.id
+            let after = fresh.indices.contains(index + 1) ? fresh[index + 1].id : nil
+            // With only two or three titles to spin that may be none; then any other than the pick will do.
+            let others = pool.filter { $0.id != choice.id }
+            if let other = others.filter({ $0.id != before && $0.id != after }).randomElement() ?? others.randomElement() {
+                fresh[index] = other
+            }
+        }
         picked.insert(choice.id)
         AchievementTracker.shared.noteSpin(postId: RezkaParser.idFromPath(choice.path))
 
