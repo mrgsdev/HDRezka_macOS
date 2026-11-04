@@ -4,8 +4,34 @@ import SwiftUI
 /// The player window: system playback controls, subtitles drawn over the video,
 /// and quality, speed, subtitle and next-episode controls in the toolbar.
 struct PlayerView: View {
+    /// What the time-left item in the toolbar shows; picked in its own menu and kept.
+    enum TimeLeftStyle: String, CaseIterable {
+        case both, left, end
+    }
+
     @State private var controller: PlayerController
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("playerTimeLeftStyle") private var timeLeftStyle = TimeLeftStyle.both
+    /// The loaded share after the time, until all of the video is in.
+    @AppStorage("playerShowsLoaded") private var showsLoaded = true
+    /// The time-left menu's values as they were when a menu opened; nil while none is open.
+    @State private var frozenTimeLeft: TimeLeftSnapshot?
+
+    /// What the time-left item shows. Held still while its menu is open: the loaded share changes with
+    /// every percent and the time every minute, and a menu whose items change under the pointer keeps
+    /// its highlight where the old item was, off the row being pointed at.
+    private struct TimeLeftSnapshot {
+        let timeLeft: PlayerController.TimeLeft
+        let speed: Float
+        let loadedShare: String?
+        let loadedLine: String?
+    }
+
+    private var liveTimeLeft: TimeLeftSnapshot? {
+        controller.timeLeft.map {
+            TimeLeftSnapshot(timeLeft: $0, speed: controller.speed, loadedShare: controller.loadedShare, loadedLine: controller.loadedLine)
+        }
+    }
 
     init(request: PlaybackRequest) {
         _controller = State(initialValue: PlayerController(request: request))
@@ -59,6 +85,7 @@ struct PlayerView: View {
             ToolbarItemGroup {
                 qualityMenu
                 speedMenu
+                timeLeftMenu
                 subtitlesMenu
                 if controller.nextEpisode != nil {
                     Button {
@@ -70,6 +97,12 @@ struct PlayerView: View {
                     .help("Следующая серия (⇧⌘N)")
                 }
             }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSMenu.didBeginTrackingNotification)) { _ in
+            frozenTimeLeft = liveTimeLeft
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSMenu.didEndTrackingNotification)) { _ in
+            frozenTimeLeft = nil
         }
         .toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
         // In full screen the video takes the whole screen; the toolbar slides in with the menu bar.
@@ -145,6 +178,94 @@ struct PlayerView: View {
         .fixedSize()
         .help("Скорость")
         .accessibilityLabel("Скорость")
+    }
+
+    /// "12 мин · до 23:40 · ⤓45 %" beside the speed it depends on: at 2× an hour left takes half an hour.
+    /// The loaded share goes once all of the video is in. Its menu tells all of it in full and picks
+    /// what the label shows.
+    @ViewBuilder
+    private var timeLeftMenu: some View {
+        // Frozen first: while a menu is open the live values are not even read, so nothing here redraws.
+        if let shown = frozenTimeLeft ?? liveTimeLeft {
+            let timeLeft = shown.timeLeft
+            Menu {
+                Section {
+                    Button(shown.speed == 1
+                           ? String(localized: "Осталось \(timeLeft.leftText)")
+                           : String(localized: "Осталось \(timeLeft.leftText) на скорости \(PlayerController.speedLabel(shown.speed))")) {}
+                        .disabled(true)
+                    Button(String(localized: "Закончится в \(timeLeft.endText)")) {}
+                        .disabled(true)
+                    if let loaded = shown.loadedLine {
+                        Button(loaded) {}
+                            .disabled(true)
+                    }
+                }
+                Section("Показывать") {
+                    styleButton(.both, String(localized: "Сколько осталось и время окончания"))
+                    styleButton(.left, String(localized: "Только сколько осталось"))
+                    styleButton(.end, String(localized: "Только время окончания"))
+                }
+                // A button with a checkmark, like the items above; a Toggle puts its check in another column.
+                Section {
+                    Button {
+                        showsLoaded.toggle()
+                    } label: {
+                        if showsLoaded {
+                            Label("Показывать процент загрузки", systemImage: "checkmark")
+                        } else {
+                            Text("Показывать процент загрузки")
+                        }
+                    }
+                }
+            } label: {
+                Label {
+                    timeLeftTitle(shown)
+                } icon: {
+                    Image(systemName: "clock")
+                }
+                .labelStyle(.titleAndIcon)
+                .monospacedDigit()
+            }
+            .fixedSize()
+            .help(timeLeftHelp(shown))
+            .accessibilityLabel("Сколько осталось")
+        }
+    }
+
+    /// Typed, so both strings are looked up for translation rather than shown as written.
+    private func timeLeftHelp(_ shown: TimeLeftSnapshot) -> LocalizedStringKey {
+        showsLoaded && shown.loadedShare != nil
+            ? "Сколько осталось с учётом скорости и сколько видео загружено"
+            : "Сколько осталось с учётом скорости"
+    }
+
+    /// The time as picked, then the loaded share after a download arrow while it is under 100 %.
+    private func timeLeftTitle(_ shown: TimeLeftSnapshot) -> Text {
+        let time = Text(Self.timeLeftLabel(shown.timeLeft, style: timeLeftStyle))
+        guard showsLoaded, let share = shown.loadedShare else { return time }
+        return Text("\(time) · \(Image(systemName: "arrow.down.circle")) \(share)")
+    }
+
+    private static func timeLeftLabel(_ timeLeft: PlayerController.TimeLeft, style: TimeLeftStyle) -> String {
+        switch style {
+        case .both: String(localized: "\(timeLeft.leftText) · до \(timeLeft.endText)")
+        case .left: String(localized: "осталось \(timeLeft.leftText)")
+        // Not «до …»: that string is taken, as «up to …» in English.
+        case .end: String(localized: "закончится в \(timeLeft.endText)")
+        }
+    }
+
+    private func styleButton(_ style: TimeLeftStyle, _ title: String) -> some View {
+        Button {
+            timeLeftStyle = style
+        } label: {
+            if style == timeLeftStyle {
+                Label(title, systemImage: "checkmark")
+            } else {
+                Text(title)
+            }
+        }
     }
 
     @ViewBuilder

@@ -27,6 +27,27 @@ final class PlayerController {
     /// How much of the video has loaded, in whole percent; nil until its length is known.
     /// The system controls don't show it.
     private(set) var loadedPercent: Int?
+    /// What is left of the episode or film at the current speed, and the clock time it ends; nil until
+    /// the video is ready, and for a teaser clip.
+    private(set) var timeLeft: TimeLeft?
+
+    struct TimeLeft: Equatable {
+        /// Real minutes left, rounded up: the last seconds still show one minute.
+        let minutes: Int
+        /// To the minute, so the toolbar changes once a minute, not with every tick.
+        let endsAt: Date
+
+        /// "12 мин", "1 ч 50 мин".
+        var leftText: String {
+            Duration.seconds(minutes * 60)
+                .formatted(.units(allowed: [.hours, .minutes], width: .abbreviated).locale(AppLanguage.locale))
+        }
+
+        /// "23:40", or "11:40 PM" in English.
+        var endText: String {
+            endsAt.formatted(Date.FormatStyle(date: .omitted, time: .shortened).locale(AppLanguage.locale))
+        }
+    }
     /// Closes the window; set by the view.
     var onClose: (() -> Void)?
 
@@ -38,6 +59,8 @@ final class PlayerController {
     @ObservationIgnored private var waitingObservation: NSKeyValueObservation?
     @ObservationIgnored private var speedObservation: NSKeyValueObservation?
     @ObservationIgnored private var bufferingTask: Task<Void, Never>?
+    /// Moves «закончится в» on while paused, when the time observer is quiet.
+    @ObservationIgnored private var clockTask: Task<Void, Never>?
     @ObservationIgnored private var loadTask: Task<Void, Never>?
     @ObservationIgnored private var subtitleTask: Task<Void, Never>?
     @ObservationIgnored private var remoteSaveTask: Task<Void, Never>?
@@ -80,7 +103,15 @@ final class PlayerController {
                 MainActor.assumeIsolated {
                     guard let self, rate > 0, rate != self.speed else { return }
                     self.speed = rate
+                    self.updateTimeLeft()
                 }
+            }
+        }
+        clockTask = Task { [weak self] in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(10))
+                guard let self else { return }
+                self.updateTimeLeft()
             }
         }
         load(startAt: request.startPosition)
@@ -96,14 +127,20 @@ final class PlayerController {
         return [season?.title ?? String(localized: "Сезон \(seasonId)"), episode?.title ?? String(localized: "Серия \(episodeId)"), request.translator.name].joined(separator: " · ")
     }
 
-    /// The episode and dub, then how much has loaded until all of it has.
+    /// The episode and dub. How much has loaded is in the toolbar, with the time left.
     var subtitleLine: String {
-        [episodeLabel ?? request.translator.name, loadedLine].compactMap { $0 }.joined(separator: " · ")
+        episodeLabel ?? request.translator.name
     }
 
-    private var loadedLine: String? {
+    /// "45 %" until all of the video has loaded; nil once it has.
+    var loadedShare: String? {
         guard let loadedPercent, loadedPercent < 100 else { return nil }
-        let share = (Double(loadedPercent) / 100).formatted(.percent.locale(AppLanguage.locale))
+        return (Double(loadedPercent) / 100).formatted(.percent.locale(AppLanguage.locale))
+    }
+
+    /// «Серия загружена на 45 %», in full for the time-left menu.
+    var loadedLine: String? {
+        guard let share = loadedShare else { return nil }
         if request.episodeId != nil { return String(localized: "Серия загружена на \(share)") }
         return switch request.kind {
         case .cartoon: String(localized: "Мультфильм загружен на \(share)")
@@ -118,6 +155,7 @@ final class PlayerController {
         loadTask?.cancel()
         finishNoted = false
         isLoading = true
+        timeLeft = nil
         cues = []
         subtitleText = nil
 
@@ -186,6 +224,7 @@ final class PlayerController {
                 self.pendingSeek = nil
                 player.seek(to: CMTime(seconds: pendingSeek, preferredTimescale: 600))
             }
+            updateTimeLeft()
         case .failed:
             if !usingFallback, let quality, quality.fallbackURL != nil {
                 play(quality, at: pendingSeek ?? currentPosition, fallback: true)
@@ -284,6 +323,7 @@ final class PlayerController {
         speed = rate
         player.defaultRate = rate
         if player.rate != 0 { player.rate = rate }
+        updateTimeLeft()
     }
 
     static func speedLabel(_ rate: Float) -> String {
@@ -330,6 +370,26 @@ final class PlayerController {
         }
         if Date().timeIntervalSince(lastLocalSave) > 5 { recordProgress() }
         countWatched(upTo: time)
+        updateTimeLeft()
+    }
+
+    /// The rest of the video divided by the speed: at 2× an hour left takes half an hour. Paused, it is
+    /// what is left once playback resumes, so the end moves on with the clock.
+    private func updateTimeLeft() {
+        let duration = currentDuration
+        // Mid-jump, from where the arrows are taking it rather than where the picture still is.
+        let position = seekTarget ?? pendingSeek ?? currentPosition
+        let left = max(duration - position, 0) / Double(max(speed, 0.1))
+        guard !isTornDown, !isLoading, duration > 0, !isPreviewClip, left >= 1 else {
+            if timeLeft != nil { timeLeft = nil }
+            return
+        }
+        let end = Date().addingTimeInterval(left).timeIntervalSinceReferenceDate
+        let value = TimeLeft(
+            minutes: Int((left / 60).rounded(.up)),
+            endsAt: Date(timeIntervalSinceReferenceDate: (end / 60).rounded(.down) * 60)
+        )
+        if value != timeLeft { timeLeft = value }
     }
 
     /// Adds the video that played since the last tick; a jump or a pause adds nothing.
@@ -434,6 +494,7 @@ final class PlayerController {
         subtitleTask?.cancel()
         seekHintTask?.cancel()
         bufferingTask?.cancel()
+        clockTask?.cancel()
         waitingObservation = nil
         speedObservation = nil
         if let timeObserver { player.removeTimeObserver(timeObserver) }
