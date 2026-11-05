@@ -15,8 +15,7 @@
 
 <p align="center">
   <img alt="macOS 15+" src="https://img.shields.io/badge/macOS-15%2B-000000?logo=apple&logoColor=white">
-  <img alt="Swift" src="https://img.shields.io/badge/Swift-5-F05138?logo=swift&logoColor=white">
-  <img alt="SwiftUI" src="https://img.shields.io/badge/UI-SwiftUI%20%2B%20AVKit-0A84FF">
+  <a href="https://github.com/mrgsdev/HDRezka_macOS/releases"><img alt="Скачивания" src="https://img.shields.io/github/downloads/mrgsdev/HDRezka_macOS/total?label=%D1%81%D0%BA%D0%B0%D1%87%D0%B8%D0%B2%D0%B0%D0%BD%D0%B8%D0%B9&color=6E56CF"></a>
   <img alt="Русский и English" src="https://img.shields.io/badge/%D1%8F%D0%B7%D1%8B%D0%BA-RU%20%7C%20EN-555555">
   <img alt="MIT" src="https://img.shields.io/badge/license-MIT-3DA639">
 </p>
