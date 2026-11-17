@@ -63,7 +63,18 @@ struct MainView: View {
         .sheet(isPresented: $router.showsOnboarding) { OnboardingView() }
         .onAppear {
             if !onboardingSeen { router.showsOnboarding = true }
+            openPendingTitle()
         }
+        .onChange(of: router.pendingTitle) { openPendingTitle() }
+    }
+
+    /// Shows a title asked for from outside (the widget) on top of Home.
+    private func openPendingTitle() {
+        guard let item = router.pendingTitle else { return }
+        router.pendingTitle = nil
+        var path = paths[.home] ?? NavigationPath()
+        path.append(item)
+        paths[.home] = path
     }
 
     private func row(_ item: SidebarItem, _ title: LocalizedStringKey, _ icon: String) -> some View {

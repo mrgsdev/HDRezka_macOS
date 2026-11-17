@@ -8,17 +8,56 @@
 
 /* Begin PBXBuildFile section */
 		B1C2D3E40000000000000001 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = B1C2D3E40000000000000002 /* SwiftSoup */; };
+		B1C2D3E40000000000000103 /* REZKAWidgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B1C2D3E40000000000000100 /* REZKAWidgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B1C2D3E40000000000000105 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1C2D3E40000000000000070 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B1C2D3E40000000000000110;
+			remoteInfo = REZKAWidgets;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B1C2D3E40000000000000104 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B1C2D3E40000000000000103 /* REZKAWidgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B1C2D3E40000000000000010 /* REZKA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = REZKA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1C2D3E40000000000000011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1C2D3E40000000000000100 /* REZKAWidgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = REZKAWidgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1C2D3E40000000000000130 /* REZKA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = REZKA.entitlements; sourceTree = "<group>"; };
+		B1C2D3E40000000000000131 /* REZKAWidgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = REZKAWidgets.entitlements; sourceTree = "<group>"; };
+		B1C2D3E40000000000000132 /* REZKAWidgets-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "REZKAWidgets-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		B1C2D3E40000000000000020 /* REZKA */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = REZKA;
+			sourceTree = "<group>";
+		};
+		B1C2D3E40000000000000101 /* REZKAWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = REZKAWidgets;
+			sourceTree = "<group>";
+		};
+		B1C2D3E40000000000000102 /* WidgetShared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = WidgetShared;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +71,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B1C2D3E40000000000000112 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -39,6 +85,8 @@
 			isa = PBXGroup;
 			children = (
 				B1C2D3E40000000000000020 /* REZKA */,
+				B1C2D3E40000000000000101 /* REZKAWidgets */,
+				B1C2D3E40000000000000102 /* WidgetShared */,
 				B1C2D3E40000000000000042 /* Config */,
 				B1C2D3E40000000000000041 /* Products */,
 			);
@@ -48,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				B1C2D3E40000000000000010 /* REZKA.app */,
+				B1C2D3E40000000000000100 /* REZKAWidgets.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,6 +105,9 @@
 			isa = PBXGroup;
 			children = (
 				B1C2D3E40000000000000011 /* Info.plist */,
+				B1C2D3E40000000000000130 /* REZKA.entitlements */,
+				B1C2D3E40000000000000132 /* REZKAWidgets-Info.plist */,
+				B1C2D3E40000000000000131 /* REZKAWidgets.entitlements */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -70,13 +122,16 @@
 				B1C2D3E40000000000000051 /* Sources */,
 				B1C2D3E40000000000000030 /* Frameworks */,
 				B1C2D3E40000000000000052 /* Resources */,
+				B1C2D3E40000000000000104 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B1C2D3E40000000000000106 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				B1C2D3E40000000000000020 /* REZKA */,
+				B1C2D3E40000000000000102 /* WidgetShared */,
 			);
 			name = REZKA;
 			packageProductDependencies = (
@@ -85,6 +140,29 @@
 			productName = REZKA;
 			productReference = B1C2D3E40000000000000010 /* REZKA.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B1C2D3E40000000000000110 /* REZKAWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B1C2D3E40000000000000120 /* Build configuration list for PBXNativeTarget "REZKAWidgets" */;
+			buildPhases = (
+				B1C2D3E40000000000000111 /* Sources */,
+				B1C2D3E40000000000000112 /* Frameworks */,
+				B1C2D3E40000000000000113 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B1C2D3E40000000000000101 /* REZKAWidgets */,
+				B1C2D3E40000000000000102 /* WidgetShared */,
+			);
+			name = REZKAWidgets;
+			packageProductDependencies = (
+			);
+			productName = REZKAWidgets;
+			productReference = B1C2D3E40000000000000100 /* REZKAWidgets.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -98,6 +176,9 @@
 				TargetAttributes = {
 					B1C2D3E40000000000000050 = {
 						CreatedOnToolsVersion = 26.2;
+					};
+					B1C2D3E40000000000000110 = {
+						CreatedOnToolsVersion = 27.2;
 					};
 				};
 			};
@@ -120,12 +201,20 @@
 			projectRoot = "";
 			targets = (
 				B1C2D3E40000000000000050 /* REZKA */,
+				B1C2D3E40000000000000110 /* REZKAWidgets */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B1C2D3E40000000000000052 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1C2D3E40000000000000113 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -142,7 +231,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B1C2D3E40000000000000111 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B1C2D3E40000000000000106 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B1C2D3E40000000000000110 /* REZKAWidgets */;
+			targetProxy = B1C2D3E40000000000000105 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B1C2D3E40000000000000061 /* Debug */ = {
@@ -150,10 +254,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/REZKA.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = Y2Y34S7QM3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -167,7 +271,6 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mrgsdev.hdrezkamac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -180,10 +283,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Config/REZKA.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = Y2Y34S7QM3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -197,7 +300,6 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mrgsdev.hdrezkamac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -209,6 +311,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CURRENT_PROJECT_VERSION = 9;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -230,6 +333,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -243,6 +347,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CURRENT_PROJECT_VERSION = 9;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -258,10 +363,63 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		B1C2D3E40000000000000121 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/REZKAWidgets.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = Y2Y34S7QM3;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/REZKAWidgets-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = REZKA;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 mrgsdev";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrgsdev.hdrezkamac.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B1C2D3E40000000000000122 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/REZKAWidgets.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = Y2Y34S7QM3;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Config/REZKAWidgets-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = REZKA;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 mrgsdev";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mrgsdev.hdrezkamac.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -282,6 +440,15 @@
 			buildConfigurations = (
 				B1C2D3E40000000000000081 /* Debug */,
 				B1C2D3E40000000000000082 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B1C2D3E40000000000000120 /* Build configuration list for PBXNativeTarget "REZKAWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1C2D3E40000000000000121 /* Debug */,
+				B1C2D3E40000000000000122 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

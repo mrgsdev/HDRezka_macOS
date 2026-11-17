@@ -77,6 +77,11 @@ final class DetailsModel {
             myRating = Self.myRatings[details.postId]
             state = .loaded(details)
             AchievementTracker.shared.noteDetails(details)
+            // A fresh look at a title waiting in "Скоро выйдет": maybe it has a date now, or came out.
+            if ReleaseReminders.shared.contains(item.path) {
+                ReleaseReminders.shared.update(details, path: item.path)
+                UpcomingTracker.shared.remindersChanged()
+            }
 
             if details.isSeries, let chosen {
                 if let active = details.activeTranslatorId, !details.seasons.isEmpty {

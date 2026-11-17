@@ -17,6 +17,8 @@ struct RezkaApp: App {
         }
         .defaultSize(width: 1320, height: 860)
         .commands { AppCommands() }
+        // The widget's links open a title here; with the window closed, they bring it back.
+        .handlesExternalEvents(matching: [AppLink.scheme])
 
         WindowGroup("Плеер", id: "player", for: PlaybackRequest.self) { $request in
             if let request {
@@ -29,6 +31,8 @@ struct RezkaApp: App {
         .defaultSize(width: 1280, height: 760)
         // Otherwise macOS reopens the last player window at launch and it starts playing by itself.
         .restorationBehavior(.disabled)
+        // A widget link must not open an empty player window.
+        .handlesExternalEvents(matching: [])
 
         Window("Обновление REZKA", id: "update") {
             UpdateView()
@@ -90,9 +94,25 @@ struct RootView: View {
         }
         .task {
             AchievementTracker.shared.start()
+            UpcomingTracker.shared.start()
             await offerUpdate()
         }
+        .onChange(of: auth.isLoggedIn) { _, isLoggedIn in
+            if isLoggedIn {
+                UpcomingTracker.shared.refresh()
+            } else {
+                UpcomingTracker.shared.signedOut()
+            }
+        }
+        .onOpenURL { url in
+            guard let link = AppLink.parseTitle(url) else { return }
+            Router.shared.open(MediaItem(path: link.path, title: link.title, subtitle: "", posterURL: nil, kind: .unknown, badge: nil))
+            NSApp.activate()
+        }
+        // An open library window takes the widget's links instead of a new one opening.
+        .handlesExternalEvents(preferring: [AppLink.scheme], allowing: [AppLink.scheme])
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            UpcomingTracker.shared.refreshIfDue()
             Task { await offerUpdate() }
         }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.willResignActiveNotification)) { _ in

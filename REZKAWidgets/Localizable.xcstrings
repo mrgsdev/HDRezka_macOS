@@ -1,0 +1,292 @@
+{
+  "sourceLanguage": "ru",
+  "strings": {
+    "%@ сезон, %@ серия": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Season %1$@, episode %2$@"
+          }
+        }
+      }
+    },
+    "%@ серия": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Episode %@"
+          }
+        }
+      }
+    },
+    "Аниме": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anime"
+          }
+        }
+      }
+    },
+    "Ближайших серий нет": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No upcoming episodes"
+          }
+        }
+      }
+    },
+    "В ближайшие дни": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next few days"
+          }
+        }
+      }
+    },
+    "Виджет показывает сериалы из «Продолжить просмотр».": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The widget shows the series in Continue Watching."
+          }
+        }
+      }
+    },
+    "Войдите в REZKA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in to REZKA"
+          }
+        }
+      }
+    },
+    "Вышел": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Out now"
+          }
+        }
+      }
+    },
+    "Вышла": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Out now"
+          }
+        }
+      }
+    },
+    "Вышли": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Out now"
+          }
+        }
+      }
+    },
+    "Ждём": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Awaited"
+          }
+        }
+      }
+    },
+    "Завтра": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomorrow"
+          }
+        }
+      }
+    },
+    "Задерживаются": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Running late"
+          }
+        }
+      }
+    },
+    "Здесь появятся новые серии из «Продолжить просмотр» и фильмы с «Напомнить о выходе».": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New episodes from Continue Watching and movies with Remind Me will show up here."
+          }
+        }
+      }
+    },
+    "Мультфильм": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cartoon"
+          }
+        }
+      }
+    },
+    "Новые и ближайшие серии из «Продолжить просмотр» и фильмы, о выходе которых вы просили напомнить.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New and upcoming episodes from Continue Watching, and the movies you asked to be reminded about."
+          }
+        }
+      }
+    },
+    "Ожидается": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expected"
+          }
+        }
+      }
+    },
+    "Откройте REZKA": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open REZKA"
+          }
+        }
+      }
+    },
+    "Передача": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show"
+          }
+        }
+      }
+    },
+    "Позже": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Later"
+          }
+        }
+      }
+    },
+    "После этого здесь появятся ближайшие серии.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upcoming episodes will show up here after that."
+          }
+        }
+      }
+    },
+    "Сегодня": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today"
+          }
+        }
+      }
+    },
+    "Сериал": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Series"
+          }
+        }
+      }
+    },
+    "Скоро выйдет": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coming up"
+          }
+        }
+      }
+    },
+    "Фильм": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Movie"
+          }
+        }
+      }
+    },
+    "и ещё %ld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "and %ld more"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

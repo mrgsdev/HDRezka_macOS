@@ -17,9 +17,16 @@ final class Router {
     var showsOnboarding = false
     /// Bumped by ⌘F so the search field takes focus even when search is already open.
     private(set) var searchRequests = 0
+    /// A title to open from outside, e.g. the widget; the library window pushes it onto Home and clears it.
+    var pendingTitle: MediaItem?
 
     func focusSearch() {
         selection = .search
         searchRequests += 1
+    }
+
+    func open(_ item: MediaItem) {
+        selection = .home
+        pendingTitle = item
     }
 }

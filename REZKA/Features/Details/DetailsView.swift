@@ -258,6 +258,25 @@ struct DetailsView: View {
 
     // MARK: Actions
 
+    /// For a title the site is still waiting for: puts it in the "Скоро выйдет" widget until it comes out.
+    private func reminderButton(_ details: MediaDetails) -> some View {
+        let reminders = ReleaseReminders.shared
+        let isOn = reminders.contains(item.path)
+        return Button {
+            if isOn {
+                reminders.remove(item.path)
+            } else {
+                reminders.add(details, item: item)
+            }
+        } label: {
+            // The same words either way; the filled bell says it's on.
+            Label("Напомнить о выходе", systemImage: isOn ? "bell.fill" : "bell")
+        }
+        .help(isOn
+            ? "Уже в виджете «Скоро выйдет». Нажмите, чтобы не напоминать"
+            : "Показать в виджете «Скоро выйдет» и отметить, когда появится на сайте")
+    }
+
     @ViewBuilder
     private func actions(_ details: MediaDetails) -> some View {
         // Wraps rather than squeezing labels down to icons when the window is narrow.
@@ -283,6 +302,7 @@ struct DetailsView: View {
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                     .background(Brand.panel, in: Capsule())
+                reminderButton(details)
             } else if details.isSeries {
                 if let target = model.resumeEpisode(progress: progress) {
                     let season = model.seasons.first { $0.id == target.episode.seasonId }?.title ?? ""

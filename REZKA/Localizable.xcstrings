@@ -7237,6 +7237,36 @@
           }
         }
       }
+    },
+    "Напомнить о выходе": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remind Me"
+          }
+        }
+      }
+    },
+    "Уже в виджете «Скоро выйдет». Нажмите, чтобы не напоминать": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already in the Coming Up widget. Click to stop the reminder"
+          }
+        }
+      }
+    },
+    "Показать в виджете «Скоро выйдет» и отметить, когда появится на сайте": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show it in the Coming Up widget and mark it when it's on the site"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
