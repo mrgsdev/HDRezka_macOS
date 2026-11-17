@@ -585,6 +585,8 @@ private struct LargeView: View {
                         Text(verbatim: hero.title)
                             .font(.system(size: roomy ? 20 : 17, weight: .bold))
                             .lineLimit(roomy ? 3 : 2)
+                            // Takes the lines it needs: otherwise the card cut a long name to two.
+                            .fixedSize(horizontal: false, vertical: true)
                             .padding(.top, 1)
                         Text(verbatim: hero.longEpisode)
                             .font(.system(size: 12, weight: .medium))
